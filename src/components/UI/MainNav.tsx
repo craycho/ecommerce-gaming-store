@@ -1,4 +1,7 @@
 import { useState } from "react";
+// npm install -D @types/autosuggest-highlight
+import parse from "autosuggest-highlight/parse";
+import match from "autosuggest-highlight/match";
 import {
   AppBar,
   Autocomplete,
@@ -101,6 +104,27 @@ function MainNavigation() {
               }
               return [];
             }}
+            renderOption={(props, option, { inputValue }) => {
+              const matches = match(option, inputValue, { insideWords: true });
+              const parts = parse(option, matches);
+
+              return (
+                <li {...props}>
+                  <div>
+                    {parts.map((part, index) => (
+                      <span
+                        key={index}
+                        style={{
+                          fontWeight: part.highlight ? 700 : 400,
+                        }}
+                      >
+                        {part.text}
+                      </span>
+                    ))}
+                  </div>
+                </li>
+              );
+            }}
           />
         </Search>
         <Icons>
@@ -162,3 +186,10 @@ function MainNavigation() {
 }
 
 export default MainNavigation;
+
+/* renderOption={(props, option, state): React.ReactNode => {
+  const matches = match(option, state.inputValue, {
+    insideWords: true,
+  });
+  const parts = parse(option, matches);
+}} */
