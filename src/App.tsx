@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import ErrorPage from "./components/Error";
+import RootLayout from "./pages/Root";
+import Home from "./pages/Home";
+
+// const App = ({ message }: AppProps) => <div>{message}</div>;
+/* 
+interface RouteObject {
+  path?: string;
+  index?: boolean;
+  children?: React.ReactNode;
+  caseSensitive?: boolean;
+  id?: string;
+  loader?: () => {};
+  action?: () => {};
+  element?: React.ReactNode | null;
+  Component?: React.ComponentType | null;
+  errorElement?: React.ReactNode | null;
+  ErrorBoundary?: React.ComponentType | null;
+} */
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+        errorElement: <ErrorPage />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
+
+// U form handlerima je tip "(event: React.FormEvent)"
+// U click handlerima moze biti React.MouseEvent (ako se koristi event object)
+// Ako se za form submit koristi useRef tip je "const refName = useRef<HTMLInputElement>();"
+// const [state, setState] = useState<type>();
+// Funkcije su tipa imeFunkc: (argument: type) => returnValueType (void ako ga nema)
