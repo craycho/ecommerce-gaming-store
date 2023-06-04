@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import ErrorPage from "./components/Error";
-import RootLayout from "./pages/Root";
+import ErrorPage from "./pages/Error";
+import RootLayout from "./components/Layout/Root";
 import Home from "./pages/Home";
 
 // const App = ({ message }: AppProps) => <div>{message}</div>;
