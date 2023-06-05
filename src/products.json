@@ -1,0 +1,104 @@
+{
+  "products": {
+    "-M8bjAYhj": {
+      "category": "Mice",
+      "description": "Experience unrivaled precision and control with the Razer DeathAdder Elite Gaming Mouse. This iconic gaming mouse features the world's most advanced optical sensor, ergonomic design, and customizable buttons for enhanced gaming performance.",
+      "image": "",
+      "new": false,
+      "onSale": false,
+      "price": 59.99,
+      "thumbnail": "",
+      "title": "Razer DeathAdder Elite Gaming Mouse"
+    },
+    "-M8bjAqzi": {
+      "category": "Headsets",
+      "description": "Immerse yourself in the virtual world with the SteelSeries Arctis Pro Wireless Gaming Headset. This high-fidelity headset delivers exceptional audio quality, comfortable fit, and lag-free wireless performance for a truly immersive gaming experience.",
+      "image": "",
+      "new": true,
+      "onSale": false,
+      "price": 299.99,
+      "thumbnail": "",
+      "title": "SteelSeries Arctis Pro Wireless Gaming Headset"
+    },
+    "-M8bjB9O9": {
+      "category": "Keyboards",
+      "description": "Unleash your lightning-fast reflexes with the Logitech G Pro Mechanical Gaming Keyboard. Featuring ultra-responsive Romer-G mechanical switches, customizable RGB lighting, and durable build quality, this keyboard is designed for professional gamers.",
+      "image": "",
+      "new": true,
+      "onSale": true,
+      "price": 129.99,
+      "thumbnail": "",
+      "title": "Logitech G Pro Mechanical Gaming Keyboard"
+    },
+    "-M8bjBTvj": {
+      "category": "Chairs",
+      "description": "Conquer the gaming realm with the Corsair T3 Rush Gaming Chair. This premium chair combines comfort and style with its breathable soft fabric, adjustable lumbar support, and ergonomic design, ensuring optimal performance during long gaming sessions.",
+      "image": "",
+      "new": true,
+      "onSale": false,
+      "price": 299.99,
+      "thumbnail": "",
+      "title": "Corsair T3 Rush Gaming Chair"
+    },
+    "-M8bjBgU6": {
+      "category": "Mice",
+      "description": "Strike fear into your opponents with the HyperX Pulsefire FPS Pro Gaming Mouse. Equipped with a high-precision Pixart sensor, ergonomic design, and customizable buttons, this mouse delivers exceptional accuracy and control for competitive gaming.",
+      "image": "",
+      "new": false,
+      "onSale": true,
+      "price": 49.99,
+      "thumbnail": "",
+      "title": "HyperX Pulsefire FPS Pro Gaming Mouse"
+    },
+    "-M8bjC-V8": {
+      "category": "Headsets",
+      "description": "Experience the power of sound with the Logitech G935 Wireless Gaming Headset. This feature-packed headset offers 7.1 surround sound, advanced Pro-G drivers, and customizable RGB lighting, immersing you in the game with stunning audio and comfort.",
+      "image": "",
+      "new": true,
+      "onSale": false,
+      "price": 149.99,
+      "thumbnail": "",
+      "title": "Logitech G935 Wireless Gaming Headset"
+    },
+    "-M8bjCGpI": {
+      "category": "Keyboards",
+      "description": "Accelerate your gaming performance with the Corsair K70 RGB Mechanical Gaming Keyboard. Featuring Cherry MX switches, per-key RGB lighting, and an aircraft-grade aluminum frame, this keyboard delivers precise and durable performance for competitive gaming.",
+      "image": "",
+      "new": false,
+      "onSale": true,
+      "price": 159.99,
+      "thumbnail": "",
+      "title": "Corsair K70 RGB Mechanical Gaming Keyboard"
+    },
+    "-M8bjCXhe": {
+      "category": "Chairs",
+      "description": "Conquer the gaming battlefield with the DXRacer Formula Series Gaming Chair. Designed for maximum comfort and support, this chair features adjustable armrests, lumbar support, and a high-density foam padding, allowing you to game in style and comfort.",
+      "image": "",
+      "new": true,
+      "onSale": true,
+      "price": 249.99,
+      "thumbnail": "",
+      "title": "DXRacer Formula Series Gaming Chair"
+    },
+    "-M8bjCm_N": {
+      "category": "Mice",
+      "description": "Dominate the night with the Razer Viper Ultimate Gaming Mouse. This wireless mouse features Razer's Hyperspeed technology for lag-free performance, a high-precision 20,000 DPI sensor, and lightweight design for effortless control and precision.",
+      "image": "",
+      "new": true,
+      "onSale": true,
+      "price": 149.99,
+      "thumbnail": "",
+      "title": "Razer Viper Ultimate Gaming Mouse"
+    },
+    "-M8bjD6vI": {
+      "category": "Headsets",
+      "description": "Immerse yourself in the gaming world with the HyperX Cloud Alpha S Gaming Headset. With its dual chamber drivers, adjustable bass sliders, and noise-canceling microphone, this headset delivers rich, immersive audio and crystal-clear communication.",
+      "image": "",
+      "new": false,
+      "onSale": false,
+      "price": 129.99,
+      "thumbnail": "",
+      "title": "HyperX Cloud Alpha S Gaming Headset"
+    }
+  }
+}

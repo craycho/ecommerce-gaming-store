@@ -101,22 +101,17 @@ const AutocompleteNav = () => {
         />
       )}
       filterOptions={(options, state) => {
-        let suggestions: string | string[] = "";
+        let suggestions: string[] = [];
         if (state.inputValue.length > 0) {
           suggestions = options.filter((productName: string) =>
             productName.toLowerCase().includes(state.inputValue.toLowerCase())
           );
-          console.log(suggestions);
-          if (suggestions?.length > 0) {
-            return suggestions;
-          }
+          // console.log(suggestions);
+          return suggestions;
         }
-        // If suggestion array is empty conditionally returns either nothing or an empty message
-        return state.inputValue.length > 0
-          ? [`No products named '${state.inputValue}'...`]
-          : [];
+        // If suggestion array is empty returns an empty array and displays nothing
+        return [];
       }}
-      /**@todo Fix error message in input on enter*/
       renderOption={(props, option, { inputValue }) => {
         const matches = match(option, inputValue, { insideWords: true });
         const parts = parse(option, matches);
@@ -145,7 +140,7 @@ const AutocompleteNav = () => {
         flex: 1,
         display: "flex",
         alignItems: "center",
-        // Vertical text align was off because default <input>'s height is different than parent
+        // Vertical text align was bad because default <input>'s height is different than parent
         "	.MuiAutocomplete-input": {
           height: "100%",
         },
