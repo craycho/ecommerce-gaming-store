@@ -1,30 +1,36 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface productInfo {
+interface ProductData {
   category: string;
   description: string;
-  id: string;
   image: string;
+  new: boolean;
+  onSale: boolean;
   price: number;
+  thumbnail: string;
   title: string;
 }
 
-const initialState: productInfo[] = [];
+interface Product {
+  id: string;
+  data: ProductData;
+}
+
+const initialState: Product[] = [];
 
 const productsSlice = createSlice({
-  name: "counter",
+  name: "products",
   initialState,
   reducers: {
-    addProduct(state: productInfo[], action: PayloadAction<productInfo>) {},
-    removeProduct(state: productInfo[], action: PayloadAction<productInfo>) {},
+    initProducts(state: Product[], action: PayloadAction<Product[]>) {
+      const newProducts = action.payload;
+      // state = newProducts;
+      return newProducts;
+    },
+    addProduct(state: Product[], action: PayloadAction<Product>) {},
+    removeProduct(state: Product[], action: PayloadAction<Product>) {},
   },
 });
 
-export const cartActions = productsSlice.actions;
+export const productsActions = productsSlice.actions;
 export default productsSlice.reducer;
-
-// <{
-//     name: string;
-//     initialState: { productsList: productsInfo[] };
-//     reducers: reducersType;
-//   }>

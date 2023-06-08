@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/index";
+
 // npm install -D @types/autosuggest-highlight
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
@@ -23,21 +26,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
-
-const productNames = [
-  "Razer DeathAdder",
-  "Corsair K70",
-  "Logitech G502",
-  "SteelSeries Arctis",
-  "HyperX Cloud",
-  "Astro A40",
-  "BenQ Zowie",
-  "Alienware AW3418DW",
-  "MSI GTX 1080",
-  "ASUS ROG Swift",
-];
-
-interface SearchProps {}
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -82,7 +70,10 @@ const Icons = styled(Box)(({ theme }) => ({
   gap: 25,
 }));
 
-const AutocompleteNav = () => {
+function AutocompleteNav() {
+  const products = useSelector((state: RootState) => state.products);
+  const productNames = products.map((product) => product.data.title);
+
   return (
     <Autocomplete
       id="products-search"
@@ -147,7 +138,7 @@ const AutocompleteNav = () => {
       }}
     />
   );
-};
+}
 
 function MainNavigation() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);

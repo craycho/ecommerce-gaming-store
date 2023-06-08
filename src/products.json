@@ -2,103 +2,289 @@
   "products": {
     "-M8bjAYhj": {
       "category": "Mice",
-      "description": "Experience unrivaled precision and control with the Razer DeathAdder Elite Gaming Mouse. This iconic gaming mouse features the world's most advanced optical sensor, ergonomic design, and customizable buttons for enhanced gaming performance.",
-      "image": "",
-      "new": false,
+      "description": "Unleash your gaming potential with the Razer DeathAdder V2 Gaming Mouse. Its high-precision sensor, ergonomic design, and customizable buttons provide the ultimate control for every gaming scenario.",
+      "image": "https://m.media-amazon.com/images/I/61doJ9AKCPL.jpg",
+      "imageAlt": "https://i.rtings.com/assets/products/ElJvpiyf/razer-deathadder-v2/design-large.jpg",
+      "new": true,
       "onSale": false,
       "price": 59.99,
       "thumbnail": "",
-      "title": "Razer DeathAdder Elite Gaming Mouse"
+      "title": "Razer DeathAdder V2 Gaming Mouse"
     },
-    "-M8bjAqzi": {
+    "-M8bjB0l3": {
       "category": "Headsets",
-      "description": "Immerse yourself in the virtual world with the SteelSeries Arctis Pro Wireless Gaming Headset. This high-fidelity headset delivers exceptional audio quality, comfortable fit, and lag-free wireless performance for a truly immersive gaming experience.",
-      "image": "",
-      "new": true,
-      "onSale": false,
-      "price": 299.99,
-      "thumbnail": "",
-      "title": "SteelSeries Arctis Pro Wireless Gaming Headset"
-    },
-    "-M8bjB9O9": {
-      "category": "Keyboards",
-      "description": "Unleash your lightning-fast reflexes with the Logitech G Pro Mechanical Gaming Keyboard. Featuring ultra-responsive Romer-G mechanical switches, customizable RGB lighting, and durable build quality, this keyboard is designed for professional gamers.",
-      "image": "",
-      "new": true,
+      "description": "Immerse yourself in the virtual world with the Steelseries Arctis Pro Wireless Gaming Headset. Its immersive sound, comfortable fit, and noise-canceling microphone deliver an unparalleled gaming experience.",
+      "image": "https://m.media-amazon.com/images/I/81jCqC-ddRL.jpg",
+      "imageAlt": "https://cdn.mos.cms.futurecdn.net/LF7ijsgQ684Qhp7M3VSeoV.jpg",
+      "new": false,
       "onSale": true,
       "price": 129.99,
       "thumbnail": "",
-      "title": "Logitech G Pro Mechanical Gaming Keyboard"
+      "title": "Steelseries Arctis Pro Wireless Gaming Headset"
     },
-    "-M8bjBTvj": {
+    "-M8bjBfRk": {
+      "category": "Keyboards",
+      "description": "Unleash your lightning-fast reflexes with the Corsair K70 RGB Mechanical Gaming Keyboard. Its responsive keys, customizable macros, and sleek design make it the perfect weapon for gaming domination.",
+      "image": "https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc3/CH_9109014_NA_Gallery_K70_RGB_MK2_06_4.png",
+      "imageAlt": "https://www.cravingtech.com/blog/wp-content/uploads/2022/05/CORSAIR-K70-RGB-TKL-2.jpg",
+      "new": true,
+      "onSale": false,
+      "price": 89.99,
+      "thumbnail": "",
+      "title": "Corsair K70 RGB Mechanical Gaming Keyboard"
+    },
+    "-M8bjBv9i": {
       "category": "Chairs",
-      "description": "Conquer the gaming realm with the Corsair T3 Rush Gaming Chair. This premium chair combines comfort and style with its breathable soft fabric, adjustable lumbar support, and ergonomic design, ensuring optimal performance during long gaming sessions.",
-      "image": "",
+      "description": "Conquer the gaming realm with the AKRacing Masters Series Pro Gaming Chair. With its sturdy construction, ergonomic design, and adjustable features, it offers unparalleled comfort and support.",
+      "image": "https://m.media-amazon.com/images/I/71zaL2gGlJL.jpg",
+      "imageAlt": "https://m.media-amazon.com/images/I/61OpPZ2isHL._AC_SL1500_.jpg",
+      "new": false,
+      "onSale": false,
+      "price": 249.99,
+      "thumbnail": "",
+      "title": "AKRacing Masters Series Pro Gaming Chair"
+    },
+    "-M8bjBmF2": {
+      "category": "Mice",
+      "description": "Strike fear into your opponents with the Logitech G Pro Wireless Gaming Mouse. Its high-precision sensor, customizable buttons, and ergonomic design empower you to dominate the battlefield.",
+      "image": "https://resource.logitech.com/content/dam/gaming/en/products/pro-wireless-gaming-mouse/pro-wireless-carbon-gallery-1.png",
+      "imageAlt": "https://i.rtings.com/assets/products/ZZ9SdscN/logitech-g-pro-wireless/design-large.jpg",
+      "new": false,
+      "onSale": true,
+      "price": 54.99,
+      "thumbnail": "",
+      "title": "Logitech G Pro Wireless Gaming Mouse"
+    },
+    "-M8bjCxRf": {
+      "category": "Headsets",
+      "description": "Experience the power of sound with the HyperX Cloud Alpha Gaming Headset. Its immersive audio, comfortable fit, and noise-canceling microphone elevate your gaming experience to new heights.",
+      "image": "https://m.media-amazon.com/images/I/61i+QbshAFL.jpg",
+      "imageAlt": "https://assets1.ignimgs.com/2020/02/19/photo-nov-11-2-11-48-pm-1582073024291_160w.jpg?width=1280",
+      "new": false,
+      "onSale": false,
+      "price": 139.99,
+      "thumbnail": "",
+      "title": "HyperX Cloud Alpha Gaming Headset"
+    },
+    "-M8bjD12S": {
+      "category": "Keyboards",
+      "description": "Accelerate your gaming performance with the Razer Huntsman Elite Mechanical Gaming Keyboard. Its responsive keys, customizable lighting effects, and durable build make it the perfect weapon of choice.",
+      "image": "https://media.ldlc.com/r1600/ld/products/00/05/83/06/LD0005830624_1.jpg",
+      "imageAlt": "https://thegamingsetup.com/wp-content/uploads/huntsman-box.jpg",
+      "new": false,
+      "onSale": true,
+      "price": 79.99,
+      "thumbnail": "",
+      "title": "Razer Huntsman Elite Mechanical Gaming Keyboard"
+    },
+    "-M8bjCYmb": {
+      "category": "Chairs",
+      "description": "Elevate your gaming experience with the DXRacer Formula Series Gaming Chair. With its ergonomic design, adjustable features, and premium build quality, it offers unmatched comfort and style.",
+      "image": "https://m.media-amazon.com/images/I/61GgaVkY5vL._AC_UF894,1000_QL80_.jpg",
+      "imageAlt": "https://sc04.alicdn.com/kf/Hc64913b1b5e74d3e97d342df232269322.jpg",
+      "new": true,
+      "onSale": false,
+      "price": 199.99,
+      "thumbnail": "",
+      "title": "DXRacer Formula Series Gaming Chair"
+    },
+    "-M8bjCko1": {
+      "category": "Mice",
+      "description": "Unleash your gaming potential with the Logitech G502 HERO Gaming Mouse. Its advanced sensor, customizable weights, and programmable buttons give you the edge in any game.",
+      "image": "https://resource.logitech.com/content/dam/gaming/en/non-braid/hyjal-g502-hero/g502-hero-gallery-1-nb.png",
+      "imageAlt": "https://static.gamesmen.com.au/media/catalog/product/cache/43c1b9e48526c06c9c8010675100b71d/l/o/logitech_g502_hero_high_performance_gaming_mouse_1_.jpg",
+      "new": true,
+      "onSale": true,
+      "price": 69.99,
+      "thumbnail": "",
+      "title": "Logitech G502 HERO Gaming Mouse"
+    },
+    "-M8bjD5PI": {
+      "category": "Headsets",
+      "description": "Experience unparalleled audio quality with the Astro A50 Wireless Gaming Headset. Its Dolby 7.1 Surround Sound, long-lasting battery life, and comfortable fit make it a must-have for gamers.",
+      "image": "https://resource.astrogaming.com/w_1800,h_1800,c_limit,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/astro/en/products/a50-headset-with-base-station-gen4/a50-gallery-xbox-01.png?v=1",
+      "imageAlt": "https://m.media-amazon.com/images/I/613w3jwGYHS.jpg",
       "new": true,
       "onSale": false,
       "price": 299.99,
       "thumbnail": "",
-      "title": "Corsair T3 Rush Gaming Chair"
+      "title": "Astro A50 Wireless Gaming Headset"
     },
-    "-M8bjBgU6": {
+    "-M8bjDZK9": {
+      "category": "Keyboards",
+      "description": "Take your gaming to the next level with the Corsair K95 RGB Platinum Mechanical Gaming Keyboard. Its Cherry MX Speed switches, customizable macros, and dynamic RGB lighting deliver exceptional performance and style.",
+      "image": "https://static3.webx.pk/files/821/Images/52883d2c-827a-546a-415d-cdb645f23990-821-238640-100419042301.jpg",
+      "imageAlt": "https://i.pcmag.com/imagery/reviews/07vjkhMyPEwY0l5cKyGvdqa-6..v1579215789.jpg",
+      "new": false,
+      "onSale": false,
+      "price": 179.99,
+      "thumbnail": "",
+      "title": "Corsair K95 RGB Platinum Mechanical Gaming Keyboard"
+    },
+    "-M8bjE5jM": {
+      "category": "Chairs",
+      "description": "Immerse yourself in comfort with the Secretlab Titan Series Gaming Chair. Its ergonomic design, adjustable features, and premium materials provide optimal support during long gaming sessions.",
+      "image": "https://cdn.shopify.com/s/files/1/2360/6457/files/turntable_2020_TT_pu_black_2-min.jpg?v=5211534989001937348",
+      "imageAlt": "https://cdn.shopify.com/s/files/1/1640/2231/files/gallery_2020_TT-13-min.jpg?v=2956683244026223199",
+      "new": false,
+      "onSale": true,
+      "price": 399.99,
+      "thumbnail": "",
+      "title": "Secretlab Titan Series Gaming Chair"
+    },
+    "-M8bjERtn": {
       "category": "Mice",
-      "description": "Strike fear into your opponents with the HyperX Pulsefire FPS Pro Gaming Mouse. Equipped with a high-precision Pixart sensor, ergonomic design, and customizable buttons, this mouse delivers exceptional accuracy and control for competitive gaming.",
-      "image": "",
+      "description": "Dominate the competition with the Corsair Scimitar RGB Elite Gaming Mouse. Its 18,000 DPI optical sensor, customizable side buttons, and onboard storage ensure precision and versatility in every game.",
+      "image": "https://m.media-amazon.com/images/I/614J0VriTRL.jpg",
+      "imageAlt": "https://cdn.mos.cms.futurecdn.net/NxaAgnGpYKtDHYGUGaoumJ.jpg",
+      "new": true,
+      "onSale": false,
+      "price": 79.99,
+      "thumbnail": "",
+      "title": "Corsair Scimitar RGB Elite Gaming Mouse"
+    },
+    "-M8bjF2Wp": {
+      "category": "Headsets",
+      "description": "Enter the realm of immersive gaming with the Razer Kraken Ultimate Gaming Headset. Its THX Spatial Audio, active noise cancellation, and cooling gel-infused ear cushions provide a truly captivating experience.",
+      "image": "https://i.pcmag.com/imagery/reviews/03eFeXezjEClJsxXKBDwwSp-5..v1582837449.jpg",
+      "imageAlt": "https://www.soundguys.com/wp-content/uploads/2021/03/Razer-Kraken-Ultimate-feature-shot-e1644512685887.jpeg",
+      "new": false,
+      "onSale": true,
+      "price": 129.99,
+      "thumbnail": "",
+      "title": "Razer Kraken Ultimate Gaming Headset"
+    },
+    "-M8bjFG36": {
+      "category": "Keyboards",
+      "description": "Elevate your gaming setup with the Steelseries Apex Pro Mechanical Gaming Keyboard. Its adjustable actuation switches, OLED smart display, and aluminum frame make it a true game-changer.",
+      "image": "https://m.media-amazon.com/images/I/81yOuAUQAiL.jpg",
+      "imageAlt": "https://editors.dexerto.com/wp-content/uploads/2022/07/08/SteelSeries-Apex-Pro-review-header.jpg",
+      "new": true,
+      "onSale": true,
+      "price": 199.99,
+      "thumbnail": "",
+      "title": "Steelseries Apex Pro Mechanical Gaming Keyboard"
+    },
+    "-M8bjFzGT": {
+      "category": "Chairs",
+      "description": "Experience ultimate comfort with the Noblechairs Hero Series Gaming Chair. Its premium materials, ergonomic design, and lumbar support ensure optimal posture and relaxation during intense gaming sessions.",
+      "image": "https://img.noblechairs.com/gallery/HERO-PU-Black/noblechairs-HERO-PU-Black_Picture_01.jpg",
+      "imageAlt": "https://cdn.mos.cms.futurecdn.net/cvdvQgoU5EiaNiN9XQmxRP-1200-80.jpg",
+      "new": true,
+      "onSale": true,
+      "price": 349.99,
+      "thumbnail": "",
+      "title": "Noblechairs Hero Series Gaming Chair"
+    },
+    "-M8bjD4y5": {
+      "category": "Monitors",
+      "description": "Experience stunning visuals with the ASUS ROG Swift PG27UQ Gaming Monitor. Its 4K UHD resolution, HDR support, and fast refresh rate deliver smooth and immersive gaming performance.",
+      "image": "https://www.tradeinn.com/f/13736/137367867/asus-rog-swift-pg27uq-27-4k-uhd-direct-led-monitor.jpg",
+      "imageAlt": "https://assets.rockpapershotgun.com/images/2018/06/Asus-ROG-Swift-PG27UQ-angle.jpg",
+      "new": true,
+      "onSale": false,
+      "price": 1299.99,
+      "thumbnail": "",
+      "title": "ASUS ROG Swift PG27UQ Gaming Monitor"
+    },
+    "-M8bjDJDv": {
+      "category": "Mousepads",
+      "description": "Maximize your mouse precision with the Steelseries QcK+ Gaming Mousepad. Its smooth surface, anti-slip rubber base, and large size provide the ideal foundation for accurate and fluid mouse movements.",
+      "image": "https://www.pbtech.co.nz/imgprod/P/A/PADSTP63003__3.jpg",
+      "imageAlt": "https://media.steelseriescdn.com/thumbs/filer_public/0e/b8/0eb8e3ff-a864-4113-820e-b2f52d9601a0/1200x_buy_qck_l_01.jpg__1920x1080_q100_crop-fit_optimize_subsampling-2.jpg",
+      "new": true,
+      "onSale": false,
+      "price": 19.99,
+      "thumbnail": "",
+      "title": "Steelseries QcK+ Gaming Mousepad"
+    },
+    "-M8bjDYYs": {
+      "category": "Monitors",
+      "description": "Immerse yourself in the action with the LG 34GN850-B Ultrawide Gaming Monitor. Its curved display, high refresh rate, and QHD resolution deliver a truly captivating and immersive gaming experience.",
+      "image": "https://www.lg.com/us/images/monitors/md07501107/gallery/D1.jpg",
+      "imageAlt": "https://www.techspot.com/articles-info/2071/images/S-6.jpg",
+      "new": false,
+      "onSale": false,
+      "price": 999.99,
+      "thumbnail": "",
+      "title": "LG 34GN850-B Ultrawide Gaming Monitor"
+    },
+    "-M8bjDnLt": {
+      "category": "Mousepads",
+      "description": "Take your gaming to the next level with the Corsair MM800 RGB Polaris Gaming Mousepad. Its customizable RGB lighting, smooth surface, and precise tracking enhance your gaming performance.",
+      "image": "https://media.ldlc.com/r1600/ld/products/00/03/82/73/LD0003827307_2.jpg",
+      "imageAlt": "https://thinkcomputers.org/wp-content/uploads/2017/12/corsair-mm800-rgb-15.jpg",
       "new": false,
       "onSale": true,
       "price": 49.99,
       "thumbnail": "",
-      "title": "HyperX Pulsefire FPS Pro Gaming Mouse"
+      "title": "Corsair MM800 RGB Polaris Gaming Mousepad"
     },
-    "-M8bjC-V8": {
-      "category": "Headsets",
-      "description": "Experience the power of sound with the Logitech G935 Wireless Gaming Headset. This feature-packed headset offers 7.1 surround sound, advanced Pro-G drivers, and customizable RGB lighting, immersing you in the game with stunning audio and comfort.",
-      "image": "",
+    "-M8bjE3Qo": {
+      "category": "Monitors",
+      "description": "Unleash your competitive edge with the BenQ XL2546K Gaming Monitor. Its lightning-fast refresh rate, low response time, and customizable features give you the edge you need to dominate the competition.",
+      "image": "https://gamesmea.com/wp-content/uploads/2021/07/xl2546k-5.jpg",
+      "imageAlt": "https://i.rtings.com/assets/products/6LGE0Gi5/benq-zowie-xl2546k/design-medium.jpg",
       "new": true,
       "onSale": false,
-      "price": 149.99,
+      "price": 499.99,
       "thumbnail": "",
-      "title": "Logitech G935 Wireless Gaming Headset"
+      "title": "BenQ XL2546K Gaming Monitor"
     },
-    "-M8bjCGpI": {
-      "category": "Keyboards",
-      "description": "Accelerate your gaming performance with the Corsair K70 RGB Mechanical Gaming Keyboard. Featuring Cherry MX switches, per-key RGB lighting, and an aircraft-grade aluminum frame, this keyboard delivers precise and durable performance for competitive gaming.",
-      "image": "",
+    "-M8bjEHMT": {
+      "category": "Mousepads",
+      "description": "Enhance your gaming precision with the HyperX Fury S Pro Gaming Mousepad. Its durable fabric surface, anti-slip rubber base, and XL size provide the perfect balance of speed and control.",
+      "image": "https://row.hyperx.com/cdn/shop/products/hyperx_fury_s_gaming_mouse_pad_speed_edition_cloth_m_3_folded.jpg?v=1662421090",
+      "imageAlt": "https://cdn.mos.cms.futurecdn.net/9SxjStMxiWRy9Djpg9DGoQ-1200-80.jpg",
       "new": false,
       "onSale": true,
-      "price": 159.99,
+      "price": 24.99,
       "thumbnail": "",
-      "title": "Corsair K70 RGB Mechanical Gaming Keyboard"
+      "title": "HyperX Fury S Pro Gaming Mousepad"
     },
-    "-M8bjCXhe": {
-      "category": "Chairs",
-      "description": "Conquer the gaming battlefield with the DXRacer Formula Series Gaming Chair. Designed for maximum comfort and support, this chair features adjustable armrests, lumbar support, and a high-density foam padding, allowing you to game in style and comfort.",
-      "image": "",
-      "new": true,
-      "onSale": true,
-      "price": 249.99,
-      "thumbnail": "",
-      "title": "DXRacer Formula Series Gaming Chair"
-    },
-    "-M8bjCm_N": {
-      "category": "Mice",
-      "description": "Dominate the night with the Razer Viper Ultimate Gaming Mouse. This wireless mouse features Razer's Hyperspeed technology for lag-free performance, a high-precision 20,000 DPI sensor, and lightweight design for effortless control and precision.",
-      "image": "",
-      "new": true,
-      "onSale": true,
-      "price": 149.99,
-      "thumbnail": "",
-      "title": "Razer Viper Ultimate Gaming Mouse"
-    },
-    "-M8bjD6vI": {
-      "category": "Headsets",
-      "description": "Immerse yourself in the gaming world with the HyperX Cloud Alpha S Gaming Headset. With its dual chamber drivers, adjustable bass sliders, and noise-canceling microphone, this headset delivers rich, immersive audio and crystal-clear communication.",
-      "image": "",
+    "-M8bjEXzW": {
+      "category": "Monitors",
+      "description": "Immerse yourself in lifelike visuals with the MSI Optix MAG321CQR Curved Gaming Monitor. Its QHD resolution, curved display, and vibrant colors bring your games to life with stunning realism.",
+      "image": "https://www.bhphotovideo.com/images/images1000x1000/msi_32_optix_mag321cqr_curved_1472054.jpg",
+      "imageAlt": "https://gadgetpilipinas.net/wp-content/uploads/2019/06/optix-5.jpg",
       "new": false,
       "onSale": false,
-      "price": 129.99,
+      "price": 399.99,
       "thumbnail": "",
-      "title": "HyperX Cloud Alpha S Gaming Headset"
+      "title": "MSI Optix MAG321CQR Curved Gaming Monitor"
+    },
+    "-M8bjFND5": {
+      "category": "Mousepads",
+      "description": "Optimize your gaming precision with the Razer Goliathus Extended Chroma Gaming Mousepad. Its customizable RGB lighting, smooth micro-textured surface, and ample size elevate your gaming performance.",
+      "image": "https://m.media-amazon.com/images/I/71IkIdjHuRL.jpg",
+      "imageAlt": "https://serving.photos.photobox.com/51241456e712afd1bf1bd02bf9647a734db2cc4e5ff011c0c193e9aba721865000f29890.jpg",
+      "new": false,
+      "onSale": false,
+      "price": 79.99,
+      "thumbnail": "",
+      "title": "Razer Goliathus Extended Chroma Gaming Mousepad"
+    },
+    "-M8bjFbtm": {
+      "category": "Monitors",
+      "description": "Immerse yourself in the world of gaming with the AOC CQ32G1 Curved Gaming Monitor. Its QHD resolution, curved display, and fast refresh rate provide a captivating and fluid gaming experience.",
+      "image": "https://www.laptopsdirect.ie/Images/CQ32G1_6_Supersize.jpg?v=7",
+      "imageAlt": "https://i.rtings.com/assets/products/n3ND8Qmf/aoc-cq32g1/design-medium.jpg",
+      "new": true,
+      "onSale": false,
+      "price": 349.99,
+      "thumbnail": "",
+      "title": "AOC CQ32G1 Curved Gaming Monitor"
+    },
+    "-M8bjFsFE": {
+      "category": "Mousepads",
+      "description": "Experience precise control with the Corsair MM300 Extended Gaming Mousepad. Its textile-weave surface, anti-fray stitching, and generous size ensure accurate and comfortable mouse movements.",
+      "image": "https://media.ldlc.com/r1600/ld/products/00/05/73/41/LD0005734179_1.jpg",
+      "imageAlt": "https://i.pinimg.com/originals/69/32/8b/69328b1ca9ac2a1041bb67ecb70bb360.jpg",
+      "new": false,
+      "onSale": true,
+      "price": 29.99,
+      "thumbnail": "",
+      "title": "Corsair MM300 Extended Gaming Mousepad"
     }
   }
 }
