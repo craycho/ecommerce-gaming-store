@@ -6,7 +6,7 @@ import "./index.css";
 import App from "./App";
 import store from "./store/index";
 
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "./components/UI/theme";
 
 const root = ReactDOM.createRoot(
@@ -16,6 +16,7 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
+        <CssBaseline />
         <App />
       </Provider>
     </ThemeProvider>

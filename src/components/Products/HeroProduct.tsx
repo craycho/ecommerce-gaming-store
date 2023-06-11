@@ -35,13 +35,15 @@ interface ProductProps {
   randomProduct: Product;
 }
 
+/**@todo Non-random hero products with special promo text */
+
 function HeroStack({ randomProduct }: ProductProps) {
   return (
     <Box
+      position="relative"
       sx={{
         width: "100%",
         height: 500,
-        display: "relative",
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55)), url('${randomProduct.data.image}')`,
         backgroundSize: "contain",
         backgroundPosition: "center center",
@@ -52,10 +54,10 @@ function HeroStack({ randomProduct }: ProductProps) {
       <div
         style={{
           position: "absolute",
-          bottom: 120,
+          bottom: 30,
           marginLeft: 25,
           marginRight: 25,
-          width: "25%",
+          width: "90%",
         }}
       >
         <Typography variant="subtitle1" fontWeight={700} color="white">
@@ -70,7 +72,7 @@ function HeroStack({ randomProduct }: ProductProps) {
           sx={{
             backgroundColor: "orangered",
             marginTop: 1,
-            padding: "8px 15px",
+            padding: "8px 18px",
           }}
         >
           Buy now

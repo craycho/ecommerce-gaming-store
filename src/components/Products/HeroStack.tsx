@@ -37,28 +37,29 @@ interface HeroProps {
   products: Product[];
 }
 
-const ProductBox = styled(Box)({
-  width: "100%",
-  display: "relative",
-  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url()`,
-});
-
 function HeroStack({ products }: HeroProps) {
   const [randomProducts, setRandomProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     if (products.length > 0) {
-      const randomProducts: Product[] = getRandomProducts(products, 3);
+      const randomProducts: Product[] = getRandomProducts(
+        products,
+        3,
+        false,
+        false
+      );
       setRandomProducts(randomProducts);
     }
   }, [products]);
 
   return (
-    <Stack direction="row" gap={2} justifyContent="center">
-      {randomProducts.map((product: Product) => (
-        <HeroProduct randomProduct={product} />
-      ))}
-    </Stack>
+    <Box sx={{ width: "85%" }} margin="30px auto">
+      <Stack direction="row" gap={1.5} justifyContent="center">
+        {randomProducts.map((product: Product) => (
+          <HeroProduct randomProduct={product} key={product.id} />
+        ))}
+      </Stack>
+    </Box>
   );
 
   /* return (

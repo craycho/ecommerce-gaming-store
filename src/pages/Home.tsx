@@ -5,7 +5,7 @@ import { RootState } from "../store/index";
 
 import ProductStack from "../components/Products/ProductStack";
 import HeroProduct from "../components/Products/HeroStack";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import HeroStack from "../components/Products/HeroStack";
 
 interface ProductData {
@@ -53,11 +53,19 @@ function Home() {
 
   return (
     <>
-      <Box sx={{ width: "90%" }} margin="30px auto">
-        <HeroStack products={products} />
-      </Box>
-
-      <ProductStack />
+      <HeroStack products={products} />
+      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
+        You might be interested in:
+      </Typography>
+      <ProductStack type="random" />
+      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
+        Currently on sale:
+      </Typography>
+      <ProductStack type="onSale" />
+      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
+        New arrivals:
+      </Typography>
+      <ProductStack type="new" />
     </>
   );
 }

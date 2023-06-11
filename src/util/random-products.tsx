@@ -16,7 +16,9 @@ interface Product {
 
 const getRandomProducts = (
   products: Product[],
-  amount: number = 1
+  amount: number = 1,
+  isNew: boolean,
+  onSale: boolean
 ): Product[] => {
   const randomProducts: Product[] = [];
 
@@ -27,6 +29,15 @@ const getRandomProducts = (
     if (randomProducts.includes(randomProduct)) {
       continue;
     }
+
+    if (onSale && !randomProduct.data.onSale) {
+      continue;
+    }
+
+    if (isNew && !randomProduct.data.new) {
+      continue;
+    }
+
     randomProducts.push(randomProduct);
   }
 
