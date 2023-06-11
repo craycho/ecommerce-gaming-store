@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { productsActions } from "../store/products-slice";
 import { RootState } from "../store/index";
 
-import ProductCard from "../components/Products/ProductCard";
-import randomProductStack from "../util/random-stack";
 import ProductStack from "../components/Products/ProductStack";
+import HeroProduct from "../components/Products/HeroStack";
+import { Box, Stack } from "@mui/material";
+import HeroStack from "../components/Products/HeroStack";
 
 interface ProductData {
   category: string;
@@ -22,32 +23,12 @@ interface Product {
   id: string;
   data: ProductData;
 }
-/* 
-const fourRandomProducts = (products: Product[]): Product[] => {
-  const randomProducts: Product[] = [];
-
-  while (randomProducts.length < 4) {
-    const randomIndex = Math.floor(Math.random() * products.length);
-    const randomProduct = products[randomIndex];
-
-    if (randomProducts.includes(randomProduct)) {
-      continue;
-    }
-    randomProducts.push(randomProduct);
-  }
-
-  return randomProducts;
-}; */
 
 let isInitial: boolean = true;
 
 function Home() {
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products);
-
-  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
-  const randomProduct = products[Math.floor(Math.random() * products.length)];
-  // console.log(randomProduct?.data.title);
 
   useEffect(() => {
     if (isInitial) {
@@ -70,19 +51,13 @@ function Home() {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    if (products.length > 0) {
-      const randomProducts: Product[] = randomProductStack(products);
-      setRandomProducts(randomProducts);
-    }
-  }, [products]);
-
-  console.log(randomProducts);
-
   return (
     <>
-      <h1>Home page</h1>
-      {randomProducts && <ProductStack randomProducts={randomProducts} />}
+      <Box sx={{ width: "90%" }} margin="30px auto">
+        <HeroStack products={products} />
+      </Box>
+
+      <ProductStack />
     </>
   );
 }

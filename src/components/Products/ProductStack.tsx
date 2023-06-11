@@ -1,4 +1,9 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/index";
 import ProductCard from "./ProductCard";
+
+import getRandomProducts from "../../util/random-products";
 
 import { Box, Stack, Typography } from "@mui/material";
 
@@ -18,11 +23,19 @@ interface Product {
   data: ProductData;
 }
 
-interface StackProps {
-  randomProducts: Product[];
-}
+function ProductStack() {
+  const dispatch = useDispatch();
+  const products = useSelector((state: RootState) => state.products);
 
-function ProductStack({ randomProducts }: StackProps) {
+  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    if (products.length > 0) {
+      const randomProducts: Product[] = getRandomProducts(products, 5);
+      setRandomProducts(randomProducts);
+    }
+  }, [products]);
+
   return (
     <Box sx={{ width: "95%", margin: "0 auto" }}>
       <Typography variant="h6" mb={2}>

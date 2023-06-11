@@ -14,10 +14,13 @@ interface Product {
   data: ProductData;
 }
 
-const randomProductStack = (products: Product[]): Product[] => {
+const getRandomProducts = (
+  products: Product[],
+  amount: number = 1
+): Product[] => {
   const randomProducts: Product[] = [];
 
-  while (randomProducts.length < 5) {
+  while (randomProducts.length < amount) {
     const randomIndex = Math.floor(Math.random() * products.length);
     const randomProduct = products[randomIndex];
 
@@ -30,4 +33,4 @@ const randomProductStack = (products: Product[]): Product[] => {
   return randomProducts;
 };
 
-export default randomProductStack;
+export default getRandomProducts;
