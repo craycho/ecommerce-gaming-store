@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/index";
+import { RootState } from "../../store/index";
 
 // npm install -D @types/autosuggest-highlight
 import parse from "autosuggest-highlight/parse";

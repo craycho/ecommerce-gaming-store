@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import MainNavigation from "../MainNav";
+import MainNavigation from "./MainNav";
 
 function RootLayout() {
   // const navigation = useNavigation();

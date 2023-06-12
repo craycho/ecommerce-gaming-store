@@ -63,7 +63,7 @@ function ProductStack({ type }: StackProps) {
   }, [products]);
 
   return (
-    <Box sx={{ width: "90%", margin: "50px auto" }}>
+    <Box sx={{ width: "90%", margin: "0 auto 40px auto" }}>
       <Stack direction="row" spacing={1} justifyContent="space-evenly">
         {displayedProducts.map((product) => (
           <ProductCard

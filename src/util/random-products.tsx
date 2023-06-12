@@ -29,11 +29,9 @@ const getRandomProducts = (
     if (randomProducts.includes(randomProduct)) {
       continue;
     }
-
     if (onSale && !randomProduct.data.onSale) {
       continue;
     }
-
     if (isNew && !randomProduct.data.new) {
       continue;
     }

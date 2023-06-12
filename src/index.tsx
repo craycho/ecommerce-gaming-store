@@ -7,7 +7,7 @@ import App from "./App";
 import store from "./store/index";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { theme } from "./components/UI/theme";
+import { theme } from "./UI/theme";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

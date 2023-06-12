@@ -4,9 +4,12 @@ import { productsActions } from "../store/products-slice";
 import { RootState } from "../store/index";
 
 import ProductStack from "../components/Products/ProductStack";
-import HeroProduct from "../components/Products/HeroStack";
-import { Box, Stack, Typography } from "@mui/material";
 import HeroStack from "../components/Products/HeroStack";
+import NextGenDescription from "../components/Layout/Description";
+import Newsletter from "../components/Layout/Newsletter";
+import Footer from "../components/Layout/Footer";
+
+import { Box, Stack, Typography } from "@mui/material";
 
 interface ProductData {
   category: string;
@@ -54,18 +57,30 @@ function Home() {
   return (
     <>
       <HeroStack products={products} />
-      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
+      <Typography variant="h5" mb={4} align="center" fontWeight={700}>
         You might be interested in:
       </Typography>
       <ProductStack type="random" />
-      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
+      <Typography variant="h5" mb={4} align="center" fontWeight={700}>
         Currently on sale:
       </Typography>
       <ProductStack type="onSale" />
-      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
+      <Typography variant="h5" mb={4} align="center" fontWeight={700}>
         New arrivals:
       </Typography>
       <ProductStack type="new" />
+      <Box
+        sx={{
+          backgroundColor: "#f4f5f7",
+          padding: "40px 0",
+          border: "1px lightgrey solid",
+          marginBottom: 8,
+        }}
+      >
+        <NextGenDescription />
+      </Box>
+      <Newsletter />
+      <Footer />
     </>
   );
 }

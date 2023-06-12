@@ -4,10 +4,12 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  styled,
   Typography,
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import FiberNewIcon from "@mui/icons-material/FiberNew";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 interface CardProps {
   id: string;
@@ -19,6 +21,27 @@ interface CardProps {
   onSale: boolean;
   img: string;
 }
+
+const NewIcon = styled(FiberNewIcon)({
+  position: "absolute",
+  top: 5,
+  right: 5,
+  fontSize: 35,
+  color: "orangered",
+  transform: "rotate(20deg)",
+});
+
+const WishlistIcon = styled(FavoriteIcon)({
+  position: "absolute",
+  top: 5,
+  left: 5,
+  fontSize: 25,
+  color: "lightgrey",
+  "&:hover": {
+    cursor: "pointer",
+    color: "red",
+  },
+});
 
 function ProductCard({
   id,
@@ -34,13 +57,15 @@ function ProductCard({
   const onSalePrice = onSale ? (price - saleAmount).toFixed(2) : price;
 
   return (
-    <Card sx={{ maxWidth: 320 }}>
+    <Card sx={{ position: "relative", maxWidth: 320 }}>
       <CardMedia
         component="img"
         image={img}
         title={title}
         sx={{ height: 200, objectFit: "contain" }}
       />
+      <WishlistIcon />
+      {isNew && <NewIcon />}
       <CardContent sx={{ height: 130 }}>
         <Typography variant="caption" fontWeight={700}>
           {category}
@@ -66,7 +91,6 @@ function ProductCard({
           </Box>
           <Box display="flex" alignItems="center" justifyContent="flex-end">
             <CheckCircleOutlineIcon />
-            {isNew && <FiberNewIcon />}
             <Typography variant="caption" ml={0.4}>
               In stock
             </Typography>
