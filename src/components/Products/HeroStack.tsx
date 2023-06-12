@@ -38,8 +38,7 @@ interface HeroProps {
 }
 
 function HeroStack({ products }: HeroProps) {
-  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
-
+  /* const [randomProducts, setRandomProducts] = useState<Product[]>([]);
   useEffect(() => {
     if (products.length > 0) {
       const randomProducts: Product[] = getRandomProducts(
@@ -50,94 +49,42 @@ function HeroStack({ products }: HeroProps) {
       );
       setRandomProducts(randomProducts);
     }
-  }, [products]);
+  }, [products]); 
+  
+  {randomProducts.map((product: Product) => ())}
+  */
+
+  const steelseriesArctis = products.find((product) =>
+    product.data.title.includes("Steelseries Arctis")
+  );
+  const noblechairsHero = products.find((product) =>
+    product.data.title.includes("Noblechairs Hero")
+  );
+  const corsairK95 = products.find((product) =>
+    product.data.title.includes("Corsair K95")
+  );
 
   return (
     <Box sx={{ width: "85%" }} margin="30px auto">
       <Stack direction="row" gap={1.5} justifyContent="center">
-        {randomProducts.map((product: Product) => (
-          <HeroProduct randomProduct={product} key={product.id} />
-        ))}
+        <HeroProduct
+          key={steelseriesArctis?.id}
+          product={steelseriesArctis}
+          promo="On sale!"
+        />
+        <HeroProduct
+          key={noblechairsHero?.id}
+          product={noblechairsHero}
+          promo="New in stock!"
+        />
+        <HeroProduct
+          key={corsairK95?.id}
+          product={corsairK95}
+          promo="A legendary classic!"
+        />
       </Stack>
     </Box>
   );
-
-  /* return (
-    <Box
-      sx={{
-        width: "100%",
-        height: 500,
-        display: "relative",
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55)), url('${randomProducts[0]?.data.image}')`,
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
-        borderRadius: 1,
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          bottom: 120,
-          marginLeft: 25,
-          marginRight: 25,
-          width: "25%",
-        }}
-      >
-        <Typography variant="subtitle1" fontWeight={700} color="white">
-          {randomProducts[0]?.data.category}
-        </Typography>
-        <Typography gutterBottom variant="h6" fontWeight={700} color="white">
-          {randomProducts[0]?.data.title}
-        </Typography>
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: "orangered", marginTop: 1 }}
-        >
-          Buy now
-        </Button>
-      </div>
-    </Box>
-  ); */
 }
 
 export default HeroStack;
-
-/* 
-background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
- */
-
-// boxShadow: "0 0 30px 30px black inset"
-
-/* <Box sx={{ width: "100%", display: "relative" }}>
-      <Card
-        sx={{
-          width: "100%",
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('${randomProducts[0]?.data.image}'))`,
-        }}
-      >
-        {randomProducts && (
-          <CardMedia
-            component="img"
-            image={randomProducts[0]?.data.image}
-            title={randomProducts[0]?.data.title}
-            sx={{ height: 400, objectFit: "contain" }}
-          />
-        )}
-        <CardContent sx={{ height: 0 }}>
-          <div style={{ position: "absolute", bottom: 250 }}>
-            <Typography variant="subtitle1" fontWeight={700} color="white">
-              {randomProducts[0]?.data.category}
-            </Typography>
-            <Typography
-              gutterBottom
-              variant="h6"
-              fontWeight={700}
-              color="white"
-            >
-              {randomProducts[0]?.data.title}
-            </Typography>
-          </div>
-        </CardContent>
-        <CardActions></CardActions>
-      </Card>
-    </Box> */

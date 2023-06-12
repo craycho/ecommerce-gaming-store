@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/index";
 import getRandomProducts from "../../util/random-products";
 
+import CorsairHero from "../../assets/corsair-k95-hero.jpg";
+import SteelseriesHero from "../../assets/steelseries-hero.jpg";
+import RazerHero from "../../assets/razer-deathadder-hero.jpg";
+import NoblechairsHero from "../../assets/noble-chair-hero.jpg";
+
 import {
   Box,
   Button,
@@ -32,26 +37,33 @@ interface Product {
 }
 
 interface ProductProps {
-  randomProduct: Product;
+  key: string | undefined;
+  product: Product | undefined;
+  promo: string;
 }
 
-/**@todo Non-random hero products with special promo text */
+function HeroProduct({ product, promo }: ProductProps) {
+  const productTitle = product?.data.title;
+  const heroImage = productTitle?.includes("Steelseries Arctis")
+    ? SteelseriesHero
+    : productTitle?.includes("Noblechairs Hero")
+    ? NoblechairsHero
+    : CorsairHero;
 
-function HeroStack({ randomProduct }: ProductProps) {
   return (
     <Box
       position="relative"
       sx={{
         width: "100%",
         height: 500,
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55)), url('${randomProduct.data.image}')`,
-        backgroundSize: "contain",
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55)), url('${heroImage}')`,
+        backgroundSize: "cover",
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
         borderRadius: 1,
       }}
     >
-      <div
+      <Box
         style={{
           position: "absolute",
           bottom: 30,
@@ -60,11 +72,21 @@ function HeroStack({ randomProduct }: ProductProps) {
           width: "90%",
         }}
       >
-        <Typography variant="subtitle1" fontWeight={700} color="white">
-          {randomProduct.data.category}
-        </Typography>
-        <Typography gutterBottom variant="h6" fontWeight={700} color="white">
-          {randomProduct.data.title}
+        {promo && (
+          <Typography variant="h4" fontWeight={700} color="white" mb={1}>
+            {promo}
+          </Typography>
+        )}
+        {/* <Typography variant="subtitle1" fontWeight={700} color="white">
+          {product?.data.category}
+        </Typography> */}
+        <Typography
+          gutterBottom
+          variant="subtitle1"
+          fontWeight={700}
+          color="white"
+        >
+          {product?.data.title}
         </Typography>
         <Button
           variant="contained"
@@ -77,9 +99,9 @@ function HeroStack({ randomProduct }: ProductProps) {
         >
           Buy now
         </Button>
-      </div>
+      </Box>
     </Box>
   );
 }
 
-export default HeroStack;
+export default HeroProduct;

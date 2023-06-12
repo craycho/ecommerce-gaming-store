@@ -57,15 +57,15 @@ function Home() {
   return (
     <>
       <HeroStack products={products} />
-      <Typography variant="h5" mb={4} align="center" fontWeight={700}>
+      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
         You might be interested in:
       </Typography>
       <ProductStack type="random" />
-      <Typography variant="h5" mb={4} align="center" fontWeight={700}>
+      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
         Currently on sale:
       </Typography>
       <ProductStack type="onSale" />
-      <Typography variant="h5" mb={4} align="center" fontWeight={700}>
+      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
         New arrivals:
       </Typography>
       <ProductStack type="new" />

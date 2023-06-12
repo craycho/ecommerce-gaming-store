@@ -28,7 +28,7 @@ const NewIcon = styled(FiberNewIcon)({
   right: 5,
   fontSize: 35,
   color: "orangered",
-  transform: "rotate(20deg)",
+  transform: "rotate(15deg)",
 });
 
 const WishlistIcon = styled(FavoriteIcon)({
@@ -57,7 +57,13 @@ function ProductCard({
   const onSalePrice = onSale ? (price - saleAmount).toFixed(2) : price;
 
   return (
-    <Card sx={{ position: "relative", maxWidth: 320 }}>
+    <Card
+      sx={{
+        position: "relative",
+        maxWidth: 320,
+        minWidth: 270,
+      }}
+    >
       <CardMedia
         component="img"
         image={img}
@@ -70,7 +76,7 @@ function ProductCard({
         <Typography variant="caption" fontWeight={700}>
           {category}
         </Typography>
-        <Typography gutterBottom variant="subtitle1" component="div">
+        <Typography variant="subtitle1" component="div" minHeight={55}>
           {title}
         </Typography>
         <Box
@@ -84,14 +90,16 @@ function ProductCard({
               {onSale ? onSalePrice : price} €
             </Typography>
             {onSale && (
-              <Typography variant="body1" color="primary.light">
+              <Typography variant="body2" color="primary.light">
                 <s>({price})</s> €
               </Typography>
             )}
           </Box>
           <Box display="flex" alignItems="center" justifyContent="flex-end">
-            <CheckCircleOutlineIcon />
-            <Typography variant="caption" ml={0.4}>
+            <CheckCircleOutlineIcon
+              style={{ fontSize: 20, color: "GrayText" }}
+            />
+            <Typography variant="caption" ml={0.4} color="GrayText">
               In stock
             </Typography>
           </Box>

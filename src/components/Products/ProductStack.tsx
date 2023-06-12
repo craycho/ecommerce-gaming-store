@@ -57,7 +57,7 @@ function ProductStack({ type }: StackProps) {
         true,
         false
       );
-      console.log(newProducts);
+      // console.log(newProducts);
       setDisplayedProducts(newProducts);
     }
   }, [products]);
