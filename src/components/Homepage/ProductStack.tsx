@@ -66,17 +66,7 @@ function ProductStack({ type }: StackProps) {
     <Box sx={{ width: "90%", margin: "0 auto 40px auto" }}>
       <Stack direction="row" spacing={1} justifyContent="space-evenly">
         {displayedProducts.map((product) => (
-          <ProductCard
-            id={product.id}
-            title={product.data.title}
-            category={product.data.category}
-            description={product.data.description}
-            price={product.data.price}
-            isNew={product.data.new}
-            onSale={product.data.onSale}
-            img={product.data.image}
-            key={product.id}
-          />
+          <ProductCard key={product.id} id={product.id} data={product.data} />
         ))}
       </Stack>
     </Box>
@@ -85,6 +75,16 @@ function ProductStack({ type }: StackProps) {
 
 export default ProductStack;
 
-{
-  /* <Box sx={{ width: "95%", margin: "50px auto" }}></Box> */
-}
+/* <ProductCard
+            id={product.id}
+            title={product.data.title}
+            category={product.data.category}
+            description={product.data.description}
+            price={product.data.price}
+            isNew={product.data.new}
+            onSale={product.data.onSale}
+            image={product.data.image}
+            key={product.id}
+          /> */
+
+/* <Box sx={{ width: "95%", margin: "50px auto" }}></Box> */

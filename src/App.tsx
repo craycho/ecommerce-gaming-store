@@ -3,22 +3,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/Error";
 import RootLayout from "./components/Layout/Root";
 import Home from "./pages/Home";
+import ProductMain from "./components/Product/ProductMain";
+import { productLoader } from "./components/Product/ProductMain";
+import ResultsPage from "./components/Resultpage/ResultsPage";
+import { resultsLoader } from "./components/Resultpage/ResultsPage";
 
-// const App = ({ message }: AppProps) => <div>{message}</div>;
-/* 
-interface RouteObject {
-  path?: string;
-  index?: boolean;
-  children?: React.ReactNode;
-  caseSensitive?: boolean;
-  id?: string;
-  loader?: () => {};
-  action?: () => {};
-  element?: React.ReactNode | null;
-  Component?: React.ComponentType | null;
-  errorElement?: React.ReactNode | null;
-  ErrorBoundary?: React.ComponentType | null;
-} */
+/**@todo LG Ultrawide monitor ne radi jer u imenu ima "-" */
+/**@todo Ne radi submit sa enter ili dugmetom, bez obzira je li autocompleted ili ne. */
+/**@todo Povremen "key" bug nepoznatog porijekla */
 
 const router = createBrowserRouter([
   {
@@ -29,7 +21,16 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/:category/:productId",
+        element: <ProductMain />,
+        loader: productLoader,
+      },
+      {
+        path: "/search/:category/:currentInput",
+        element: <ResultsPage />,
+        // loader: resultsLoader,
       },
     ],
   },

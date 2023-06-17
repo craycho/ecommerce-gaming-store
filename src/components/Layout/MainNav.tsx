@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/index";
 
@@ -70,16 +71,46 @@ const Icons = styled(Box)(({ theme }) => ({
   gap: 25,
 }));
 
-function AutocompleteNav() {
+interface ProductData {
+  category: string;
+  description: string;
+  image: string;
+  new: boolean;
+  onSale: boolean;
+  price: number;
+  thumbnail: string;
+  title: string;
+}
+
+interface Product {
+  id: string;
+  data: ProductData;
+}
+
+function AutocompleteNav({ category }: { category: string }) {
   const products = useSelector((state: RootState) => state.products);
-  const productNames = products.map((product) => product.data.title);
+  const navigate = useNavigate();
+
+  /* const handleSubmit = (
+    event: React.FormEvent,
+    value: string | Product | null
+  ) => {
+    event.preventDefault();
+    console.log(value);
+    navigate(
+      `/search/${category.toLowerCase().replaceAll(" ", "-")}/${value
+        ?.toString()
+        .replaceAll(" ", "-")}`
+    );
+  }; */
 
   return (
     <Autocomplete
       id="products-search"
+      // onChange={handleSubmit}
       freeSolo
-      autoHighlight
-      options={productNames.map((option: string) => option)}
+      // autoHighlight
+      options={products.map((option) => option)}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -91,38 +122,57 @@ function AutocompleteNav() {
           // }}
         />
       )}
-      filterOptions={(options, state) => {
-        let suggestions: string[] = [];
+      filterOptions={(options, state): Product[] => {
+        let suggestions: Product[] = [];
+
         if (state.inputValue.length > 0) {
-          suggestions = options.filter((productName: string) =>
-            productName.toLowerCase().includes(state.inputValue.toLowerCase())
+          suggestions = options.filter((product) =>
+            product.data.title
+              .toLowerCase()
+              .includes(state.inputValue.toLowerCase())
           );
-          // console.log(suggestions);
           return suggestions;
         }
         // If suggestion array is empty returns an empty array and displays nothing
         return [];
       }}
       renderOption={(props, option, { inputValue }) => {
-        const matches = match(option, inputValue, { insideWords: true });
-        const parts = parse(option, matches);
+        const matches = match(option.data.title, inputValue, {
+          insideWords: true,
+        });
+        const parts = parse(option.data.title, matches);
+        const urlString = `${option.data.category.toLowerCase()}/${option.data.title
+          .toLowerCase()
+          .replaceAll(" ", "-")}`;
 
         return (
-          <li {...props}>
-            <div>
-              {parts.map((part, index) => (
-                <span
-                  key={index}
-                  style={{
-                    fontWeight: part.highlight ? 700 : 400,
-                  }}
-                >
-                  {part.text}
-                </span>
-              ))}
-            </div>
-          </li>
+          <Link
+            to={urlString}
+            style={{ textDecoration: "none", color: "#1a1a1a" }}
+          >
+            <li {...props}>
+              <div>
+                {parts.map((part, index) => (
+                  <span
+                    key={index}
+                    style={{
+                      fontWeight: part.highlight ? 700 : 400,
+                    }}
+                  >
+                    {part.text}
+                  </span>
+                ))}
+              </div>
+            </li>
+          </Link>
         );
+      }}
+      // "If used in free solo mode, it must accept both the type of the options and a string."
+      getOptionLabel={(option: Product | string): string => {
+        if (typeof option === "string") return "";
+        else {
+          return option?.data.title;
+        }
       }}
       sx={{
         height: 45,
@@ -152,28 +202,43 @@ function MainNavigation() {
     setCategory(event.target.value);
   };
 
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   console.log(event.currentTarget);
+  //   //["products-search"].value
+  //   // navigate(`/results/${event.current}`)
+  // };
+
   return (
     <AppBar position="sticky">
       <StyledToolbar>
-        <Typography
-          variant="h5"
-          fontWeight={700}
-          sx={{
-            display: { xs: "none", sm: "block" },
-            cursor: "pointer",
-            "&:hover": {
-              color: (theme) => theme.palette.secondary.main,
-            },
-          }}
-        >
-          NEXTGEN
-        </Typography>
+        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          <Typography
+            variant="h5"
+            fontWeight={700}
+            sx={{
+              display: { xs: "none", sm: "block" },
+              cursor: "pointer",
+              "&:hover": {
+                color: (theme) => theme.palette.secondary.main,
+              },
+            }}
+          >
+            NEXTGEN
+          </Typography>
+        </Link>
         <SportsEsportsIcon
           fontSize="large"
           sx={{ display: { xs: "block", sm: "none" } }}
         />
         <Search>
-          <AutocompleteNav />
+          {/* <form 
+          // onSubmit={handleSubmit}
+          style={{ width: "100%" }}
+          id="mainSearch"
+           > */}
+          <AutocompleteNav category={category} />
+          {/* </form> */}
           <FormControl
             variant="standard"
             sx={{ minWidth: 80, marginRight: 0.5 }}

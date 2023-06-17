@@ -3,18 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { productsActions } from "../store/products-slice";
 import { RootState } from "../store/index";
 
-import ProductStack from "../components/Products/ProductStack";
-import HeroStack from "../components/Products/HeroStack";
+import ProductStack from "../components/Homepage/ProductStack";
+import HeroStack from "../components/Homepage/HeroStack";
 import NextGenDescription from "../components/Layout/Description";
 import Newsletter from "../components/Layout/Newsletter";
 import Footer from "../components/Layout/Footer";
+import ProductMain from "../components/Product/ProductMain";
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 
 interface ProductData {
   category: string;
   description: string;
   image: string;
+  imageAlt: string;
   new: boolean;
   onSale: boolean;
   price: number;
@@ -29,9 +31,23 @@ interface Product {
 
 let isInitial: boolean = true;
 
+// const loadingSpinner = styled(span)({
+//   width: "45px",
+//   height: "45px",
+//   display: "block",
+//   margin: "5rem auto",
+
+//   borderRadius: "50%",
+//   borderTop: "3px solid #fff",
+//   borderRight: "3px solid transparent",
+//   boxSizing: "border-box",
+//   animation: "rotation 1s linear infinite",
+// });
+
 function Home() {
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (isInitial) {
@@ -39,6 +55,7 @@ function Home() {
       return;
     }
     const fetchProducts = async () => {
+      setIsLoading(true);
       const res = await fetch(
         "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"
       );
@@ -52,23 +69,30 @@ function Home() {
       dispatch(productsActions.initProducts(productsArray));
     };
     fetchProducts();
+    setIsLoading(false);
   }, []);
 
   return (
     <>
-      <HeroStack products={products} />
-      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
-        You might be interested in:
-      </Typography>
-      <ProductStack type="random" />
-      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
-        Currently on sale:
-      </Typography>
-      <ProductStack type="onSale" />
-      <Typography variant="h5" mb={3} align="center" fontWeight={700}>
-        New arrivals:
-      </Typography>
-      <ProductStack type="new" />
+      {isLoading ? (
+        <CircularProgress sx={{ margin: "2% 48%" }} />
+      ) : (
+        <>
+          <HeroStack products={products} />
+          <Typography variant="h5" mb={3} align="center" fontWeight={700}>
+            You might be interested in:
+          </Typography>
+          <ProductStack type="random" />
+          <Typography variant="h5" mb={3} align="center" fontWeight={700}>
+            Currently on sale:
+          </Typography>
+          <ProductStack type="onSale" />
+          <Typography variant="h5" mb={3} align="center" fontWeight={700}>
+            New arrivals:
+          </Typography>
+          <ProductStack type="new" />
+        </>
+      )}
       <Box
         sx={{
           backgroundColor: "#f4f5f7",
