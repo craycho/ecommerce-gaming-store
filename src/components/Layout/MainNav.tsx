@@ -88,29 +88,111 @@ interface Product {
 }
 
 function AutocompleteNav({ category }: { category: string }) {
-  const products = useSelector((state: RootState) => state.products);
   const navigate = useNavigate();
+  const products = useSelector((state: RootState) => state.products);
+  const inputOptions = products.map((product) => product.data.title);
+  // const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
 
-  /* const handleSubmit = (
-    event: React.FormEvent,
-    value: string | Product | null
-  ) => {
+  const handleChange = (event: any, newValue: string | null) => {
     event.preventDefault();
-    console.log(value);
-    navigate(
-      `/search/${category.toLowerCase().replaceAll(" ", "-")}/${value
-        ?.toString()
-        .replaceAll(" ", "-")}`
+    const foundProduct = products.find(
+      (product) => product.data.title.toLowerCase() === newValue?.toLowerCase()
     );
-  }; */
+
+    if (foundProduct) {
+      // console.log(foundProduct);
+      // setSelectedProduct(foundProduct);
+      const productUrl = `${foundProduct.data.category.toLowerCase()}/${foundProduct.data.title
+        .toLowerCase()
+        .replaceAll(" ", "-")}`;
+
+      navigate(productUrl);
+    } else {
+      // console.log(newValue);
+      const searchUrl = `/search/${category
+        .toLowerCase()
+        .replaceAll(" ", "-")}/${newValue?.toString().replaceAll(" ", "-")}`;
+
+      navigate(searchUrl);
+    }
+  };
 
   return (
     <Autocomplete
       id="products-search"
-      // onChange={handleSubmit}
       freeSolo
       // autoHighlight
-      options={products.map((option) => option)}
+      onChange={handleChange}
+      options={inputOptions}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          variant="standard"
+          InputProps={{ ...params.InputProps, disableUnderline: true }}
+          placeholder="Search for products..."
+          // sx={{
+          //   ".MuiInputBase-input": { fontSize: 15 },
+          // }}
+        />
+      )}
+      filterOptions={(options, state): string[] => {
+        let suggestions: string[] = [];
+
+        if (state.inputValue.length > 0) {
+          suggestions = options.filter((productTitle) =>
+            productTitle.toLowerCase().includes(state.inputValue.toLowerCase())
+          );
+          return suggestions;
+        }
+        // If suggestion array is empty returns and displays nothing
+        return [];
+      }}
+      renderOption={(props, option, { inputValue }) => {
+        const matches = match(option, inputValue, {
+          insideWords: true,
+        });
+        const parts = parse(option, matches);
+
+        return (
+          <li {...props} key={option}>
+            <div>
+              {parts.map((part, index) => (
+                <span
+                  key={index}
+                  style={{
+                    fontWeight: part.highlight ? 700 : 400,
+                  }}
+                >
+                  {part.text}
+                </span>
+              ))}
+            </div>
+          </li>
+        );
+      }}
+      sx={{
+        height: 45,
+        paddingRight: 0.7,
+        paddingLeft: 2,
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        // Vertical text align was bad because default <input>'s height is different than parent
+        "	.MuiAutocomplete-input": {
+          height: "100%",
+        },
+      }}
+    />
+  );
+}
+/* WORKING VERSION w/ <Link>
+
+ <Autocomplete
+      id="products-search"
+      freeSolo
+      // autoHighlight
+      // onChange={handleSubmit}
+      options={inputOptions}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -148,6 +230,7 @@ function AutocompleteNav({ category }: { category: string }) {
         return (
           <Link
             to={urlString}
+            key={option.id}
             style={{ textDecoration: "none", color: "#1a1a1a" }}
           >
             <li {...props}>
@@ -167,6 +250,7 @@ function AutocompleteNav({ category }: { category: string }) {
           </Link>
         );
       }}
+      // Po defaultu se samo prima string, te ako hocu "Product" neophodno je manual return
       // "If used in free solo mode, it must accept both the type of the options and a string."
       getOptionLabel={(option: Product | string): string => {
         if (typeof option === "string") return "";
@@ -186,28 +270,12 @@ function AutocompleteNav({ category }: { category: string }) {
           height: "100%",
         },
       }}
-    />
-  );
-}
+    /> */
 
 function MainNavigation() {
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLDivElement>(null);
-  const [category, setCategory] = useState<string>("All categories");
-  /* const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    setAnchorEl(event.currentTarget);
-  }; */
+  const [category, setCategory] = useState<string>("all");
 
-  const handleCategory = (event: SelectChangeEvent) => {
-    setCategory(event.target.value);
-  };
-
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   console.log(event.currentTarget);
-  //   //["products-search"].value
-  //   // navigate(`/results/${event.current}`)
-  // };
+  const [currentInput, setCurrentInput] = useState<string>("");
 
   return (
     <AppBar position="sticky">
@@ -232,13 +300,7 @@ function MainNavigation() {
           sx={{ display: { xs: "block", sm: "none" } }}
         />
         <Search>
-          {/* <form 
-          // onSubmit={handleSubmit}
-          style={{ width: "100%" }}
-          id="mainSearch"
-           > */}
           <AutocompleteNav category={category} />
-          {/* </form> */}
           <FormControl
             variant="standard"
             sx={{ minWidth: 80, marginRight: 0.5 }}
@@ -246,7 +308,9 @@ function MainNavigation() {
             <Select
               id="select-category"
               value={category}
-              onChange={handleCategory}
+              onChange={(event: SelectChangeEvent) => {
+                setCategory(event.target.value);
+              }}
               autoWidth
               disableUnderline
               sx={{
@@ -255,13 +319,13 @@ function MainNavigation() {
                 },
               }}
             >
-              <MenuItem value="All categories">All categories</MenuItem>
-              <MenuItem value={"Keyboards"}>Keyboards</MenuItem>
-              <MenuItem value={"Mice"}>Mice</MenuItem>
-              <MenuItem value={"Headsets"}>Headsets</MenuItem>
-              <MenuItem value={"Mousepads"}>Mousepads</MenuItem>
-              <MenuItem value={"Monitors"}>Monitors</MenuItem>
-              <MenuItem value={"Gaming chairs"}>Gaming chairs</MenuItem>
+              <MenuItem value="all">All categories</MenuItem>
+              <MenuItem value={"keyboards"}>Keyboards</MenuItem>
+              <MenuItem value={"mice"}>Mice</MenuItem>
+              <MenuItem value={"headsets"}>Headsets</MenuItem>
+              <MenuItem value={"mousepads"}>Mousepads</MenuItem>
+              <MenuItem value={"monitors"}>Monitors</MenuItem>
+              <MenuItem value={"chairs"}>Gaming chairs</MenuItem>
             </Select>
           </FormControl>
           <SearchButton>
@@ -312,62 +376,3 @@ export default MainNavigation;
 
 // Autocomplete workaround ali backspace ne radi:
 // onMouseDownCapture={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation()}
-
-/*  
-const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-<Menu
-        id="positioned-menu"
-        open={openMenu}
-        onClose={() => {
-          setOpenMenu(false);
-          handleClose();
-        }}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
-      </Menu>
-      */
-
-/*  <Box
-            sx={{
-              width: "30%",
-              padding: "5px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <FormControl variant="standard" fullWidth size="small">
-              <Select
-                id="select-category"
-                value={category}
-                onChange={handleCategory}
-                disableUnderline
-                displayEmpty
-                renderValue={(value: string) => category}
-                sx={{ fontSize: 15 }}
-              >
-                <MenuItem value="All categories">
-                  <em>All categories</em>
-                </MenuItem>
-                <MenuItem value={"Keyboards"}>Keyboards</MenuItem>
-                <MenuItem value={"Mice"}>Mice</MenuItem>
-                <MenuItem value={"Headsets"}>Headsets</MenuItem>
-                <MenuItem value={"Mousepads"}>Mousepads</MenuItem>
-                <MenuItem value={"Monitors"}>Monitors</MenuItem>
-                <MenuItem value={"Gaming chairs"}>Gaming chairs</MenuItem>
-              </Select>
-            </FormControl>
-          </Box> */

@@ -6,11 +6,9 @@ import Home from "./pages/Home";
 import ProductMain from "./components/Product/ProductMain";
 import { productLoader } from "./components/Product/ProductMain";
 import ResultsPage from "./components/Resultpage/ResultsPage";
-import { resultsLoader } from "./components/Resultpage/ResultsPage";
+// import { resultsLoader } from "./components/Resultpage/ResultsPage";
 
-/**@todo LG Ultrawide monitor ne radi jer u imenu ima "-" */
 /**@todo Ne radi submit sa enter ili dugmetom, bez obzira je li autocompleted ili ne. */
-/**@todo Povremen "key" bug nepoznatog porijekla */
 
 const router = createBrowserRouter([
   {
