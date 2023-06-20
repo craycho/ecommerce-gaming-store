@@ -91,25 +91,34 @@ function AutocompleteNav({ category }: { category: string }) {
   const navigate = useNavigate();
   const products = useSelector((state: RootState) => state.products);
   const inputOptions = products.map((product) => product.data.title);
+  const [currentInput, setCurrentInput] = useState<string | null>(null);
 
   const handleChange = (event: any, newValue: string | null) => {
     event.preventDefault();
-    const foundProduct = products.find(
-      (product) => product.data.title.toLowerCase() === newValue?.toLowerCase()
-    );
+    event.target.blur();
 
-    if (foundProduct) {
-      const productUrl = `${foundProduct.data.category.toLowerCase()}/${foundProduct.data.title
-        .toLowerCase()
-        .replaceAll(" ", "-")}`;
+    // Necessary check. Automatic change event occurs on input clear (newValue = null).
+    if (newValue) {
+      setCurrentInput(newValue);
 
-      navigate(productUrl);
-    } else {
-      const searchUrl = `/search/${category
-        .toLowerCase()
-        .replaceAll(" ", "-")}/${newValue?.toString().replaceAll(" ", "-")}`;
+      const foundProduct = products.find(
+        (product) =>
+          product.data.title.toLowerCase() === newValue?.toLowerCase()
+      );
 
-      navigate(searchUrl);
+      if (foundProduct) {
+        const productUrl = `${foundProduct.data.category.toLowerCase()}/${foundProduct.data.title
+          .toLowerCase()
+          .replaceAll(" ", "-")}`;
+
+        navigate(productUrl);
+      } else {
+        const searchUrl = `/search/${category
+          .toLowerCase()
+          .replaceAll(" ", "-")}/${newValue?.toString().replaceAll(" ", "-")}`;
+
+        navigate(searchUrl);
+      }
     }
   };
 
@@ -118,6 +127,7 @@ function AutocompleteNav({ category }: { category: string }) {
       id="products-search"
       freeSolo
       // autoHighlight
+      value={currentInput}
       onChange={handleChange}
       options={inputOptions}
       renderInput={(params) => (
@@ -270,8 +280,6 @@ function AutocompleteNav({ category }: { category: string }) {
 
 function MainNavigation() {
   const [category, setCategory] = useState<string>("all");
-
-  const [currentInput, setCurrentInput] = useState<string>("");
 
   return (
     <AppBar position="sticky">

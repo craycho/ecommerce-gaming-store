@@ -5,7 +5,6 @@ import getRandomProducts from "../../util/random-products";
 
 import CorsairHero from "../../assets/corsair-k95-hero.jpg";
 import SteelseriesHero from "../../assets/steelseries-hero.jpg";
-import RazerHero from "../../assets/razer-deathadder-hero.jpg";
 import NoblechairsHero from "../../assets/noble-chair-hero.jpg";
 
 import {
@@ -15,6 +14,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   Stack,
   styled,
   Typography,
@@ -44,11 +44,15 @@ interface ProductProps {
 
 function HeroProduct({ product, promo }: ProductProps) {
   const productTitle = product?.data.title;
-  const heroImage = productTitle?.includes("Steelseries Arctis")
-    ? SteelseriesHero
-    : productTitle?.includes("Noblechairs Hero")
-    ? NoblechairsHero
-    : CorsairHero;
+  const heroImage = productTitle?.includes("Steelseries Arctis") ? (
+    SteelseriesHero
+  ) : productTitle?.includes("Noblechairs Hero") ? (
+    NoblechairsHero
+  ) : productTitle?.includes("Corsair K95") ? (
+    CorsairHero
+  ) : (
+    <h4>Error displaying image.</h4>
+  );
 
   return (
     <Box
@@ -77,9 +81,6 @@ function HeroProduct({ product, promo }: ProductProps) {
             {promo}
           </Typography>
         )}
-        {/* <Typography variant="subtitle1" fontWeight={700} color="white">
-          {product?.data.category}
-        </Typography> */}
         <Typography
           gutterBottom
           variant="subtitle1"

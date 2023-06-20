@@ -42,13 +42,17 @@ function ProductMain() {
   );
 
   if (!currentProduct) {
-    return <Typography variant="h6">Error. No product found!</Typography>;
+    return (
+      <Typography variant="h6" mt={5} ml={5}>
+        There was an error displaying your product.
+      </Typography>
+    );
   }
 
-  console.log(currentProduct.data);
-
-  // currentProduct.data.imageAlt,
-  const productImages = [currentProduct.data.image];
+  const productImages = [
+    currentProduct.data.image,
+    currentProduct.data.imageAlt,
+  ];
 
   return (
     <Box sx={{ margin: "4rem auto", width: "80%" }}>
@@ -71,49 +75,6 @@ function ProductMain() {
 }
 
 export default ProductMain;
-
-/* ------- USING A LOADER ---------
-
-// const productData = useLoaderData() as Product;
-  // // Type assertion. "Overwriteamo" tip jer znamo bolje koji ce biti od automatskog inferanja. Slicno :ProductData ali poredi subtypes a ne exact types.
-  // console.log(productData);
-
-interface LoaderData {
-  request: Request;
-  params: Params;
-}
-
-interface ParamsData {
-  category: string;
-  productId: string;
-}
-
-export async function productLoader({ request, params }: LoaderData) {
-  const { category, productId } = params;
-  const productTitle = productId?.replaceAll("-", " ");
-
-  const res = await fetch(
-    "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"
-  );
-  const productData = await res.json();
-
-  const products = Object.keys(productData).map((productId) => ({
-    id: productId,
-    data: productData[productId],
-  }));
-
-  // console.log(products);
-  // console.log(productTitle);
-
-  // Returns the product where the category and title match the params
-  const foundProduct = products.find(
-    (product) =>
-      product.data.category.toLowerCase().includes(category) &&
-      product.data.title.toLowerCase().includes(productTitle)
-  );
-
-  return foundProduct;
-} */
 
 /* NEWER GRID
 

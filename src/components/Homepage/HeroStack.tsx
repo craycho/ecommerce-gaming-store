@@ -38,22 +38,6 @@ interface HeroProps {
 }
 
 function HeroStack({ products }: HeroProps) {
-  /* const [randomProducts, setRandomProducts] = useState<Product[]>([]);
-  useEffect(() => {
-    if (products.length > 0) {
-      const randomProducts: Product[] = getRandomProducts(
-        products,
-        3,
-        false,
-        false
-      );
-      setRandomProducts(randomProducts);
-    }
-  }, [products]); 
-  
-  {randomProducts.map((product: Product) => ())}
-  */
-
   const steelseriesArctis = products.find((product) =>
     product.data.title.includes("Steelseries Arctis")
   );

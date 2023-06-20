@@ -55,6 +55,7 @@ function Home() {
       return;
     }
     const fetchProducts = async () => {
+      console.log("Fetcha govno");
       setIsLoading(true);
       const res = await fetch(
         "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"
@@ -110,15 +111,3 @@ function Home() {
 }
 
 export default Home;
-
-/* Storeanje products pomocu useState:
-
-  // const [products, setProducts] = useState<Product[]>([]);
-
-      // for (const productId in productData) {
-      //   setProducts((prev) => [
-      //     ...prev,
-      //     { id: productId, data: productData[productId] },
-      //   ]);
-      // }
-*/
