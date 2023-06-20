@@ -1,10 +1,10 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 
 interface InfoProps {
-  title: string;
-  description: string;
-  price: number;
-  category: string;
+  title: string | undefined;
+  description: string | undefined;
+  price: number | undefined;
+  category: string | undefined;
 }
 
 function Info({ title, description, price, category }: InfoProps) {

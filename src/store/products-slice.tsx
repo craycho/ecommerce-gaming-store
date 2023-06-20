@@ -22,9 +22,11 @@ const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    initProducts(state: Product[], action: PayloadAction<Product[]>) {
+    initProducts(
+      state: Product[] = initialState,
+      action: PayloadAction<Product[]>
+    ) {
       const newProducts = action.payload;
-      // state = newProducts;
       return newProducts;
     },
     addProduct(state: Product[], action: PayloadAction<Product>) {},

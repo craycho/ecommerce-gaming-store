@@ -91,7 +91,6 @@ function AutocompleteNav({ category }: { category: string }) {
   const navigate = useNavigate();
   const products = useSelector((state: RootState) => state.products);
   const inputOptions = products.map((product) => product.data.title);
-  // const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
 
   const handleChange = (event: any, newValue: string | null) => {
     event.preventDefault();
@@ -100,15 +99,12 @@ function AutocompleteNav({ category }: { category: string }) {
     );
 
     if (foundProduct) {
-      // console.log(foundProduct);
-      // setSelectedProduct(foundProduct);
       const productUrl = `${foundProduct.data.category.toLowerCase()}/${foundProduct.data.title
         .toLowerCase()
         .replaceAll(" ", "-")}`;
 
       navigate(productUrl);
     } else {
-      // console.log(newValue);
       const searchUrl = `/search/${category
         .toLowerCase()
         .replaceAll(" ", "-")}/${newValue?.toString().replaceAll(" ", "-")}`;

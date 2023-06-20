@@ -4,7 +4,7 @@ import ErrorPage from "./pages/Error";
 import RootLayout from "./components/Layout/Root";
 import Home from "./pages/Home";
 import ProductMain from "./components/Product/ProductMain";
-import { productLoader } from "./components/Product/ProductMain";
+// import { productLoader } from "./components/Product/ProductMain";
 import ResultsPage from "./components/Resultpage/ResultsPage";
 // import { resultsLoader } from "./components/Resultpage/ResultsPage";
 
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       {
         path: "/:category/:productId",
         element: <ProductMain />,
-        loader: productLoader,
+        // loader: productLoader,
       },
       {
         path: "/search/:category/:currentInput",
