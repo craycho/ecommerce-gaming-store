@@ -3,12 +3,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/Error";
 import RootLayout from "./components/Layout/Root";
 import Home from "./pages/Home";
-import ProductMain from "./components/Product/ProductMain";
-// import { productLoader } from "./components/Product/ProductMain";
+import Product from "./pages/Product";
+import { productLoader } from "./pages/Product";
 import ResultsPage from "./components/Resultpage/ResultsPage";
 // import { resultsLoader } from "./components/Resultpage/ResultsPage";
 
-/**@todo Ne radi submit sa enter ili dugmetom, bez obzira je li autocompleted ili ne. */
+/**@todo Auto highlighta trenutno/posljednje otvoreni product i nece da searcha sa istim pocetnim keywordom. */
+/**@todo Ne radi search kada se ne promijeni input, cak i kada se promijeni kategorija. Takodjer ne radi submit sa dugmetom. */
+/**@todo Implement search sa query params. */
+/**@todo Nepotrebno x re-rendera kada se vrati sa product pagea na home page. */
+/**@todo Scroll bug on "back". Try to scroll to top of page. */
 
 const router = createBrowserRouter([
   {
@@ -22,8 +26,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/:category/:productId",
-        element: <ProductMain />,
-        // loader: productLoader,
+        element: <Product />,
+        loader: productLoader,
       },
       {
         path: "/search/:category/:currentInput",

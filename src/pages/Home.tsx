@@ -8,9 +8,8 @@ import HeroStack from "../components/Homepage/HeroStack";
 import NextGenDescription from "../components/Layout/Description";
 import Newsletter from "../components/Layout/Newsletter";
 import Footer from "../components/Layout/Footer";
-import ProductMain from "../components/Product/ProductMain";
 
-import { Box, CircularProgress, Stack, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 interface ProductData {
   category: string;
@@ -29,20 +28,7 @@ interface Product {
   data: ProductData;
 }
 
-let isInitial: boolean = true;
-
-// const loadingSpinner = styled(span)({
-//   width: "45px",
-//   height: "45px",
-//   display: "block",
-//   margin: "5rem auto",
-
-//   borderRadius: "50%",
-//   borderTop: "3px solid #fff",
-//   borderRight: "3px solid transparent",
-//   boxSizing: "border-box",
-//   animation: "rotation 1s linear infinite",
-// });
+// let isInitial: boolean = true;
 
 function Home() {
   const dispatch = useDispatch();
@@ -50,12 +36,12 @@ function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isInitial) {
-      isInitial = false;
-      return;
-    }
+    // if (isInitial) {
+    //   isInitial = false;
+    //   return;
+    // }
+
     const fetchProducts = async () => {
-      console.log("Fetcha govno");
       setIsLoading(true);
       const res = await fetch(
         "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"
@@ -68,6 +54,8 @@ function Home() {
         data: productData[productId],
       }));
       dispatch(productsActions.initProducts(productsArray));
+
+      /**@todo Store products in localStorage API and call them from there */
     };
     fetchProducts();
     setIsLoading(false);
@@ -111,3 +99,21 @@ function Home() {
 }
 
 export default Home;
+
+/* interface LoaderData {
+  request: Request;
+  // params: Params;
+}
+
+export async function productLoader({ request }: LoaderData) {
+  const res = await fetch(
+    "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"
+  );
+  const productData = await res.json();
+  const products = Object.keys(productData).map((productId) => ({
+    id: productId,
+    data: productData[productId],
+  }));
+
+  return products;
+} */

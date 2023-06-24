@@ -28,11 +28,9 @@ interface StackProps {
 }
 
 function ProductStack({ type }: StackProps) {
-  const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products);
-  // const [randomProducts, setRandomProducts] = useState<Product[]>([]);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
-  console.log("ProductStack");
+  // console.log("ProductStack");
 
   useEffect(() => {
     if (products.length > 0 && type === "random") {
@@ -42,7 +40,7 @@ function ProductStack({ type }: StackProps) {
         false,
         false
       );
-      console.log("randomProducts");
+      // console.log("randomProducts");
       setDisplayedProducts(randomProducts);
     } else if (products.length > 0 && type === "onSale") {
       const onSaleProducts: Product[] = getRandomProducts(

@@ -57,13 +57,6 @@ function ProductCard({ id, data }: CardProps) {
   const urlString = `${category.toLowerCase()}/${title
     .toLowerCase()
     .replaceAll(" ", "-")}`;
-  // Moze i .split(" ").join("-")
-  // console.log(urlString);
-
-  // const toObject: LinkProps = {
-  //   pathname: urlString,
-  //   state: { data },
-  // };
 
   return (
     <Link
@@ -80,6 +73,7 @@ function ProductCard({ id, data }: CardProps) {
       >
         <CardMedia
           component="img"
+          /* loading="lazy" */
           image={image}
           title={title}
           sx={{ height: 200, objectFit: "contain" }}

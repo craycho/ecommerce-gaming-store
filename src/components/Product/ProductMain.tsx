@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { Params, useLoaderData, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/index";
 import MainImage from "./MainImage";
 import ImageGrid from "./ImageGrid";
 import Info from "./Info";
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 interface ProductData {
   category: string;
@@ -25,34 +22,9 @@ interface Product {
   data: ProductData;
 }
 
-function ProductMain() {
-  // Casting radi nepotrebnog "string | undefined" type. Nikad nisu undefined.
-  const { category, productId } = useParams() as {
-    category: string;
-    productId: string;
-  };
-  const productTitle = productId.replaceAll("-", " ");
-  const products = useSelector((state: RootState) => state.products);
+function ProductMain({ product }: { product: Product }) {
   const [selectedImage, setSelectedImage] = useState<number>(0);
-
-  const currentProduct = products.find(
-    (product) =>
-      product.data.category.toLowerCase().includes(category) &&
-      product.data.title.toLowerCase().includes(productTitle)
-  );
-
-  if (!currentProduct) {
-    return (
-      <Typography variant="h6" mt={5} ml={5}>
-        There was an error displaying your product.
-      </Typography>
-    );
-  }
-
-  const productImages = [
-    currentProduct.data.image,
-    currentProduct.data.imageAlt,
-  ];
+  const productImages = [product.data.image, product.data.imageAlt];
 
   return (
     <Box sx={{ margin: "4rem auto", width: "80%" }}>
@@ -64,10 +36,10 @@ function ProductMain() {
         />
         <MainImage mainImage={productImages[selectedImage]} />
         <Info
-          title={currentProduct?.data.title}
-          description={currentProduct?.data.description}
-          price={currentProduct?.data.price}
-          category={currentProduct?.data.category}
+          title={product?.data.title}
+          description={product?.data.description}
+          price={product?.data.price}
+          category={product?.data.category}
         />
       </Stack>
     </Box>
@@ -147,3 +119,28 @@ export default ProductMain;
           category={productData.data.category}
         />
       </Stack> */
+
+/* ------------- WITH REDUX -------------
+  // Casting radi nepotrebnog "string | undefined" type. Nikad nisu undefined.
+  const { category, productId } = useParams() as {
+    category: string;
+    productId: string;
+  };
+  const productTitle = productId.replaceAll("-", " ");
+  const products = useSelector((state: RootState) => state.products); 
+  
+  const currentProduct = products.find(
+    (product) =>
+    product.data.category.toLowerCase().includes(category) &&
+    product.data.title.toLowerCase().includes(productTitle)
+    );
+    
+  */
+
+/*  if (!currentProduct) {
+   return (
+     <Typography variant="h6" mt={5} ml={5}>
+     There was an error displaying your product.
+     </Typography>
+     );
+    } */

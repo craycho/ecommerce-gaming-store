@@ -32,7 +32,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   gap: "3%",
-  height: "100px",
+  height: "70px",
 
   [theme.breakpoints.down("sm")]: {
     justifyContent: "space-between",
@@ -44,7 +44,7 @@ const Search = styled("div")(({ theme }) => ({
   backgroundColor: "white",
   borderRadius: "30px",
   width: "40%",
-  height: 45,
+  height: 40,
 
   display: "none",
   justifyContent: "space-evenly",
@@ -96,10 +96,11 @@ function AutocompleteNav({ category }: { category: string }) {
   const handleChange = (event: any, newValue: string | null) => {
     event.preventDefault();
     event.target.blur();
-
+    console.log("U handle change smo");
     // Necessary check. Automatic change event occurs on input clear (newValue = null).
     if (newValue) {
       setCurrentInput(newValue);
+      console.log("U ifu smo");
 
       const foundProduct = products.find(
         (product) =>
@@ -119,6 +120,8 @@ function AutocompleteNav({ category }: { category: string }) {
 
         navigate(searchUrl);
       }
+    } else {
+      setCurrentInput(null);
     }
   };
 
