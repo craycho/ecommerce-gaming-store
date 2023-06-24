@@ -8,10 +8,10 @@ import { productLoader } from "./pages/Product";
 import ResultsPage from "./components/Resultpage/ResultsPage";
 // import { resultsLoader } from "./components/Resultpage/ResultsPage";
 
-/**@todo Auto highlighta trenutno/posljednje otvoreni product i nece da searcha sa istim pocetnim keywordom. */
-/**@todo Ne radi search kada se ne promijeni input, cak i kada se promijeni kategorija. Takodjer ne radi submit sa dugmetom. */
-/**@todo Implement search sa query params. */
 /**@todo Nepotrebno x re-rendera kada se vrati sa product pagea na home page. */
+/**@todo Implement input clear on logo click and back button. */
+/**@todo openOnFocus doesn't work. */
+/**@todo Implement search sa query params. */
 /**@todo Scroll bug on "back". Try to scroll to top of page. */
 
 const router = createBrowserRouter([
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         loader: productLoader,
       },
       {
-        path: "/search/:category/:currentInput",
+        path: "/search/:currentInput",
         element: <ResultsPage />,
         // loader: resultsLoader,
       },

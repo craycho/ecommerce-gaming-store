@@ -23,16 +23,9 @@ interface Product {
 
 function ResultsPage() {
   const products = useSelector((state: RootState) => state.products);
-  const { category, currentInput } = useParams();
+  const { currentInput } = useParams();
 
-  const matchingByCategory =
-    category === "all"
-      ? products
-      : products.filter(
-          (product) => product.data.category.toLowerCase() === category
-        );
-
-  const results = matchingByCategory.filter((product) => {
+  const results = products.filter((product) => {
     const productTitle = product.data.title.toLowerCase();
     return currentInput ? productTitle.includes(currentInput) : [];
   });
@@ -43,7 +36,7 @@ function ResultsPage() {
       <Typography
         variant="h6"
         mb={3}
-      >{`Showing results for "${currentInput}" in ${category}:`}</Typography>
+      >{`Showing results for "${currentInput}":`}</Typography>
       {results && (
         <Stack direction="column" gap={1.5} justifyContent="center">
           {results.map((product) => (
@@ -56,3 +49,13 @@ function ResultsPage() {
 }
 
 export default ResultsPage;
+
+/* WORKING CATEGORY FILTER
+
+const matchingByCategory =
+    category === "all"
+      ? products
+      : products.filter(
+          (product) => product.data.category.toLowerCase() === category
+        );
+*/

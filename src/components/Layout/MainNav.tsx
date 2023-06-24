@@ -43,7 +43,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 const Search = styled("div")(({ theme }) => ({
   backgroundColor: "white",
   borderRadius: "30px",
-  width: "40%",
+  width: "35%",
   height: 40,
 
   display: "none",
@@ -55,9 +55,15 @@ const Search = styled("div")(({ theme }) => ({
   },
 }));
 
-const SearchButton = styled(Search)({
+const SearchButton = styled("button")({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   backgroundColor: "orangered",
+  color: "white",
   width: 60,
+  height: 40,
+  border: "none",
   borderRadius: "0 30px 30px 0",
   "&:hover": {
     cursor: "pointer",
@@ -87,7 +93,7 @@ interface Product {
   data: ProductData;
 }
 
-function AutocompleteNav({ category }: { category: string }) {
+function MainNavigation() {
   const navigate = useNavigate();
   const products = useSelector((state: RootState) => state.products);
   const inputOptions = products.map((product) => product.data.title);
@@ -96,11 +102,10 @@ function AutocompleteNav({ category }: { category: string }) {
   const handleChange = (event: any, newValue: string | null) => {
     event.preventDefault();
     event.target.blur();
-    console.log("U handle change smo");
-    // Necessary check. Automatic change event occurs on input clear (newValue = null).
+
+    // Necessary check. Auto change event occurs on input clear (newValue = null) and causes error.
     if (newValue) {
       setCurrentInput(newValue);
-      console.log("U ifu smo");
 
       const foundProduct = products.find(
         (product) =>
@@ -114,9 +119,9 @@ function AutocompleteNav({ category }: { category: string }) {
 
         navigate(productUrl);
       } else {
-        const searchUrl = `/search/${category
-          .toLowerCase()
-          .replaceAll(" ", "-")}/${newValue?.toString().replaceAll(" ", "-")}`;
+        const searchUrl = `/search/${newValue
+          ?.toString()
+          .replaceAll(" ", "-")}`;
 
         navigate(searchUrl);
       }
@@ -126,76 +131,160 @@ function AutocompleteNav({ category }: { category: string }) {
   };
 
   return (
-    <Autocomplete
-      id="products-search"
-      freeSolo
-      // autoHighlight
-      value={currentInput}
-      onChange={handleChange}
-      options={inputOptions}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          variant="standard"
-          InputProps={{ ...params.InputProps, disableUnderline: true }}
-          placeholder="Search for products..."
-          // sx={{
-          //   ".MuiInputBase-input": { fontSize: 15 },
-          // }}
+    <AppBar position="sticky">
+      <StyledToolbar>
+        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          <Typography
+            variant="h5"
+            fontWeight={700}
+            sx={{
+              display: { xs: "none", sm: "block" },
+              cursor: "pointer",
+              "&:hover": {
+                color: (theme) => theme.palette.secondary.main,
+              },
+            }}
+          >
+            NEXTGEN
+          </Typography>
+        </Link>
+        <SportsEsportsIcon
+          fontSize="large"
+          sx={{ display: { xs: "block", sm: "none" } }}
         />
-      )}
-      filterOptions={(options, state): string[] => {
-        let suggestions: string[] = [];
+        <Search>
+          <Autocomplete
+            id="products-search"
+            freeSolo
+            // autoHighlight
+            openOnFocus={true}
+            value={currentInput}
+            onChange={handleChange}
+            onInputChange={(event, value) => {
+              setCurrentInput(value);
+            }}
+            options={inputOptions}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="standard"
+                InputProps={{
+                  ...params.InputProps,
+                  disableUnderline: true,
+                  onKeyDown: (e) => {
+                    if (e.key === "Enter") {
+                      handleChange(e, currentInput);
+                      // Potrebno manually handleati, onInputChange disablea Enter
+                    }
+                  },
+                }}
+                placeholder="Search for products..."
+                // sx={{
+                //   ".MuiInputBase-input": { fontSize: 15 },
+                // }}
+              />
+            )}
+            filterOptions={(options, state): string[] => {
+              let suggestions: string[] = [];
 
-        if (state.inputValue.length > 0) {
-          suggestions = options.filter((productTitle) =>
-            productTitle.toLowerCase().includes(state.inputValue.toLowerCase())
-          );
-          return suggestions;
-        }
-        // If suggestion array is empty returns and displays nothing
-        return [];
-      }}
-      renderOption={(props, option, { inputValue }) => {
-        const matches = match(option, inputValue, {
-          insideWords: true,
-        });
-        const parts = parse(option, matches);
+              if (state.inputValue.length > 0) {
+                suggestions = options.filter((productTitle) =>
+                  productTitle
+                    .toLowerCase()
+                    .includes(state.inputValue.toLowerCase())
+                );
+                return suggestions;
+              }
+              // If suggestion array is empty returns and displays nothing
+              return [];
+            }}
+            renderOption={(props, option, { inputValue }) => {
+              const matches = match(option, inputValue, {
+                insideWords: true,
+              });
+              const parts = parse(option, matches);
 
-        return (
-          <li {...props} key={option}>
-            <div>
-              {parts.map((part, index) => (
-                <span
-                  key={index}
-                  style={{
-                    fontWeight: part.highlight ? 700 : 400,
-                  }}
-                >
-                  {part.text}
-                </span>
-              ))}
-            </div>
-          </li>
-        );
-      }}
-      sx={{
-        height: 45,
-        paddingRight: 0.7,
-        paddingLeft: 2,
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        // Vertical text align was bad because default <input>'s height is different than parent
-        "	.MuiAutocomplete-input": {
-          height: "100%",
-        },
-      }}
-    />
+              return (
+                <li {...props} key={option}>
+                  <div>
+                    {parts.map((part, index) => (
+                      <span
+                        key={index}
+                        style={{
+                          fontWeight: part.highlight ? 700 : 400,
+                        }}
+                      >
+                        {part.text}
+                      </span>
+                    ))}
+                  </div>
+                </li>
+              );
+            }}
+            sx={{
+              height: 45,
+              paddingRight: 0.7,
+              paddingLeft: 2,
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              // Vertical text align was bad because default <input>'s height is different than parent
+              "	.MuiAutocomplete-input": {
+                height: "100%",
+              },
+            }}
+          />
+          <SearchButton
+            onClick={(event) => {
+              handleChange(event, currentInput);
+            }}
+          >
+            <SearchIcon fontSize="large" />
+          </SearchButton>
+        </Search>
+        <Icons>
+          <Box sx={{ display: { xs: "block", sm: "none" } }}>
+            <SearchIcon fontSize="large" />
+          </Box>
+          <Badge
+            badgeContent={0}
+            sx={{
+              cursor: "pointer",
+              "&:hover": {
+                color: "orangered",
+              },
+            }}
+          >
+            <FavoriteIcon />
+          </Badge>
+          <PersonIcon
+            sx={{
+              cursor: "pointer",
+              "&:hover": {
+                color: (theme) => theme.palette.secondary.main,
+              },
+            }}
+          />
+          <Badge
+            badgeContent={1}
+            sx={{
+              cursor: "pointer",
+              "&:hover": {
+                color: (theme) => theme.palette.secondary.main,
+              },
+            }}
+          >
+            <ShoppingCartIcon />
+          </Badge>
+        </Icons>
+      </StyledToolbar>
+    </AppBar>
   );
 }
-/* WORKING VERSION w/ <Link>
 
+export default MainNavigation;
+
+/* WORKING VERSION w/ <Link>
  <Autocomplete
       id="products-search"
       freeSolo
@@ -281,34 +370,12 @@ function AutocompleteNav({ category }: { category: string }) {
       }}
     /> */
 
-function MainNavigation() {
+/* WORKING SEARCH CATEGORY DROPDOWN
+
+{ category }: { category: string }
   const [category, setCategory] = useState<string>("all");
 
-  return (
-    <AppBar position="sticky">
-      <StyledToolbar>
-        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-          <Typography
-            variant="h5"
-            fontWeight={700}
-            sx={{
-              display: { xs: "none", sm: "block" },
-              cursor: "pointer",
-              "&:hover": {
-                color: (theme) => theme.palette.secondary.main,
-              },
-            }}
-          >
-            NEXTGEN
-          </Typography>
-        </Link>
-        <SportsEsportsIcon
-          fontSize="large"
-          sx={{ display: { xs: "block", sm: "none" } }}
-        />
-        <Search>
-          <AutocompleteNav category={category} />
-          <FormControl
+<FormControl
             variant="standard"
             sx={{ minWidth: 80, marginRight: 0.5 }}
           >
@@ -335,51 +402,4 @@ function MainNavigation() {
               <MenuItem value={"chairs"}>Gaming chairs</MenuItem>
             </Select>
           </FormControl>
-          <SearchButton>
-            <SearchIcon fontSize="large" />
-          </SearchButton>
-        </Search>
-        <Icons>
-          <Box sx={{ display: { xs: "block", sm: "none" } }}>
-            <SearchIcon fontSize="large" />
-          </Box>
-          <Badge
-            badgeContent={0}
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                color: "orangered",
-              },
-            }}
-          >
-            <FavoriteIcon />
-          </Badge>
-          <PersonIcon
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                color: (theme) => theme.palette.secondary.main,
-              },
-            }}
-          />
-          <Badge
-            badgeContent={1}
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                color: (theme) => theme.palette.secondary.main,
-              },
-            }}
-          >
-            <ShoppingCartIcon />
-          </Badge>
-        </Icons>
-      </StyledToolbar>
-    </AppBar>
-  );
-}
-
-export default MainNavigation;
-
-// Autocomplete workaround ali backspace ne radi:
-// onMouseDownCapture={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation()}
+*/

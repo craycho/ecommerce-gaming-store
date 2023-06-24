@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch } from "../store/index";
 import { productsActions } from "../store/products-slice";
-import { RootState } from "../store/index";
+import { RootState, AppDispatch } from "../store/index";
 
 import ProductStack from "../components/Homepage/ProductStack";
 import HeroStack from "../components/Homepage/HeroStack";
@@ -10,6 +11,8 @@ import Newsletter from "../components/Layout/Newsletter";
 import Footer from "../components/Layout/Footer";
 
 import { Box, CircularProgress, Typography } from "@mui/material";
+
+import { fetchProducts } from "../store/products-actions";
 
 interface ProductData {
   category: string;
@@ -28,37 +31,13 @@ interface Product {
   data: ProductData;
 }
 
-// let isInitial: boolean = true;
-
 function Home() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const products = useSelector((state: RootState) => state.products);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    // if (isInitial) {
-    //   isInitial = false;
-    //   return;
-    // }
-
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      const res = await fetch(
-        "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"
-      );
-      const productData = await res.json();
-      // console.log(productData);
-
-      const productsArray = Object.keys(productData).map((productId) => ({
-        id: productId,
-        data: productData[productId],
-      }));
-      dispatch(productsActions.initProducts(productsArray));
-
-      /**@todo Store products in localStorage API and call them from there */
-    };
-    fetchProducts();
-    setIsLoading(false);
+    dispatch(fetchProducts());
   }, []);
 
   return (
