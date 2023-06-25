@@ -1,5 +1,3 @@
-import { Dispatch } from "redux";
-import { AnyAction } from "@reduxjs/toolkit";
 import { AppDispatch } from "../store/index";
 import { productsActions } from "./products-slice";
 

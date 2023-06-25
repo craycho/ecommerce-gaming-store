@@ -8,11 +8,9 @@ import { productLoader } from "./pages/Product";
 import ResultsPage from "./components/Resultpage/ResultsPage";
 // import { resultsLoader } from "./components/Resultpage/ResultsPage";
 
-/**@todo Nepotrebno x re-rendera kada se vrati sa product pagea na home page. */
 /**@todo Implement input clear on logo click and back button. */
 /**@todo openOnFocus doesn't work. */
 /**@todo Implement search sa query params. */
-/**@todo Scroll bug on "back". Try to scroll to top of page. */
 
 const router = createBrowserRouter([
   {

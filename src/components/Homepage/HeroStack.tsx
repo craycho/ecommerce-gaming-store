@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/index";
 import getRandomProducts from "../../util/random-products";
@@ -37,7 +37,7 @@ interface HeroProps {
   products: Product[];
 }
 
-function HeroStack({ products }: HeroProps) {
+const HeroStack = forwardRef(function ({ products }: HeroProps, ref) {
   const steelseriesArctis = products.find((product) =>
     product.data.title.includes("Steelseries Arctis")
   );
@@ -49,7 +49,7 @@ function HeroStack({ products }: HeroProps) {
   );
 
   return (
-    <Box sx={{ width: "85%" }} margin="30px auto">
+    <Box sx={{ width: "85%" }} margin="30px auto" ref={ref}>
       <Stack direction="row" gap={1.5} justifyContent="center">
         <HeroProduct
           key={steelseriesArctis?.id}
@@ -69,6 +69,6 @@ function HeroStack({ products }: HeroProps) {
       </Stack>
     </Box>
   );
-}
+});
 
 export default HeroStack;

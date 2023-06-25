@@ -6,6 +6,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Fade,
   styled,
   Typography,
 } from "@mui/material";
@@ -59,6 +60,7 @@ function ProductCard({ id, data }: CardProps) {
     .replaceAll(" ", "-")}`;
 
   return (
+    // <Fade in={true} timeout={500}>
     <Link
       to={urlString}
       state={{ productData: data }}
@@ -119,6 +121,7 @@ function ProductCard({ id, data }: CardProps) {
         </CardActions>
       </Card>
     </Link>
+    // </Fade>
   );
 }
 

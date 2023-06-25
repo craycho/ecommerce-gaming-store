@@ -3,7 +3,7 @@ import MainImage from "./MainImage";
 import ImageGrid from "./ImageGrid";
 import Info from "./Info";
 
-import { Box, Stack } from "@mui/material";
+import { Box, Fade, Stack } from "@mui/material";
 
 interface ProductData {
   category: string;
@@ -27,22 +27,27 @@ function ProductMain({ product }: { product: Product }) {
   const productImages = [product.data.image, product.data.imageAlt];
 
   return (
-    <Box sx={{ margin: "4rem auto", width: "80%" }}>
-      <Stack columnGap={8} sx={{ flexDirection: { xs: "column", md: "row" } }}>
-        <ImageGrid
-          images={productImages}
-          selectedImage={selectedImage}
-          onSelect={setSelectedImage}
-        />
-        <MainImage mainImage={productImages[selectedImage]} />
-        <Info
-          title={product?.data.title}
-          description={product?.data.description}
-          price={product?.data.price}
-          category={product?.data.category}
-        />
-      </Stack>
-    </Box>
+    <Fade in={true} timeout={1000}>
+      <Box sx={{ margin: "4rem auto", width: "80%" }}>
+        <Stack
+          columnGap={8}
+          sx={{ flexDirection: { xs: "column", md: "row" } }}
+        >
+          <ImageGrid
+            images={productImages}
+            selectedImage={selectedImage}
+            onSelect={setSelectedImage}
+          />
+          <MainImage mainImage={productImages[selectedImage]} />
+          <Info
+            title={product?.data.title}
+            description={product?.data.description}
+            price={product?.data.price}
+            category={product?.data.category}
+          />
+        </Stack>
+      </Box>
+    </Fade>
   );
 }
 

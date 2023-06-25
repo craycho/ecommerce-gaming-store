@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useAppDispatch } from "../store/index";
-import { productsActions } from "../store/products-slice";
-import { RootState, AppDispatch } from "../store/index";
+import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../store/index";
+import { fetchProducts } from "../store/products-actions";
 
 import ProductStack from "../components/Homepage/ProductStack";
 import HeroStack from "../components/Homepage/HeroStack";
@@ -12,7 +11,7 @@ import Footer from "../components/Layout/Footer";
 
 import { Box, CircularProgress, Typography } from "@mui/material";
 
-import { fetchProducts } from "../store/products-actions";
+import { useLocation } from "react-router-dom";
 
 interface ProductData {
   category: string;
@@ -31,14 +30,42 @@ interface Product {
   data: ProductData;
 }
 
+/* Memoized selector, radi kao obicni al ne runa svaki put
+const productsSelector = (state: RootState) => state.products;
+const memoizedProducts = createSelector(
+  productsSelector,
+  (products) => products
+); */
+
 function Home() {
   const dispatch = useAppDispatch();
   const products = useSelector((state: RootState) => state.products);
+  const heroRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const location = useLocation();
+  // const [scroll, setScroll] = useState<number>(0);
+
+  // console.log(heroRef.current);
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    /**@todo Ne radi jer se ref selecta i onda opet postane null??? */
+    // heroRef.current?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }, 10);
+
+    const fetchHomepage = async () => {
+      setIsLoading(true);
+      await dispatch(fetchProducts()); // Neat little hack, doesn't break rules
+      setIsLoading(false);
+    };
+    fetchHomepage();
   }, []);
+
+  // useEffect(() => {
+  //   console.log("promjena lokacije");
+
+  // }, [location.pathname]);
 
   return (
     <>
@@ -46,7 +73,7 @@ function Home() {
         <CircularProgress sx={{ margin: "2% 48%" }} />
       ) : (
         <>
-          <HeroStack products={products} />
+          <HeroStack products={products} ref={heroRef} />
           <Typography variant="h5" mb={3} align="center" fontWeight={700}>
             You might be interested in:
           </Typography>
@@ -78,21 +105,3 @@ function Home() {
 }
 
 export default Home;
-
-/* interface LoaderData {
-  request: Request;
-  // params: Params;
-}
-
-export async function productLoader({ request }: LoaderData) {
-  const res = await fetch(
-    "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"
-  );
-  const productData = await res.json();
-  const products = Object.keys(productData).map((productId) => ({
-    id: productId,
-    data: productData[productId],
-  }));
-
-  return products;
-} */

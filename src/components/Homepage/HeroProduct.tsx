@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/index";
 import getRandomProducts from "../../util/random-products";
 
+import { Fade } from "@mui/material";
 import CorsairHero from "../../assets/corsair-k95-hero.jpg";
 import SteelseriesHero from "../../assets/steelseries-hero.jpg";
 import NoblechairsHero from "../../assets/noble-chair-hero.jpg";
@@ -55,53 +56,55 @@ function HeroProduct({ product, promo }: ProductProps) {
   );
 
   return (
-    <Box
-      position="relative"
-      sx={{
-        width: "100%",
-        height: 500,
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55)), url('${heroImage}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-        backgroundRepeat: "no-repeat",
-        borderRadius: 1,
-      }}
-    >
+    <Fade in={true} timeout={700}>
       <Box
-        style={{
-          position: "absolute",
-          bottom: 30,
-          marginLeft: 25,
-          marginRight: 25,
-          width: "90%",
+        position="relative"
+        sx={{
+          width: "100%",
+          height: 500,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55)), url('${heroImage}')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+          borderRadius: 1,
         }}
       >
-        {promo && (
-          <Typography variant="h4" fontWeight={700} color="white" mb={1}>
-            {promo}
-          </Typography>
-        )}
-        <Typography
-          gutterBottom
-          variant="subtitle1"
-          fontWeight={700}
-          color="white"
-        >
-          {product?.data.title}
-        </Typography>
-        <Button
-          variant="contained"
-          size="large"
-          sx={{
-            backgroundColor: "orangered",
-            marginTop: 1,
-            padding: "8px 18px",
+        <Box
+          style={{
+            position: "absolute",
+            bottom: 30,
+            marginLeft: 25,
+            marginRight: 25,
+            width: "90%",
           }}
         >
-          Buy now
-        </Button>
+          {promo && (
+            <Typography variant="h4" fontWeight={700} color="white" mb={1}>
+              {promo}
+            </Typography>
+          )}
+          <Typography
+            gutterBottom
+            variant="subtitle1"
+            fontWeight={700}
+            color="white"
+          >
+            {product?.data.title}
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              backgroundColor: "orangered",
+              marginTop: 1,
+              padding: "8px 18px",
+            }}
+          >
+            Buy now
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </Fade>
   );
 }
 
