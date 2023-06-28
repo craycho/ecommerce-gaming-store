@@ -11,6 +11,7 @@ function Newsletter() {
     <Container
       sx={{
         marginBottom: 8,
+        height: 160,
       }}
     >
       <Typography variant="h5" fontWeight={700} textAlign="center" mb={1}>

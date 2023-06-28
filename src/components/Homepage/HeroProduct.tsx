@@ -3,23 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/index";
 import getRandomProducts from "../../util/random-products";
 
-import { Fade } from "@mui/material";
 import CorsairHero from "../../assets/corsair-k95-hero.jpg";
 import SteelseriesHero from "../../assets/steelseries-hero.jpg";
 import NoblechairsHero from "../../assets/noble-chair-hero.jpg";
 
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  CircularProgress,
-  Stack,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Fade, styled, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface ProductData {
   category: string;
@@ -45,6 +34,9 @@ interface ProductProps {
 
 function HeroProduct({ product, promo }: ProductProps) {
   const productTitle = product?.data.title;
+  const productUrl = `/${product?.data.category.toLowerCase()}/${product?.data.title
+    .toLowerCase()
+    .replaceAll(" ", "-")}`;
   const heroImage = productTitle?.includes("Steelseries Arctis") ? (
     SteelseriesHero
   ) : productTitle?.includes("Noblechairs Hero") ? (
@@ -91,17 +83,19 @@ function HeroProduct({ product, promo }: ProductProps) {
           >
             {product?.data.title}
           </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            sx={{
-              backgroundColor: "orangered",
-              marginTop: 1,
-              padding: "8px 18px",
-            }}
-          >
-            Buy now
-          </Button>
+          <Link to={productUrl}>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: "orangered",
+                marginTop: 1,
+                padding: "8px 18px",
+              }}
+            >
+              Buy now
+            </Button>
+          </Link>
         </Box>
       </Box>
     </Fade>

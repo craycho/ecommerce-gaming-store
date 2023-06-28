@@ -19,6 +19,15 @@ interface Product {
 
 const initialState: Product[] = [];
 
+// interface StateData {
+//   products: Product[];
+//   cart: Product[];
+// }
+// const initialState: StateData = {
+//   products: [],
+//   cart: [],
+// };
+
 const productsSlice = createSlice({
   name: "products",
   initialState,
