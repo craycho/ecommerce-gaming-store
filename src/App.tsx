@@ -8,7 +8,6 @@ import { productLoader } from "./pages/Product";
 import ResultsPage from "./pages/Results";
 import { resultsLoader } from "./pages/Results";
 
-/**@todo Implement input clear on logo click and back button. */
 /**@todo openOnFocus doesn't work. */
 /**@todo Implement search sa query params. */
 

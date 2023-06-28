@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../Homepage/ProductCard";
 
-import { Box, Grid, Pagination, Typography } from "@mui/material";
+import { Box, Fade, Grid, Pagination, Typography } from "@mui/material";
 
 interface ProductData {
   category: string;
@@ -51,39 +51,57 @@ function ResultsMain({
 
   return (
     <Box sx={{ width: "85%" }} margin="30px auto">
-      <Typography
-        variant="h6"
-        mb={1}
-      >{`Search results: "${searchTerm}"`}</Typography>
-      {results.length > 16 ? (
-        <Typography variant="body1" mb={3} textAlign="end">
-          Showing {resultsStart}-{resultsEnd} of {results.length} results:
-        </Typography>
+      {results.length > 0 ? (
+        <>
+          <Typography
+            variant="h6"
+            mb={1}
+          >{`Search results: "${searchTerm}"`}</Typography>
+          {results.length > 16 ? (
+            <Typography variant="body1" mb={3} textAlign="end">
+              Showing {resultsStart}-{resultsEnd} of {results.length} results:
+            </Typography>
+          ) : (
+            <Typography variant="body1" mb={3} textAlign="end">
+              Showing all {results.length} results:
+            </Typography>
+          )}
+          <Fade in={true} timeout={700}>
+            {currentProducts && (
+              <Grid container spacing={2} mb={4.5}>
+                {currentProducts.map((product) => (
+                  <Grid item xs={3} key={product.id}>
+                    <ProductCard id={product.id} data={product.data} />
+                  </Grid>
+                ))}
+              </Grid>
+            )}
+          </Fade>
+          <Box
+            sx={{ width: "85%", display: "flex", justifyContent: "center" }}
+            margin="30px auto"
+          >
+            <Pagination
+              count={Math.ceil(results.length / 16)}
+              color="primary"
+              page={page}
+              onChange={handlePagination}
+            />
+          </Box>
+        </>
       ) : (
-        <Typography variant="body1" mb={3} textAlign="end">
-          Showing all {results.length} results:
-        </Typography>
+        <Box sx={{ width: "95%" }}>
+          <Typography variant="h6" mb={4}>
+            No results found for: "{searchTerm}"
+          </Typography>
+          <Typography variant="body1" width={500} display="inline">
+            Unfortunately, no products were found matching your search criteria.
+          </Typography>
+          <Typography variant="body1" width={500} mt={2}>
+            Try changing your search terms and search again.
+          </Typography>
+        </Box>
       )}
-      {currentProducts && (
-        <Grid container spacing={2} mb={4.5}>
-          {currentProducts.map((product) => (
-            <Grid item xs={3} key={product.id}>
-              <ProductCard id={product.id} data={product.data} />
-            </Grid>
-          ))}
-        </Grid>
-      )}
-      <Box
-        sx={{ width: "85%", display: "flex", justifyContent: "center" }}
-        margin="30px auto"
-      >
-        <Pagination
-          count={Math.ceil(results.length / 16)}
-          color="primary"
-          page={page}
-          onChange={handlePagination}
-        />
-      </Box>
     </Box>
   );
 }

@@ -55,7 +55,7 @@ function ProductCard({ id, data }: CardProps) {
   const { price, onSale, new: isNew, title, category, image } = data;
   const saleAmount = +(price * 0.3).toFixed(2);
   const onSalePrice = onSale ? (price - saleAmount).toFixed(2) : price;
-  const urlString = `${category.toLowerCase()}/${title
+  const urlString = `/${category.toLowerCase()}/${title
     .toLowerCase()
     .replaceAll(" ", "-")}`;
 

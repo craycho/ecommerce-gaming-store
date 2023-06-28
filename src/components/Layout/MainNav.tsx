@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/index";
@@ -130,10 +130,19 @@ function MainNavigation() {
     }
   };
 
+  // Clears input on back button
+  window.addEventListener("popstate", () => {
+    setCurrentInput("");
+  });
+
   return (
     <AppBar position="sticky">
       <StyledToolbar>
-        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+        <Link
+          to="/"
+          style={{ textDecoration: "none", color: "white" }}
+          onClick={() => setCurrentInput("")}
+        >
           <Typography
             variant="h5"
             fontWeight={700}

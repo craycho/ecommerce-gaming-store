@@ -38,7 +38,6 @@ interface LoaderData {
 
 export async function resultsLoader({ request, params }: LoaderData) {
   try {
-    console.log(params);
     const res = await fetch(
       "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"
     );
