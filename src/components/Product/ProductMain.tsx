@@ -27,7 +27,7 @@ function ProductMain({ product }: { product: Product }) {
   const productImages = [product.data.image, product.data.imageAlt];
 
   return (
-    <Fade in={true} timeout={1000}>
+    <Fade in={true} timeout={700}>
       <Box sx={{ margin: "4rem auto", width: "80%" }}>
         <Stack
           columnGap={8}

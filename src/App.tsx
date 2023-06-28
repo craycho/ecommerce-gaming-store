@@ -5,8 +5,8 @@ import RootLayout from "./components/Layout/Root";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import { productLoader } from "./pages/Product";
-import ResultsPage from "./components/Resultpage/ResultsPage";
-// import { resultsLoader } from "./components/Resultpage/ResultsPage";
+import ResultsPage from "./pages/Results";
+import { resultsLoader } from "./pages/Results";
 
 /**@todo Implement input clear on logo click and back button. */
 /**@todo openOnFocus doesn't work. */
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: "/search/:currentInput",
         element: <ResultsPage />,
-        // loader: resultsLoader,
+        loader: resultsLoader,
       },
     ],
   },
