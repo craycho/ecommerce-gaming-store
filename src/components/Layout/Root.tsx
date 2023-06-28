@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import MainNavigation from "./MainNav";
+import CategoryBar from "./CategoryBar";
 import Footer from "./Footer";
 
 function RootLayout() {
@@ -11,6 +12,7 @@ function RootLayout() {
     <>
       <main>
         <MainNavigation />
+        <CategoryBar />
         {/* {navigation.state === "loading" && <p>Loading...</p>} */}
         <Outlet />
         <Footer />

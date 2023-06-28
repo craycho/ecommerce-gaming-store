@@ -5,6 +5,8 @@ import RootLayout from "./components/Layout/Root";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import { productLoader } from "./pages/Product";
+import CategoryPage from "./pages/Category";
+import { categoryLoader } from "./pages/Category";
 import ResultsPage from "./pages/Results";
 import { resultsLoader } from "./pages/Results";
 
@@ -26,6 +28,7 @@ const router = createBrowserRouter([
         element: <Product />,
         loader: productLoader,
       },
+      { path: "/:category", element: <CategoryPage />, loader: categoryLoader },
       {
         path: "/search/:currentInput",
         element: <ResultsPage />,

@@ -90,7 +90,7 @@ function ResultsMain({
           </Box>
         </>
       ) : (
-        <Box sx={{ width: "95%" }}>
+        <Box sx={{ width: "95%", height: "60vh" }}>
           <Typography variant="h6" mb={4}>
             No results found for: "{searchTerm}"
           </Typography>
