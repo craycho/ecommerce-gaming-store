@@ -39,12 +39,13 @@ function ProductMain({ product }: { product: Product }) {
             onSelect={setSelectedImage}
           />
           <MainImage mainImage={productImages[selectedImage]} />
-          <Info
+          {/* <Info
             title={product?.data.title}
             description={product?.data.description}
             price={product?.data.price}
             category={product?.data.category}
-          />
+          /> */}
+          <Info product={product} />
         </Stack>
       </Box>
     </Fade>

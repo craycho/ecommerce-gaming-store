@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/index";
+import CartModal from "../Cart/CartModal";
 
 // npm install -D @types/autosuggest-highlight
 import parse from "autosuggest-highlight/parse";
@@ -11,12 +12,6 @@ import {
   Autocomplete,
   Badge,
   Box,
-  FormControl,
-  InputLabel,
-  Menu,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   styled,
   TextField,
   Toolbar,
@@ -95,9 +90,13 @@ interface Product {
 
 function MainNavigation() {
   const navigate = useNavigate();
-  const products = useSelector((state: RootState) => state.products);
+  const products = useSelector(
+    (state: RootState) => state.products.allProducts
+  );
+  const cart = useSelector((state: RootState) => state.products.cart);
   const inputOptions = products.map((product) => product.data.title);
   const [currentInput, setCurrentInput] = useState<string | null>(null);
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
 
   const handleChange = (event: any, newValue: string | null) => {
     event.preventDefault();
@@ -275,18 +274,20 @@ function MainNavigation() {
             }}
           />
           <Badge
-            badgeContent={1}
+            badgeContent={cart.length}
             sx={{
               cursor: "pointer",
               "&:hover": {
                 color: (theme) => theme.palette.secondary.main,
               },
             }}
+            onClick={() => setCartOpen(true)}
           >
             <ShoppingCartIcon />
           </Badge>
         </Icons>
       </StyledToolbar>
+      <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />
     </AppBar>
   );
 }

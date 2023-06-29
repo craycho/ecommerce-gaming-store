@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import MainNavigation from "./MainNav";
 import CategoryBar from "./CategoryBar";

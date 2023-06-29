@@ -17,30 +17,31 @@ interface Product {
   data: ProductData;
 }
 
-const initialState: Product[] = [];
-
-// interface StateData {
-//   products: Product[];
-//   cart: Product[];
-// }
-// const initialState: StateData = {
-//   products: [],
-//   cart: [],
-// };
+interface StateData {
+  allProducts: Product[];
+  cart: Product[];
+}
+const initialState: StateData = {
+  allProducts: [],
+  cart: [],
+};
 
 const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
     initProducts(
-      state: Product[] = initialState,
+      state: StateData = initialState,
       action: PayloadAction<Product[]>
     ) {
       const newProducts = action.payload;
-      return newProducts;
+      state.allProducts = newProducts;
+      // return newProducts;  Neophodno kada state nije objekat (nema automatskog dereferenciranja sa ".")
     },
-    addProduct(state: Product[], action: PayloadAction<Product>) {},
-    removeProduct(state: Product[], action: PayloadAction<Product>) {},
+    addProduct(state: StateData, action: PayloadAction<Product>) {
+      state.cart.push(action.payload);
+    },
+    removeProduct(state: StateData, action: PayloadAction<Product>) {},
   },
 });
 

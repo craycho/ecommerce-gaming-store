@@ -29,7 +29,9 @@ interface StackProps {
 }
 
 function ProductStack({ type }: StackProps) {
-  const products = useSelector((state: RootState) => state.products);
+  const products = useSelector(
+    (state: RootState) => state.products.allProducts
+  );
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
