@@ -72,10 +72,21 @@ const Icons = styled(Box)(({ theme }) => ({
   gap: 25,
 }));
 
+const CartBadge = styled(Badge)({
+  "& .MuiBadge-badge": {
+    padding: "0 0",
+    display: "flex",
+
+    height: 18,
+    minWidth: 18,
+  },
+});
+
 interface ProductData {
   category: string;
   description: string;
   image: string;
+  imageAlt: string;
   new: boolean;
   onSale: boolean;
   price: number;
@@ -97,6 +108,10 @@ function MainNavigation() {
   const inputOptions = products.map((product) => product.data.title);
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
+  const cartTotalAmount = cart.reduce(
+    (accumulator, product) => accumulator + (product.quantity ?? 0),
+    0
+  );
 
   const handleChange = (event: any, newValue: string | null) => {
     event.preventDefault();
@@ -273,8 +288,9 @@ function MainNavigation() {
               },
             }}
           />
-          <Badge
-            badgeContent={cart.length}
+          <CartBadge
+            badgeContent={cartTotalAmount}
+            color="secondary"
             sx={{
               cursor: "pointer",
               "&:hover": {
@@ -284,7 +300,7 @@ function MainNavigation() {
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCartIcon />
-          </Badge>
+          </CartBadge>
         </Icons>
       </StyledToolbar>
       <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />

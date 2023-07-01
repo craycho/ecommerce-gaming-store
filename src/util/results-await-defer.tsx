@@ -25,6 +25,7 @@ interface ProductData {
 interface Product {
   id: string;
   data: ProductData;
+  quantity?: number;
 }
 
 // RADI, ALI NE DAJE ZELJENI REZULTAT

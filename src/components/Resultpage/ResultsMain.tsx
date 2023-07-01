@@ -7,6 +7,7 @@ interface ProductData {
   category: string;
   description: string;
   image: string;
+  imageAlt: string;
   new: boolean;
   onSale: boolean;
   price: number;
@@ -16,6 +17,7 @@ interface ProductData {
 interface Product {
   id: string;
   data: ProductData;
+  quantity?: number;
 }
 
 function ResultsMain({

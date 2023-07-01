@@ -16,6 +16,7 @@ interface ProductData {
 interface Product {
   id: string;
   data: ProductData;
+  quantity?: number;
 }
 
 function CategoryPage() {

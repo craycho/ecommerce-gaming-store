@@ -43,7 +43,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const cart = useSelector((state: RootState) => state.products.cart);
-  console.log(cart);
+  // console.log(cart);
 
   useEffect(() => {
     setTimeout(() => {

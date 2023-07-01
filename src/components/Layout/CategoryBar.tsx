@@ -3,7 +3,7 @@ import { Box, Stack, Typography, styled } from "@mui/material";
 
 const CategoryBox = styled(Box)({
   width: "100%",
-  height: 50,
+  height: 40,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

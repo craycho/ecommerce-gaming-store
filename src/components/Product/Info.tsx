@@ -31,7 +31,7 @@ function Info({ product }: { product: Product }) {
   const dispatch = useDispatch();
 
   const addToCartHandler = () => {
-    dispatch(productsActions.addProduct(product));
+    dispatch(productsActions.addToCart(product));
   };
 
   return (
@@ -52,7 +52,7 @@ function Info({ product }: { product: Product }) {
         sx={{ marginTop: 3 }}
         onClick={addToCartHandler}
       >
-        Purchase
+        Add to cart
       </Button>
     </Stack>
   );

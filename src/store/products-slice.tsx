@@ -15,6 +15,7 @@ interface ProductData {
 interface Product {
   id: string;
   data: ProductData;
+  quantity?: number;
 }
 
 interface StateData {
@@ -38,10 +39,49 @@ const productsSlice = createSlice({
       state.allProducts = newProducts;
       // return newProducts;  Neophodno kada state nije objekat (nema automatskog dereferenciranja sa ".")
     },
-    addProduct(state: StateData, action: PayloadAction<Product>) {
-      state.cart.push(action.payload);
+    addToCart(state: StateData, action: PayloadAction<Product>) {
+      const addedProduct = action.payload;
+      // existingProduct je pointer (reference value)
+      const existingProduct = state.cart.find(
+        (product) => product.id === addedProduct.id
+      );
+
+      if (!existingProduct) {
+        state.cart.push({ ...addedProduct, quantity: 1 });
+      } else {
+        existingProduct.quantity
+          ? existingProduct.quantity++
+          : (existingProduct.quantity = 1);
+      }
     },
-    removeProduct(state: StateData, action: PayloadAction<Product>) {},
+    removeFromCart(state: StateData, action: PayloadAction<Product>) {
+      const removedProduct = action.payload;
+      const existingProduct = state.cart.find(
+        (product) => product.id === removedProduct.id
+      );
+
+      if (existingProduct && existingProduct.quantity) {
+        if (existingProduct.quantity === 1) {
+          state.cart = state.cart.filter(
+            (product) => product.id !== existingProduct.id
+          );
+        } else {
+          existingProduct.quantity--;
+        }
+      }
+    },
+    removeAllFromCart(state: StateData, action: PayloadAction<Product>) {
+      const removedProduct = action.payload;
+      const existingProduct = state.cart.find(
+        (product) => product.id === removedProduct.id
+      );
+
+      if (existingProduct) {
+        state.cart = state.cart.filter(
+          (product) => product.id !== existingProduct.id
+        );
+      }
+    },
   },
 });
 

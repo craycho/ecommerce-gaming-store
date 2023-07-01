@@ -11,6 +11,7 @@ interface ProductData {
   category: string;
   description: string;
   image: string;
+  imageAlt: string;
   new: boolean;
   onSale: boolean;
   price: number;

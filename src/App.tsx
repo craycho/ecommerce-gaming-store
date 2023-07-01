@@ -10,6 +10,8 @@ import { categoryLoader } from "./pages/Category";
 import ResultsPage from "./pages/Results";
 import { resultsLoader } from "./pages/Results";
 
+/**@todo Fix cart new line bug on high amount*/
+/**@todo Auto scroll to top on page refresh. */
 /**@todo openOnFocus doesn't work. */
 /**@todo Implement search sa query params. */
 
