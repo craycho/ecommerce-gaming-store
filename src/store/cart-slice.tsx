@@ -28,7 +28,7 @@ const initialState: StateData = {
 };
 
 const cartSlice = createSlice({
-  name: "products",
+  name: "cart",
   initialState,
   reducers: {
     initProducts(
@@ -38,13 +38,6 @@ const cartSlice = createSlice({
       const newProducts = action.payload;
       state.allProducts = newProducts;
       // return newProducts;  Neophodno kada state nije objekat (nema automatskog dereferenciranja sa ".")
-    },
-    loadCart(
-      state: StateData = initialState,
-      action: PayloadAction<Product[]>
-    ) {
-      const localCart = action.payload;
-      state.cart = localCart;
     },
     addToCart(state: StateData, action: PayloadAction<Product>) {
       const addedProduct = action.payload;

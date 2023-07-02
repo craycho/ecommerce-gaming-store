@@ -133,7 +133,7 @@ export default ProductMain;
     productId: string;
   };
   const productTitle = productId.replaceAll("-", " ");
-  const products = useSelector((state: RootState) => state.products); 
+  const products = useSelector((state: RootState) => state.cart); 
   
   const currentProduct = products.find(
     (product) =>

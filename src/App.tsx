@@ -9,8 +9,10 @@ import CategoryPage from "./pages/Category";
 import { categoryLoader } from "./pages/Category";
 import ResultsPage from "./pages/Results";
 import { resultsLoader } from "./pages/Results";
+import WishlistPage from "./pages/Wishlist";
 
 /**@todo Fix cart new line bug on high amount*/
+/**@todo localStorage critical error if undefined. Handleuj error.*/
 /**@todo Auto scroll to top on page refresh. */
 /**@todo openOnFocus doesn't work. */
 /**@todo Implement search sa query params. */
@@ -36,6 +38,7 @@ const router = createBrowserRouter([
         element: <ResultsPage />,
         loader: resultsLoader,
       },
+      { path: "/wishlist", element: <WishlistPage /> },
     ],
   },
 ]);

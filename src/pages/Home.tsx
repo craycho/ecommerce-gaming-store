@@ -28,7 +28,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 // }
 
 /* Memoized selector, radi kao obicni al ne runa svaki put
-const productsSelector = (state: RootState) => state.products;
+const productsSelector = (state: RootState) => state.cart;
 const memoizedProducts = createSelector(
   productsSelector,
   (products) => products
@@ -36,14 +36,14 @@ const memoizedProducts = createSelector(
 
 function Home() {
   const dispatch = useAppDispatch();
-  const products = useSelector(
-    (state: RootState) => state.products.allProducts
-  );
+  const products = useSelector((state: RootState) => state.cart.allProducts);
   const heroRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const cart = useSelector((state: RootState) => state.products.cart);
+  // const cart = useSelector((state: RootState) => state.cart.cart);
   // console.log(cart);
+
+  const wishlist = useSelector((state: RootState) => state.wishlist);
 
   useEffect(() => {
     setTimeout(() => {

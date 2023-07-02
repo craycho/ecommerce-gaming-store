@@ -1,8 +1,3 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/index";
-import getRandomProducts from "../../util/random-products";
-
 import CorsairHero from "../../assets/corsair-k95-hero.jpg";
 import SteelseriesHero from "../../assets/steelseries-hero.jpg";
 import NoblechairsHero from "../../assets/noble-chair-hero.jpg";
@@ -14,6 +9,7 @@ interface ProductData {
   category: string;
   description: string;
   image: string;
+  imageAlt: string;
   new: boolean;
   onSale: boolean;
   price: number;

@@ -1,21 +1,19 @@
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch } from "../../store/index";
-import { cartActions } from "../../store/cart-slice";
+import { wishlistActions } from "../../store/wishlist-slice";
 
 import {
   Box,
+  Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
-  IconButton,
   Stack,
   styled,
   Typography,
 } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCartOutlined";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import AddCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 interface ProductData {
@@ -33,21 +31,26 @@ interface ProductData {
 interface Product {
   id: string;
   data: ProductData;
-  quantity?: number;
 }
 
-const AddCartIcon = styled(AddShoppingCartIcon)({
-  position: "absolute",
-  bottom: 122,
-  right: 8,
-  borderRadius: "50%",
-  padding: 5,
-  fontSize: 33,
-  backgroundColor: "#b3b3b3",
-  color: "white",
+interface ProductProps {
+  key: string | undefined;
+  product: Product | undefined;
+}
+
+const BuyButton = styled(Button)({
+  backgroundColor: "orangered",
   "&:hover": {
-    cursor: "pointer",
-    backgroundColor: "#ff4500",
+    backgroundColor: "#c63500",
+  },
+});
+
+const RemoveIcon = styled(DeleteIcon)({
+  cursor: "pointer",
+  fontSize: 27,
+  color: "#bbbbbb",
+  "&:hover": {
+    color: "gray",
   },
 });
 
@@ -55,21 +58,6 @@ const ProductTitle = styled(Typography)({
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
   overflow: "hidden",
-});
-
-const ProductQuantity = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  position: "absolute",
-  top: 10,
-  left: 70,
-  height: 25,
-  width: 32,
-  backgroundColor: "#3c3c3c75",
-  color: "white",
-  borderRadius: 3,
-  fontWeight: 700,
 });
 
 const TitleBox = styled(Box)({
@@ -84,32 +72,26 @@ const PriceBox = styled(Box)({
   justifyContent: "space-between",
 });
 
-function CartItem({ product }: { product: Product }) {
-  const cart = useSelector((state: RootState) => state.cart.cart);
+function WishlistItem({ product }: { product: Product }) {
+  const wishlist = useSelector((state: RootState) => state.wishlist);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const saleAmount = +(product.data.price * 0.3).toFixed(2);
   const individualPrice = product.data.onSale
     ? +(product.data.price - saleAmount).toFixed(2)
     : product.data.price;
 
-  const totalPrice = product.quantity
-    ? (individualPrice * product.quantity).toFixed(2)
-    : individualPrice.toFixed(2);
-  const totalPriceWithoutDiscount = product.quantity
-    ? product.data.price * product.quantity
-    : product.data.price;
-
-  const increaseQuantity = () => {
-    dispatch(cartActions.addToCart(product));
+  const clearWishlist = () => {
+    dispatch(wishlistActions.clearWishlist());
   };
 
-  const decreaseQuantity = () => {
-    dispatch(cartActions.removeFromCart(product));
-  };
+  const buyHandler = () => {
+    const productUrl = `/${product.data.category.toLowerCase()}/${product.data.title
+      .toLowerCase()
+      .replaceAll(" ", "-")}`;
 
-  const deleteFromCart = () => {
-    dispatch(cartActions.removeAllFromCart(product));
+    navigate(productUrl);
   };
 
   return (
@@ -117,7 +99,7 @@ function CartItem({ product }: { product: Product }) {
       <Card
         sx={{
           position: "relative",
-          height: 110,
+          marginBottom: 2,
         }}
       >
         <Box
@@ -130,8 +112,8 @@ function CartItem({ product }: { product: Product }) {
           <CardMedia
             sx={{
               width: "20%",
-              height: 90,
-              backgroundSize: "contain", // objectFit ne radi?
+              height: 110,
+              backgroundSize: "contain",
             }}
             image={product.data.image}
             title={product.data.title}
@@ -141,9 +123,11 @@ function CartItem({ product }: { product: Product }) {
               width: "80%",
               display: "flex",
               justifyContent: "space-between",
+              "&:last-child": {
+                paddingBottom: 2,
+              },
             }}
           >
-            <ProductQuantity>{product.quantity}</ProductQuantity>
             <TitleBox>
               <ProductTitle variant="subtitle1">
                 {product.data.title}
@@ -151,18 +135,18 @@ function CartItem({ product }: { product: Product }) {
               <Typography variant="caption" mb={1.2}>
                 {product.data.category}
               </Typography>
-              <Stack direction="row" spacing={0.3}>
-                <RemoveCircleOutlineIcon
-                  sx={{ cursor: "pointer", fontSize: 27 }}
-                  onClick={decreaseQuantity}
-                />
-                <AddCircleOutlineIcon
-                  sx={{ cursor: "pointer", fontSize: 27 }}
-                  onClick={increaseQuantity}
-                />
-                <DeleteIcon
-                  sx={{ cursor: "pointer", fontSize: 27 }}
-                  onClick={deleteFromCart}
+              <Stack direction="row" spacing={1.5} alignItems="center">
+                <BuyButton
+                  variant="contained"
+                  startIcon={<AddCartIcon />}
+                  onClick={buyHandler}
+                >
+                  Buy
+                </BuyButton>
+                <RemoveIcon
+                  onClick={() =>
+                    dispatch(wishlistActions.toggleWishlist(product))
+                  }
                 />
               </Stack>
             </TitleBox>
@@ -171,11 +155,11 @@ function CartItem({ product }: { product: Product }) {
                 variant="h6"
                 color={product.data.onSale ? "orangered" : "primary"}
               >
-                {totalPrice} €
+                {individualPrice} €
               </Typography>
               {product.data.onSale && (
                 <Typography variant="body2" color="primary.light">
-                  <s>({totalPriceWithoutDiscount.toFixed(2)})</s> €
+                  <s>({product.data.price})</s> €
                 </Typography>
               )}
               <Typography variant="body2">In stock</Typography>
@@ -187,4 +171,4 @@ function CartItem({ product }: { product: Product }) {
   );
 }
 
-export default CartItem;
+export default WishlistItem;

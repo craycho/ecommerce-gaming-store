@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store/index";
 import { cartActions } from "../../store/cart-slice";
-import { Link, LinkProps } from "react-router-dom";
+import { wishlistActions } from "../../store/wishlist-slice";
+import { Link } from "react-router-dom";
 
 import {
   Box,
@@ -51,7 +53,6 @@ const WishlistIcon = styled(FavoriteIcon)({
   top: 5,
   left: 5,
   fontSize: 25,
-  color: "lightgrey",
   "&:hover": {
     cursor: "pointer",
     color: "red",
@@ -91,7 +92,8 @@ const AddCartNotification = styled("div")({
 });
 
 function ProductCard({ id, data }: CardProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const wishlist = useSelector((state: RootState) => state.wishlist);
   const [openCartNotification, setOpenCartNotification] =
     useState<boolean>(false);
   const { price, onSale, new: isNew, title, category, image } = data;
@@ -100,6 +102,10 @@ function ProductCard({ id, data }: CardProps) {
   const urlString = `/${category.toLowerCase()}/${title
     .toLowerCase()
     .replaceAll(" ", "-")}`;
+
+  const wishlistHandler = () => {
+    dispatch(wishlistActions.toggleWishlist({ id, data }));
+  };
 
   const addToCartHandler = () => {
     setOpenCartNotification(true);
@@ -119,9 +125,13 @@ function ProductCard({ id, data }: CardProps) {
     setOpenCartNotification(false);
   }; */
 
+  const isInWishlist = () => {
+    // const wishlistProduct = wishlist.find((product) => product.id === id);
+    return wishlist.find((product) => product.id === id) ? true : false;
+  };
+
   return (
     // <Fade in={true} timeout={500}>
-
     <Card
       sx={{
         position: "relative",
@@ -139,19 +149,14 @@ function ProductCard({ id, data }: CardProps) {
           sx={{ height: 200, objectFit: "contain" }}
         />
       </Link>
-      <WishlistIcon />
+      <WishlistIcon
+        onClick={wishlistHandler}
+        sx={{ color: isInWishlist() ? "red" : "lightgrey" }}
+      />
       <AddCartIcon onClick={addToCartHandler} />
       {openCartNotification && (
         <AddCartNotification>Added to cart</AddCartNotification>
       )}
-      {/* <Snackbar
-        open={openCartNotification}
-        autoHideDuration={1000}
-        onClose={closeNotificationHandler}
-        message="Added to cart"
-        sx={{ maxWidth: "50%" }}
-        // action={action}
-      /> */}
       {isNew && <NewIcon />}
       <CardContent sx={{ height: 130 }}>
         <Typography variant="caption" fontWeight={700}>
@@ -191,10 +196,6 @@ function ProductCard({ id, data }: CardProps) {
           </Box>
         </Box>
       </CardContent>
-      {/* <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions> */}
     </Card>
     // </Fade>
   );

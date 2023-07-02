@@ -81,6 +81,15 @@ const CartBadge = styled(Badge)({
     minWidth: 18,
   },
 });
+const WishlistBadge = styled(Badge)({
+  "& .MuiBadge-badge": {
+    padding: "0 0",
+    display: "flex",
+
+    height: 18,
+    minWidth: 18,
+  },
+});
 
 interface ProductData {
   category: string;
@@ -101,10 +110,9 @@ interface Product {
 
 function MainNavigation() {
   const navigate = useNavigate();
-  const products = useSelector(
-    (state: RootState) => state.products.allProducts
-  );
-  const cart = useSelector((state: RootState) => state.products.cart);
+  const products = useSelector((state: RootState) => state.cart.allProducts);
+  const cart = useSelector((state: RootState) => state.cart.cart);
+  const wishlist = useSelector((state: RootState) => state.wishlist);
   const inputOptions = products.map((product) => product.data.title);
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
@@ -180,7 +188,7 @@ function MainNavigation() {
             id="products-search"
             freeSolo
             // autoHighlight
-            openOnFocus={true}
+            openOnFocus={true} // Ne radi radi onInputChange
             value={currentInput}
             onChange={handleChange}
             onInputChange={(event, value) => {
@@ -269,8 +277,8 @@ function MainNavigation() {
           <Box sx={{ display: { xs: "block", sm: "none" } }}>
             <SearchIcon fontSize="large" />
           </Box>
-          <Badge
-            badgeContent={0}
+          {/* <WishlistBadge
+            badgeContent={wishlist.length}
             sx={{
               cursor: "pointer",
               "&:hover": {
@@ -278,8 +286,20 @@ function MainNavigation() {
               },
             }}
           >
-            <FavoriteIcon />
-          </Badge>
+            <FavoriteIcon onClick={() => navigate("/wishlist")} />
+          </WishlistBadge> */}
+          <CartBadge
+            badgeContent={wishlist.length}
+            color="error"
+            sx={{
+              cursor: "pointer",
+              "&:hover": {
+                color: "red",
+              },
+            }}
+          >
+            <FavoriteIcon onClick={() => navigate("/wishlist")} />
+          </CartBadge>
           <PersonIcon
             sx={{
               cursor: "pointer",

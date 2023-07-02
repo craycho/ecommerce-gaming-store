@@ -22,8 +22,8 @@ interface ModalProps {
 }
 
 function CartModal({ cartOpen, handleClose }: ModalProps) {
-  const cart = useSelector((state: RootState) => state.products.cart);
-  console.log(cart);
+  const cart = useSelector((state: RootState) => state.cart.cart);
+  // console.log(cart);
 
   return (
     <Paper component="div" elevation={5}>

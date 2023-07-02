@@ -16,9 +16,12 @@ interface Product {
   quantity?: number;
 }
 
-const updateLocalCart = (cart: Product[]) => {
+export const updateLocalCart = (cart: Product[]) => {
   const cartData = JSON.stringify(cart);
   localStorage.setItem("cart", cartData);
 };
 
-export default updateLocalCart;
+export const updateLocalWishlist = (wishlist: Product[]) => {
+  const wishlistData = JSON.stringify(wishlist);
+  localStorage.setItem("wishlist", wishlistData);
+};

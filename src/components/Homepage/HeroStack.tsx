@@ -1,26 +1,13 @@
-import { useEffect, useState, forwardRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/index";
-import getRandomProducts from "../../util/random-products";
-
+import { forwardRef } from "react";
 import HeroProduct from "./HeroProduct";
 
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Stack,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 interface ProductData {
   category: string;
   description: string;
   image: string;
+  imageAlt: string;
   new: boolean;
   onSale: boolean;
   price: number;

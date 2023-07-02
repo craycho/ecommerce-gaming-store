@@ -1,4 +1,4 @@
-import { Container, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 
 interface GridProps {
   images: string[];
@@ -13,6 +13,7 @@ function ImageGrid({ images, selectedImage, onSelect }: GridProps) {
         <img
           key={image}
           src={image}
+          alt="Product image"
           height={100}
           width={100}
           style={{

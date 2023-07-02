@@ -1,13 +1,7 @@
-import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cart-slice";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import { useAppDispatch } from "../../store";
 
-// interface InfoProps {
-//   title: string | undefined;
-//   description: string | undefined;
-//   price: number | undefined;
-//   category: string | undefined;
-// }
+import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 
 interface ProductData {
   category: string;
@@ -28,7 +22,7 @@ interface Product {
 
 function Info({ product }: { product: Product }) {
   const { category, title, description, price } = product.data;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const addToCartHandler = () => {
     dispatch(cartActions.addToCart(product));
