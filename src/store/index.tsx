@@ -2,7 +2,10 @@ import { useDispatch } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
 import cartReducer from "./cart-slice";
-import { updateLocalCart, updateLocalWishlist } from "../util/update-cart";
+import {
+  updateLocalCart,
+  updateLocalWishlist,
+} from "../util/update-localStorage";
 import wishlistReducer from "./wishlist-slice";
 
 const store = configureStore({

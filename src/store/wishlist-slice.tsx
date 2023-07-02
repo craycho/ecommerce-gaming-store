@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { getLocalStorage } from "../util/get-localStorage";
 
 interface ProductData {
   category: string;
@@ -18,9 +19,7 @@ interface Product {
   quantity?: number;
 }
 
-const initialState: Product[] = JSON.parse(
-  localStorage.getItem("wishlist") || ""
-);
+const initialState: Product[] = getLocalStorage("wishlist");
 
 const wishlistSlice = createSlice({
   name: "wishlist",
