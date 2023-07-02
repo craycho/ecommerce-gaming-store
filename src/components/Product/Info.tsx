@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { productsActions } from "../../store/products-slice";
+import { cartActions } from "../../store/cart-slice";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 
 // interface InfoProps {
@@ -31,7 +31,7 @@ function Info({ product }: { product: Product }) {
   const dispatch = useDispatch();
 
   const addToCartHandler = () => {
-    dispatch(productsActions.addToCart(product));
+    dispatch(cartActions.addToCart(product));
   };
 
   return (

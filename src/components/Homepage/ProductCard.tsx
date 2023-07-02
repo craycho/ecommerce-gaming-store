@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { productsActions } from "../../store/products-slice";
+import { cartActions } from "../../store/cart-slice";
 import { Link, LinkProps } from "react-router-dom";
 
 import {
@@ -103,7 +103,7 @@ function ProductCard({ id, data }: CardProps) {
 
   const addToCartHandler = () => {
     setOpenCartNotification(true);
-    dispatch(productsActions.addToCart({ id, data }));
+    dispatch(cartActions.addToCart({ id, data }));
     setTimeout(() => {
       setOpenCartNotification(false);
     }, 1000);

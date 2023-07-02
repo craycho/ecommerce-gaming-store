@@ -1,5 +1,5 @@
 import { AppDispatch } from "../store/index";
-import { productsActions } from "./products-slice";
+import { cartActions } from "./cart-slice";
 
 export const fetchProducts = function () {
   return async (dispatch: AppDispatch) => {
@@ -16,6 +16,6 @@ export const fetchProducts = function () {
       data: productData[productId],
     }));
 
-    dispatch(productsActions.initProducts(productsArray));
+    dispatch(cartActions.initProducts(productsArray));
   };
 };

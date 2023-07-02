@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/index";
-import { productsActions } from "../../store/products-slice";
+import { cartActions } from "../../store/cart-slice";
 
 import {
   Box,
@@ -101,15 +101,15 @@ function CartItem({ product }: { product: Product }) {
     : product.data.price;
 
   const increaseQuantity = () => {
-    dispatch(productsActions.addToCart(product));
+    dispatch(cartActions.addToCart(product));
   };
 
   const decreaseQuantity = () => {
-    dispatch(productsActions.removeFromCart(product));
+    dispatch(cartActions.removeFromCart(product));
   };
 
   const deleteFromCart = () => {
-    dispatch(productsActions.removeAllFromCart(product));
+    dispatch(cartActions.removeAllFromCart(product));
   };
 
   return (

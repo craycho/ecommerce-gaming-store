@@ -19,27 +19,78 @@ interface Product {
 }
 
 interface StateData {
-  cartItems: Product[];
-  totalQuantity: number;
+  allProducts: Product[];
+  cart: Product[];
 }
 const initialState: StateData = {
-  cartItems: [],
-  totalQuantity: 0,
+  allProducts: [],
+  cart: JSON.parse(localStorage.getItem("cart") || ""),
 };
 
-const productsSlice = createSlice({
+const cartSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    addProduct(state: StateData, action: PayloadAction<Product>) {
-      const existingProduct = state.cartItems.find(
-        (product) => product.id === action.payload.id
-      );
-      state.cartItems.push(action.payload);
+    initProducts(
+      state: StateData = initialState,
+      action: PayloadAction<Product[]>
+    ) {
+      const newProducts = action.payload;
+      state.allProducts = newProducts;
+      // return newProducts;  Neophodno kada state nije objekat (nema automatskog dereferenciranja sa ".")
     },
-    removeProduct(state: StateData, action: PayloadAction<Product>) {},
+    loadCart(
+      state: StateData = initialState,
+      action: PayloadAction<Product[]>
+    ) {
+      const localCart = action.payload;
+      state.cart = localCart;
+    },
+    addToCart(state: StateData, action: PayloadAction<Product>) {
+      const addedProduct = action.payload;
+      // existingProduct je pointer (reference value)
+      const existingProduct = state.cart.find(
+        (product) => product.id === addedProduct.id
+      );
+
+      if (!existingProduct) {
+        state.cart.push({ ...addedProduct, quantity: 1 });
+      } else {
+        existingProduct.quantity
+          ? existingProduct.quantity++
+          : (existingProduct.quantity = 1);
+      }
+    },
+    removeFromCart(state: StateData, action: PayloadAction<Product>) {
+      const removedProduct = action.payload;
+      const existingProduct = state.cart.find(
+        (product) => product.id === removedProduct.id
+      );
+
+      if (existingProduct && existingProduct.quantity) {
+        if (existingProduct.quantity === 1) {
+          state.cart = state.cart.filter(
+            (product) => product.id !== existingProduct.id
+          );
+        } else {
+          existingProduct.quantity--;
+        }
+      }
+    },
+    removeAllFromCart(state: StateData, action: PayloadAction<Product>) {
+      const removedProduct = action.payload;
+      const existingProduct = state.cart.find(
+        (product) => product.id === removedProduct.id
+      );
+
+      if (existingProduct) {
+        state.cart = state.cart.filter(
+          (product) => product.id !== existingProduct.id
+        );
+      }
+    },
   },
 });
 
-export const productsActions = productsSlice.actions;
-export default productsSlice.reducer;
+export const cartActions = cartSlice.actions;
+export default cartSlice.reducer;

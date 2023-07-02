@@ -1,10 +1,19 @@
 import { useDispatch } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
-import productsReducer from "./products-slice";
+import productsReducer from "./cart-slice";
+import updateLocalCart from "../util/update-cart";
 
 const store = configureStore({
   reducer: { products: productsReducer },
+});
+
+store.subscribe(() => {
+  const {
+    products: { cart },
+  } = store.getState();
+
+  updateLocalCart(cart);
 });
 
 export default store;
