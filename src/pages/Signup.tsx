@@ -28,28 +28,28 @@ function Signup() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
 
+    const data = new FormData(event.currentTarget);
     const firstName = data.get("firstName") as string;
     const lastName = data.get("lastName") as string;
     const email = data.get("email") as string;
     const password = data.get("password") as string;
 
-    try {
-      const existingUsersResponse = await fetch(
-        "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
-      );
-      const existingUsersData = await existingUsersResponse.json();
+    const validNameInput = validateInput("firstName", firstName);
+    setFirstNameValid(validNameInput);
 
-      const validNameInput = validateInput("firstName", firstName);
-      setFirstNameValid(validNameInput);
+    const validLastNameInput = validateInput("lastName", lastName);
+    setLastNameValid(validLastNameInput);
 
-      const validLastNameInput = validateInput("lastName", lastName);
-      setLastNameValid(validLastNameInput);
+    let validEmailInput: boolean = validateInput("email", email);
+    setEmailValid(validEmailInput);
+    if (validEmailInput) {
+      try {
+        const existingUsersResponse = await fetch(
+          "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+        );
+        const existingUsersData = await existingUsersResponse.json();
 
-      let validEmailInput: boolean = validateInput("email", email);
-      setEmailValid(validEmailInput);
-      if (validEmailInput) {
         for (const user in existingUsersData) {
           const existingUserEmail: string = existingUsersData[user].email;
 
@@ -62,64 +62,60 @@ function Signup() {
             break;
           }
         }
-
         // If e-mail passed all if checks
         if (validEmailInput) {
           setEmailValid(true);
         }
-      } else {
-        setEmailValid(false);
-        setEmailError("Email must contain @ and be under 50 characters long.");
-      }
-
-      const validPasswordInput = validateInput("password", password);
-      setPasswordValid(validPasswordInput);
-
-      // Submitting form data if all fields are valid
-      if (
-        validNameInput &&
-        validLastNameInput &&
-        validEmailInput &&
-        validPasswordInput
-      ) {
-        const userData = {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          allowExtraEmails: allowExtraEmails,
-        };
-
-        // Post request
-        const response = await fetch(
-          "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-          }
+      } catch (err) {
+        console.log("Error fetching the existing user data.");
+        throw new Error(
+          "Error fetching the existing user data. Please refresh the page and try again."
         );
-
-        if (response.status === 422 || response.status === 401) {
-          return response;
-        }
-
-        if (!response.ok) {
-          throw json(
-            { message: "Could not submit user data." },
-            { status: 500 }
-          );
-        }
-
-        navigate("/");
       }
-    } catch (err) {
-      console.log("Error fetching the existing user data.");
-      throw new Error(
-        "Error fetching the existing user data. Please refresh the page and try again."
+    } else {
+      setEmailValid(false);
+      setEmailError("Email must contain @ and be under 50 characters long.");
+    }
+
+    const validPasswordInput = validateInput("password", password);
+    setPasswordValid(validPasswordInput);
+
+    // Submitting form data if all fields are valid
+    if (
+      validNameInput &&
+      validLastNameInput &&
+      validEmailInput &&
+      validPasswordInput
+    ) {
+      const userData = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        allowExtraEmails: allowExtraEmails,
+      };
+
+      // Post request
+      const response = await fetch(
+        "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
       );
+
+      if (response.status === 422 || response.status === 401) {
+        return response;
+      }
+
+      if (!response.ok) {
+        throw json({ message: "Could not submit user data." }, { status: 500 });
+      }
+
+      navigate("/");
     }
   };
 

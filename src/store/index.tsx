@@ -7,9 +7,10 @@ import {
   updateLocalWishlist,
 } from "../util/update-localStorage";
 import wishlistReducer from "./wishlist-slice";
+import userReducer from "./user-slice";
 
 const store = configureStore({
-  reducer: { cart: cartReducer, wishlist: wishlistReducer },
+  reducer: { cart: cartReducer, wishlist: wishlistReducer, user: userReducer },
 });
 
 store.subscribe(() => {

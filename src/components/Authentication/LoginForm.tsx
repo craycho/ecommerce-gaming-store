@@ -14,6 +14,10 @@ import {
 // import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import NextgenLogo from "../../assets/nextgen-logo-black.png";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { userActions } from "../../store/user-slice";
 
 interface LoginProps {
   handleClose: () => void;
@@ -21,16 +25,24 @@ interface LoginProps {
 
 function LoginForm({ handleClose }: LoginProps) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector((state: RootState) => state.user);
+  console.log(userData);
+
+  const [showEmailError, setShowEmailError] = useState<boolean | null>(null);
+  const [showPasswordError, setShowPasswordError] = useState<boolean | null>(
+    null
+  );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get("email");
-    const password = data.get("password");
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const email = data.get("email") as string;
+    const password = data.get("password") as string;
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
 
     try {
       const existingUsersResponse = await fetch(
@@ -41,12 +53,21 @@ function LoginForm({ handleClose }: LoginProps) {
       for (const user in existingUsersData) {
         const existingUserEmail: string = existingUsersData[user].email;
         const existingUserPassword: string = existingUsersData[user].password;
+        const existingName: string = existingUsersData[user].firstName;
 
         if (existingUserEmail === email && existingUserPassword === password) {
-          console.log("Logged in");
+          dispatch(userActions.loginUser({ existingName, existingUserEmail }));
           handleClose();
           break;
-        } else {
+        } else if (existingUserEmail !== email) {
+          setShowEmailError(true);
+        } else if (
+          existingUserEmail === email &&
+          existingUserPassword !== password
+        ) {
+          setShowEmailError(false);
+          setShowPasswordError(true);
+          break;
         }
       }
     } catch (err) {
@@ -84,6 +105,11 @@ function LoginForm({ handleClose }: LoginProps) {
             name="email"
             autoComplete="email"
             autoFocus
+            error={showEmailError === true}
+            helperText={
+              showEmailError === true &&
+              "Sorry, we can't find an account with this email address. Try creating a new account (LINK)"
+            }
           />
           <TextField
             margin="normal"
@@ -94,6 +120,8 @@ function LoginForm({ handleClose }: LoginProps) {
             type="password"
             id="password"
             autoComplete="current-password"
+            error={showPasswordError === true}
+            helperText={showPasswordError === true && "Invalid password."}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

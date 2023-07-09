@@ -73,17 +73,7 @@ const Icons = styled(Box)({
   gap: 25,
 });
 
-const WishlistBadge = styled(Badge)({
-  "& .MuiBadge-badge": {
-    padding: "0 0",
-    display: "flex",
-
-    height: 18,
-    minWidth: 18,
-  },
-});
-
-const CartBadge = styled(Badge)({
+const NavbarBadge = styled(Badge)({
   "& .MuiBadge-badge": {
     padding: "0 0",
     display: "flex",
@@ -115,6 +105,9 @@ function MainNavigation() {
   const products = useSelector((state: RootState) => state.cart.allProducts);
   const cart = useSelector((state: RootState) => state.cart.cart);
   const wishlist = useSelector((state: RootState) => state.wishlist);
+  const userData = useSelector((state: RootState) => state.user);
+  console.log(userData);
+
   const inputOptions = products.map((product) => product.data.title);
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
@@ -291,7 +284,7 @@ function MainNavigation() {
           >
             <FavoriteIcon onClick={() => navigate("/wishlist")} />
           </WishlistBadge> */}
-          <CartBadge
+          <NavbarBadge
             badgeContent={wishlist.length}
             color="error"
             sx={{
@@ -302,7 +295,7 @@ function MainNavigation() {
             }}
           >
             <FavoriteIcon onClick={() => navigate("/wishlist")} />
-          </CartBadge>
+          </NavbarBadge>
           <LoginIcon
             sx={{
               cursor: "pointer",
@@ -312,7 +305,7 @@ function MainNavigation() {
             }}
             onClick={() => setLoginModalOpen(true)}
           />
-          <CartBadge
+          <NavbarBadge
             badgeContent={cartTotalAmount}
             color="secondary"
             sx={{
@@ -324,8 +317,11 @@ function MainNavigation() {
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCartIcon />
-          </CartBadge>
+          </NavbarBadge>
         </Icons>
+        {userData.loggedIn && (
+          <Typography variant="body1">Hello, {userData.name}!</Typography>
+        )}
       </StyledToolbar>
       <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />
       <LoginModal
@@ -337,92 +333,6 @@ function MainNavigation() {
 }
 
 export default MainNavigation;
-
-/* WORKING VERSION w/ <Link>
- <Autocomplete
-      id="products-search"
-      freeSolo
-      // autoHighlight
-      // onChange={handleSubmit}
-      options={inputOptions}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          variant="standard"
-          InputProps={{ ...params.InputProps, disableUnderline: true }}
-          placeholder="Search for products..."
-          // sx={{
-          //   ".MuiInputBase-input": { fontSize: 15 },
-          // }}
-        />
-      )}
-      filterOptions={(options, state): Product[] => {
-        let suggestions: Product[] = [];
-
-        if (state.inputValue.length > 0) {
-          suggestions = options.filter((product) =>
-            product.data.title
-              .toLowerCase()
-              .includes(state.inputValue.toLowerCase())
-          );
-          return suggestions;
-        }
-        // If suggestion array is empty returns an empty array and displays nothing
-        return [];
-      }}
-      renderOption={(props, option, { inputValue }) => {
-        const matches = match(option.data.title, inputValue, {
-          insideWords: true,
-        });
-        const parts = parse(option.data.title, matches);
-        const urlString = `${option.data.category.toLowerCase()}/${option.data.title
-          .toLowerCase()
-          .replaceAll(" ", "-")}`;
-
-        return (
-          <Link
-            to={urlString}
-            key={option.id}
-            style={{ textDecoration: "none", color: "#1a1a1a" }}
-          >
-            <li {...props}>
-              <div>
-                {parts.map((part, index) => (
-                  <span
-                    key={index}
-                    style={{
-                      fontWeight: part.highlight ? 700 : 400,
-                    }}
-                  >
-                    {part.text}
-                  </span>
-                ))}
-              </div>
-            </li>
-          </Link>
-        );
-      }}
-      // Po defaultu se samo prima string, te ako hocu "Product" neophodno je manual return
-      // "If used in free solo mode, it must accept both the type of the options and a string."
-      getOptionLabel={(option: Product | string): string => {
-        if (typeof option === "string") return "";
-        else {
-          return option?.data.title;
-        }
-      }}
-      sx={{
-        height: 45,
-        paddingRight: 0.7,
-        paddingLeft: 2,
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        // Vertical text align was bad because default <input>'s height is different than parent
-        "	.MuiAutocomplete-input": {
-          height: "100%",
-        },
-      }}
-    /> */
 
 /* WORKING SEARCH CATEGORY DROPDOWN
 
