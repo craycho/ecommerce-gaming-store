@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/index";
 import CartModal from "../Cart/CartModal";
+import LoginModal from "../Authentication/LoginModal";
 
 // npm install -D @types/autosuggest-highlight
 import parse from "autosuggest-highlight/parse";
@@ -19,7 +20,7 @@ import {
 } from "@mui/material";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import PersonIcon from "@mui/icons-material/Person";
+import LoginIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -66,13 +67,13 @@ const SearchButton = styled("button")({
   },
 });
 
-const Icons = styled(Box)(({ theme }) => ({
+const Icons = styled(Box)({
   display: "flex",
   alignItems: "center",
   gap: 25,
-}));
+});
 
-const CartBadge = styled(Badge)({
+const WishlistBadge = styled(Badge)({
   "& .MuiBadge-badge": {
     padding: "0 0",
     display: "flex",
@@ -81,7 +82,8 @@ const CartBadge = styled(Badge)({
     minWidth: 18,
   },
 });
-const WishlistBadge = styled(Badge)({
+
+const CartBadge = styled(Badge)({
   "& .MuiBadge-badge": {
     padding: "0 0",
     display: "flex",
@@ -115,13 +117,19 @@ function MainNavigation() {
   const wishlist = useSelector((state: RootState) => state.wishlist);
   const inputOptions = products.map((product) => product.data.title);
   const [currentInput, setCurrentInput] = useState<string | null>(null);
+  const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const cartTotalAmount = cart.reduce(
     (accumulator, product) => accumulator + (product.quantity ?? 0),
     0
   );
 
-  const handleChange = (event: any, newValue: string | null) => {
+  // Clears input on back button
+  window.addEventListener("popstate", () => {
+    setCurrentInput("");
+  });
+
+  const inputChangeHandler = (event: any, newValue: string | null) => {
     event.preventDefault();
     event.target.blur();
 
@@ -151,11 +159,6 @@ function MainNavigation() {
       setCurrentInput(null);
     }
   };
-
-  // Clears input on back button
-  window.addEventListener("popstate", () => {
-    setCurrentInput("");
-  });
 
   return (
     <AppBar position="sticky">
@@ -190,7 +193,7 @@ function MainNavigation() {
             // autoHighlight
             openOnFocus={true} // Ne radi radi onInputChange
             value={currentInput}
-            onChange={handleChange}
+            onChange={inputChangeHandler}
             onInputChange={(event, value) => {
               setCurrentInput(value);
             }}
@@ -204,7 +207,7 @@ function MainNavigation() {
                   disableUnderline: true,
                   onKeyDown: (e) => {
                     if (e.key === "Enter") {
-                      handleChange(e, currentInput);
+                      inputChangeHandler(e, currentInput);
                       // Potrebno manually handleati, onInputChange disablea Enter
                     }
                   },
@@ -267,7 +270,7 @@ function MainNavigation() {
           />
           <SearchButton
             onClick={(event) => {
-              handleChange(event, currentInput);
+              inputChangeHandler(event, currentInput);
             }}
           >
             <SearchIcon fontSize="large" />
@@ -300,13 +303,14 @@ function MainNavigation() {
           >
             <FavoriteIcon onClick={() => navigate("/wishlist")} />
           </CartBadge>
-          <PersonIcon
+          <LoginIcon
             sx={{
               cursor: "pointer",
               "&:hover": {
-                color: (theme) => theme.palette.secondary.main,
+                color: (theme: any) => theme.palette.secondary.main,
               },
             }}
+            onClick={() => setLoginModalOpen(true)}
           />
           <CartBadge
             badgeContent={cartTotalAmount}
@@ -324,6 +328,10 @@ function MainNavigation() {
         </Icons>
       </StyledToolbar>
       <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />
+      <LoginModal
+        loginOpen={loginModalOpen}
+        handleClose={() => setLoginModalOpen(false)}
+      />
     </AppBar>
   );
 }

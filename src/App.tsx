@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import ErrorPage from "./pages/Error";
@@ -11,8 +10,9 @@ import { categoryLoader } from "./pages/Category";
 import ResultsPage from "./pages/Results";
 import { resultsLoader } from "./pages/Results";
 import WishlistPage from "./pages/Wishlist";
+import SignupPage from "./pages/Signup";
 
-/**@todo Fix cart new line bug on high amount*/
+/**@todo errorElement not rendered when an error is thrown. */
 /**@todo Auto scroll to top on page refresh. */
 /**@todo openOnFocus doesn't work. */
 /**@todo Implement search sa query params. */
@@ -39,6 +39,7 @@ const router = createBrowserRouter([
         loader: resultsLoader,
       },
       { path: "/wishlist", element: <WishlistPage /> },
+      { path: "/signup", element: <SignupPage /> },
     ],
   },
 ]);
