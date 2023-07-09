@@ -22,13 +22,38 @@ interface LoginProps {
 function LoginForm({ handleClose }: LoginProps) {
   const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const email = data.get("email");
+    const password = data.get("password");
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+
+    try {
+      const existingUsersResponse = await fetch(
+        "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+      );
+      const existingUsersData = await existingUsersResponse.json();
+
+      for (const user in existingUsersData) {
+        const existingUserEmail: string = existingUsersData[user].email;
+        const existingUserPassword: string = existingUsersData[user].password;
+
+        if (existingUserEmail === email && existingUserPassword === password) {
+          console.log("Logged in");
+          handleClose();
+          break;
+        } else {
+        }
+      }
+    } catch (err) {
+      throw new Error(
+        "There was a problem with the sign-in feature. Please refresh and try again."
+      );
+    }
   };
 
   return (

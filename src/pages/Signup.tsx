@@ -17,19 +17,13 @@ import NextgenLogo from "../assets/nextgen-logo-black.png";
 
 function Signup() {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState<string>("");
   const [firstNameValid, setFirstNameValid] = useState<boolean | null>(null);
-
-  const [lastName, setLastName] = useState<string>("");
   const [lastNameValid, setLastNameValid] = useState<boolean | null>(null);
 
-  const [email, setEmail] = useState<string>("");
   const [emailValid, setEmailValid] = useState<boolean | null>(null);
   const [emailError, setEmailError] = useState<string>("");
 
-  const [password, setPassword] = useState<string>("");
   const [passwordValid, setPasswordValid] = useState<boolean | null>(null);
-
   const [allowExtraEmails, setAllowExtraEmails] = useState<boolean>(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -49,26 +43,18 @@ function Signup() {
 
       const validNameInput = validateInput("firstName", firstName);
       setFirstNameValid(validNameInput);
-      if (validNameInput) {
-        setFirstName(firstName);
-      }
 
       const validLastNameInput = validateInput("lastName", lastName);
       setLastNameValid(validLastNameInput);
-      if (validLastNameInput) {
-        setLastName(lastName);
-      }
 
-      const validEmailInput = validateInput("email", email);
+      let validEmailInput: boolean = validateInput("email", email);
       setEmailValid(validEmailInput);
       if (validEmailInput) {
-        let isValid: boolean = true; // setEmailValid je async a email validity je potreban odmah
-
         for (const user in existingUsersData) {
           const existingUserEmail: string = existingUsersData[user].email;
 
           if (existingUserEmail === email) {
-            isValid = false;
+            validEmailInput = false;
             setEmailValid(false);
             setEmailError(
               "An account with this e-mail address already exists. Please try a different one."
@@ -78,9 +64,8 @@ function Signup() {
         }
 
         // If e-mail passed all if checks
-        if (isValid) {
+        if (validEmailInput) {
           setEmailValid(true);
-          setEmail(email);
         }
       } else {
         setEmailValid(false);
@@ -89,34 +74,14 @@ function Signup() {
 
       const validPasswordInput = validateInput("password", password);
       setPasswordValid(validPasswordInput);
-      if (validPasswordInput) {
-        setPassword(password);
-      }
-    } catch (err) {
-      console.log("Error fetching the existing user data.");
-      throw new Error(
-        "Error fetching the existing user data. Please refresh the page and try again."
-      );
-    }
-  };
 
-  // const dependencies = [
-  //   firstName,
-  //   firstNameValid,
-  //   lastName,
-  //   lastNameValid,
-  //   email,
-  //   emailValid,
-  //   password,
-  //   passwordValid,
-  //   allowExtraEmails,
-  //   navigate,
-  // ];
-  useEffect(() => {
-    const postUserData = async () => {
-      if (firstNameValid && lastNameValid && emailValid && passwordValid) {
-        // console.log("Post request");
-
+      // Submitting form data if all fields are valid
+      if (
+        validNameInput &&
+        validLastNameInput &&
+        validEmailInput &&
+        validPasswordInput
+      ) {
         const userData = {
           firstName: firstName,
           lastName: lastName,
@@ -150,20 +115,13 @@ function Signup() {
 
         navigate("/");
       }
-    };
-    postUserData();
-  }, [
-    firstName,
-    firstNameValid,
-    lastName,
-    lastNameValid,
-    email,
-    emailValid,
-    password,
-    passwordValid,
-    allowExtraEmails,
-    navigate,
-  ]);
+    } catch (err) {
+      console.log("Error fetching the existing user data.");
+      throw new Error(
+        "Error fetching the existing user data. Please refresh the page and try again."
+      );
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
