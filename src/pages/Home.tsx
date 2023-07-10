@@ -36,14 +36,9 @@ const memoizedProducts = createSelector(
 
 function Home() {
   const dispatch = useAppDispatch();
-  const products = useSelector((state: RootState) => state.cart.allProducts);
+  const products = useSelector((state: RootState) => state.cart.products);
   const heroRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // const cart = useSelector((state: RootState) => state.cart.cart);
-  // console.log(cart);
-
-  const wishlist = useSelector((state: RootState) => state.wishlist);
 
   useEffect(() => {
     setTimeout(() => {
@@ -56,7 +51,7 @@ function Home() {
       setIsLoading(false);
     };
     fetchHomepage();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

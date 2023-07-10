@@ -30,7 +30,7 @@ interface StackProps {
 }
 
 function ProductStack({ type }: StackProps) {
-  const products = useSelector((state: RootState) => state.cart.allProducts);
+  const products = useSelector((state: RootState) => state.cart.products);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -59,7 +59,7 @@ function ProductStack({ type }: StackProps) {
       );
       setDisplayedProducts(newProducts);
     }
-  }, [products]);
+  }, [products, type]);
 
   return (
     <>

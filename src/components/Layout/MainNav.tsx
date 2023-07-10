@@ -2,19 +2,17 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/index";
+import AutocompleteSearch from "./Autocomplete";
 import CartModal from "../Cart/CartModal";
 import LoginModal from "../Authentication/LoginModal";
 
 // npm install -D @types/autosuggest-highlight
-import parse from "autosuggest-highlight/parse";
-import match from "autosuggest-highlight/match";
 import {
   AppBar,
-  Autocomplete,
+  Avatar,
   Badge,
   Box,
   styled,
-  TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -36,37 +34,6 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
-const Search = styled("div")(({ theme }) => ({
-  backgroundColor: "white",
-  borderRadius: "30px",
-  width: "35%",
-  height: 40,
-
-  display: "none",
-  justifyContent: "space-evenly",
-
-  [theme.breakpoints.up("sm")]: {
-    display: "flex",
-    alignItems: "center",
-  },
-}));
-
-const SearchButton = styled("button")({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "orangered",
-  color: "white",
-  width: 60,
-  height: 40,
-  border: "none",
-  borderRadius: "0 30px 30px 0",
-  "&:hover": {
-    cursor: "pointer",
-    backgroundColor: "#df3c00",
-  },
-});
-
 const Icons = styled(Box)({
   display: "flex",
   alignItems: "center",
@@ -83,32 +50,19 @@ const NavbarBadge = styled(Badge)({
   },
 });
 
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-}
+const UserIcon = styled(LoginIcon)({
+  cursor: "pointer",
+  "&:hover": {
+    color: (theme: any) => theme.palette.secondary.main,
+  },
+});
 
 function MainNavigation() {
   const navigate = useNavigate();
-  const products = useSelector((state: RootState) => state.cart.allProducts);
   const cart = useSelector((state: RootState) => state.cart.cart);
-  const wishlist = useSelector((state: RootState) => state.wishlist);
-  const userData = useSelector((state: RootState) => state.user);
-  console.log(userData);
+  const { wishlist, user: userData } = useSelector((state: RootState) => state);
+  // console.log(userData);
 
-  const inputOptions = products.map((product) => product.data.title);
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
@@ -116,42 +70,6 @@ function MainNavigation() {
     (accumulator, product) => accumulator + (product.quantity ?? 0),
     0
   );
-
-  // Clears input on back button
-  window.addEventListener("popstate", () => {
-    setCurrentInput("");
-  });
-
-  const inputChangeHandler = (event: any, newValue: string | null) => {
-    event.preventDefault();
-    event.target.blur();
-
-    // Necessary check. Auto change event occurs on input clear (newValue = null) and causes error.
-    if (newValue) {
-      setCurrentInput(newValue);
-
-      const foundProduct = products.find(
-        (product) =>
-          product.data.title.toLowerCase() === newValue?.toLowerCase()
-      );
-
-      if (foundProduct) {
-        const productUrl = `${foundProduct.data.category.toLowerCase()}/${foundProduct.data.title
-          .toLowerCase()
-          .replaceAll(" ", "-")}`;
-
-        navigate(productUrl);
-      } else {
-        const searchUrl = `/search/${newValue
-          ?.toString()
-          .replaceAll(" ", "-")}`;
-
-        navigate(searchUrl);
-      }
-    } else {
-      setCurrentInput(null);
-    }
-  };
 
   return (
     <AppBar position="sticky">
@@ -179,111 +97,14 @@ function MainNavigation() {
           fontSize="large"
           sx={{ display: { xs: "block", sm: "none" } }}
         />
-        <Search>
-          <Autocomplete
-            id="products-search"
-            freeSolo
-            // autoHighlight
-            openOnFocus={true} // Ne radi radi onInputChange
-            value={currentInput}
-            onChange={inputChangeHandler}
-            onInputChange={(event, value) => {
-              setCurrentInput(value);
-            }}
-            options={inputOptions}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="standard"
-                InputProps={{
-                  ...params.InputProps,
-                  disableUnderline: true,
-                  onKeyDown: (e) => {
-                    if (e.key === "Enter") {
-                      inputChangeHandler(e, currentInput);
-                      // Potrebno manually handleati, onInputChange disablea Enter
-                    }
-                  },
-                }}
-                placeholder="Search for products..."
-                // sx={{
-                //   ".MuiInputBase-input": { fontSize: 15 },
-                // }}
-              />
-            )}
-            filterOptions={(options, state): string[] => {
-              let suggestions: string[] = [];
-
-              if (state.inputValue.length > 0) {
-                suggestions = options.filter((productTitle) =>
-                  productTitle
-                    .toLowerCase()
-                    .includes(state.inputValue.toLowerCase())
-                );
-                return suggestions;
-              }
-              // If suggestion array is empty returns and displays nothing
-              return [];
-            }}
-            renderOption={(props, option, { inputValue }) => {
-              const matches = match(option, inputValue, {
-                insideWords: true,
-              });
-              const parts = parse(option, matches);
-
-              return (
-                <li {...props} key={option}>
-                  <div>
-                    {parts.map((part, index) => (
-                      <span
-                        key={index}
-                        style={{
-                          fontWeight: part.highlight ? 700 : 400,
-                        }}
-                      >
-                        {part.text}
-                      </span>
-                    ))}
-                  </div>
-                </li>
-              );
-            }}
-            sx={{
-              height: 45,
-              paddingRight: 0.7,
-              paddingLeft: 2,
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              // Vertical text align was bad because default <input>'s height is different than parent
-              "	.MuiAutocomplete-input": {
-                height: "100%",
-              },
-            }}
-          />
-          <SearchButton
-            onClick={(event) => {
-              inputChangeHandler(event, currentInput);
-            }}
-          >
-            <SearchIcon fontSize="large" />
-          </SearchButton>
-        </Search>
+        <AutocompleteSearch
+          currentInput={currentInput}
+          setCurrentInput={setCurrentInput}
+        />
         <Icons>
           <Box sx={{ display: { xs: "block", sm: "none" } }}>
             <SearchIcon fontSize="large" />
           </Box>
-          {/* <WishlistBadge
-            badgeContent={wishlist.length}
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                color: "orangered",
-              },
-            }}
-          >
-            <FavoriteIcon onClick={() => navigate("/wishlist")} />
-          </WishlistBadge> */}
           <NavbarBadge
             badgeContent={wishlist.length}
             color="error"
@@ -296,15 +117,7 @@ function MainNavigation() {
           >
             <FavoriteIcon onClick={() => navigate("/wishlist")} />
           </NavbarBadge>
-          <LoginIcon
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                color: (theme: any) => theme.palette.secondary.main,
-              },
-            }}
-            onClick={() => setLoginModalOpen(true)}
-          />
+          <UserIcon onClick={() => setLoginModalOpen(true)} />
           <NavbarBadge
             badgeContent={cartTotalAmount}
             color="secondary"

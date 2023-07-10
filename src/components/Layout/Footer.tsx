@@ -49,26 +49,27 @@ function Footer() {
           <Typography variant="body1">Bosnia and Herzegovina</Typography>
           <Typography variant="body1">Phone: (+387) 62 316-666</Typography>
           <Typography variant="body1">info@nextgengaming.com</Typography>
-          <Typography variant="body1">www.nextgengaming.com</Typography>
         </Stack>
         <Stack direction="column">
-          <Typography variant="body1" fontWeight={700}>
-            Category 1
+          <Typography variant="body1" fontWeight={700} mb={1}>
+            Popular categories
           </Typography>
-          <Typography variant="body1">Option1</Typography>
-          <Typography variant="body1">Option2</Typography>
-          <Typography variant="body1">Option3</Typography>
-          <Typography variant="body1">Option4</Typography>
+          <Typography variant="body1">Keyboards</Typography>
+          <Typography variant="body1">Mice</Typography>
+          <Typography variant="body1">Mousepads</Typography>
+          <Typography variant="body1">Monitors</Typography>
+          <Typography variant="body1">Gaming Chairs</Typography>
         </Stack>
         <Stack direction="column">
           <Stack direction="column">
-            <Typography variant="body1" fontWeight={700}>
-              Category 2
+            <Typography variant="body1" fontWeight={700} mb={1}>
+              Customer service
             </Typography>
-            <Typography variant="body1">Option1</Typography>
-            <Typography variant="body1">Option2</Typography>
-            <Typography variant="body1">Option3</Typography>
-            <Typography variant="body1">Option4</Typography>
+            <Typography variant="body1">
+              Frequently asked questions (FAQ)
+            </Typography>
+            <Typography variant="body1">Terms & Conditions</Typography>
+            <Typography variant="body1">Customer service</Typography>
           </Stack>
         </Stack>
         <Stack direction="column">
