@@ -76,6 +76,11 @@ function HeroProduct({ product, promo }: ProductProps) {
             variant="subtitle1"
             fontWeight={700}
             color="white"
+            sx={{
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            }}
           >
             {product?.data.title}
           </Typography>

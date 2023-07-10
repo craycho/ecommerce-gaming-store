@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/index";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
+// npm install -D @types/autosuggest-highlight
 
 import { Autocomplete, TextField, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";

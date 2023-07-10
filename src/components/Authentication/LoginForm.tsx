@@ -39,10 +39,6 @@ function LoginForm({ handleClose }: LoginProps) {
     const data = new FormData(event.currentTarget);
     const email = data.get("email") as string;
     const password = data.get("password") as string;
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
 
     try {
       const existingUsersResponse = await fetch(
@@ -54,9 +50,10 @@ function LoginForm({ handleClose }: LoginProps) {
         const existingUserEmail: string = existingUsersData[user].email;
         const existingUserPassword: string = existingUsersData[user].password;
         const existingName: string = existingUsersData[user].firstName;
+        const userData = existingUsersData[user];
 
         if (existingUserEmail === email && existingUserPassword === password) {
-          dispatch(userActions.loginUser({ existingName, existingUserEmail }));
+          dispatch(userActions.loginUser(userData));
           handleClose();
           break;
         } else if (existingUserEmail !== email) {

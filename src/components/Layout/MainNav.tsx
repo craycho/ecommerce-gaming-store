@@ -5,8 +5,8 @@ import { RootState } from "../../store/index";
 import AutocompleteSearch from "./Autocomplete";
 import CartModal from "../Cart/CartModal";
 import LoginModal from "../Authentication/LoginModal";
+import UserModal from "../User/UserModal";
 
-// npm install -D @types/autosuggest-highlight
 import {
   AppBar,
   Avatar,
@@ -23,6 +23,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  position: "relative",
   display: "flex",
   justifyContent: "center",
   gap: "3%",
@@ -40,7 +41,7 @@ const Icons = styled(Box)({
   gap: 25,
 });
 
-const NavbarBadge = styled(Badge)({
+const IconWithBadge = styled(Badge)({
   "& .MuiBadge-badge": {
     padding: "0 0",
     display: "flex",
@@ -57,6 +58,11 @@ const UserIcon = styled(LoginIcon)({
   },
 });
 
+// const WelcomeMessage = styled(Typography)({
+//   position: "absolute",
+//   right: 150,
+// });
+
 function MainNavigation() {
   const navigate = useNavigate();
   const cart = useSelector((state: RootState) => state.cart.cart);
@@ -65,6 +71,7 @@ function MainNavigation() {
 
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [userModalOpen, setUserModalOpen] = useState<boolean>(false);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const cartTotalAmount = cart.reduce(
     (accumulator, product) => accumulator + (product.quantity ?? 0),
@@ -105,7 +112,7 @@ function MainNavigation() {
           <Box sx={{ display: { xs: "block", sm: "none" } }}>
             <SearchIcon fontSize="large" />
           </Box>
-          <NavbarBadge
+          <IconWithBadge
             badgeContent={wishlist.length}
             color="error"
             sx={{
@@ -116,9 +123,21 @@ function MainNavigation() {
             }}
           >
             <FavoriteIcon onClick={() => navigate("/wishlist")} />
-          </NavbarBadge>
-          <UserIcon onClick={() => setLoginModalOpen(true)} />
-          <NavbarBadge
+          </IconWithBadge>
+
+          {userData.loggedIn ? (
+            <Box display="flex" alignItems="center" gap={1.2}>
+              <Avatar
+                onClick={() => setUserModalOpen(true)}
+                sx={{ cursor: "pointer" }}
+              />
+              {userData.firstName}
+            </Box>
+          ) : (
+            <UserIcon onClick={() => setLoginModalOpen(true)} />
+          )}
+
+          <IconWithBadge
             badgeContent={cartTotalAmount}
             color="secondary"
             sx={{
@@ -130,16 +149,17 @@ function MainNavigation() {
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCartIcon />
-          </NavbarBadge>
+          </IconWithBadge>
         </Icons>
-        {userData.loggedIn && (
-          <Typography variant="body1">Hello, {userData.name}!</Typography>
-        )}
       </StyledToolbar>
       <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />
       <LoginModal
         loginOpen={loginModalOpen}
         handleClose={() => setLoginModalOpen(false)}
+      />
+      <UserModal
+        userModalOpen={userModalOpen}
+        handleClose={() => setUserModalOpen(false)}
       />
     </AppBar>
   );

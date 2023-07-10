@@ -1,26 +1,41 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { getLocalStorage } from "../util/get-localStorage";
 
 interface User {
   loggedIn: boolean;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-}
-interface PayloadData {
-  existingName: string;
-  existingUserEmail: string;
+  password: string;
+  allowExtraEmails: boolean;
 }
 
-const initialState: User = { loggedIn: false, name: "", email: "" };
+interface LoggedInUserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  allowExtraEmails: boolean;
+}
+
+const initialState: User = {
+  loggedIn: false,
+  allowExtraEmails: true,
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+};
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loginUser(state: User, action: PayloadAction<PayloadData>) {
+    loginUser(state: User, action: PayloadAction<LoggedInUserData>) {
       state.loggedIn = true;
-      state.name = action.payload.existingName;
-      state.email = action.payload.existingUserEmail;
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
+      state.email = action.payload.email;
+      state.password = action.payload.password;
     },
     logoutUser(state: User) {
       state.loggedIn = false;

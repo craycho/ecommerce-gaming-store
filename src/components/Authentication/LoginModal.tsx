@@ -17,7 +17,7 @@ interface ModalData {
   handleClose: () => void;
 }
 
-export default function BasicModal({ loginOpen, handleClose }: ModalData) {
+function LoginModal({ loginOpen, handleClose }: ModalData) {
   return (
     <Modal
       disableAutoFocus
@@ -32,3 +32,5 @@ export default function BasicModal({ loginOpen, handleClose }: ModalData) {
     </Modal>
   );
 }
+
+export default LoginModal;
