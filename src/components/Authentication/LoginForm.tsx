@@ -1,5 +1,9 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/user-slice";
+
 import {
-  Avatar,
   Box,
   Button,
   Checkbox,
@@ -8,16 +12,8 @@ import {
   Link,
   TextField,
   Typography,
-  styled,
 } from "@mui/material";
-
-// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import NextgenLogo from "../../assets/nextgen-logo-black.png";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { userActions } from "../../store/user-slice";
 
 interface LoginProps {
   handleClose: () => void;
@@ -26,9 +22,8 @@ interface LoginProps {
 function LoginForm({ handleClose }: LoginProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userData = useSelector((state: RootState) => state.user);
-  console.log(userData);
 
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [showEmailError, setShowEmailError] = useState<boolean | null>(null);
   const [showPasswordError, setShowPasswordError] = useState<boolean | null>(
     null
@@ -49,11 +44,10 @@ function LoginForm({ handleClose }: LoginProps) {
       for (const user in existingUsersData) {
         const existingUserEmail: string = existingUsersData[user].email;
         const existingUserPassword: string = existingUsersData[user].password;
-        const existingName: string = existingUsersData[user].firstName;
         const userData = existingUsersData[user];
 
         if (existingUserEmail === email && existingUserPassword === password) {
-          dispatch(userActions.loginUser(userData));
+          dispatch(userActions.loginUser({ userData, rememberMe }));
           handleClose();
           break;
         } else if (existingUserEmail !== email) {
@@ -121,7 +115,13 @@ function LoginForm({ handleClose }: LoginProps) {
             helperText={showPasswordError === true && "Invalid password."}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={
+              <Checkbox
+                value={rememberMe}
+                color="primary"
+                onChange={() => setRememberMe((prev) => !prev)}
+              />
+            }
             label="Remember me"
           />
           <Button

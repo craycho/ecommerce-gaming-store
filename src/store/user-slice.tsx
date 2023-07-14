@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { getUserData } from "../util/get-localStorage";
 
 interface User {
   loggedIn: boolean;
@@ -17,28 +18,41 @@ interface LoggedInUserData {
   allowExtraEmails: boolean;
 }
 
-const initialState: User = {
-  loggedIn: false,
-  allowExtraEmails: true,
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-};
+interface LoginProps {
+  userData: LoggedInUserData;
+  rememberMe: boolean;
+}
+
+const initialState: User = getUserData();
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loginUser(state: User, action: PayloadAction<LoggedInUserData>) {
-      state.loggedIn = true;
-      state.firstName = action.payload.firstName;
-      state.lastName = action.payload.lastName;
-      state.email = action.payload.email;
-      state.password = action.payload.password;
+    loginUser(state: User, action: PayloadAction<LoginProps>): User {
+      const userData = { ...action.payload.userData, loggedIn: true };
+
+      if (action.payload.rememberMe) {
+        localStorage.setItem("userData", JSON.stringify(userData));
+      } else {
+        sessionStorage.setItem("userData", JSON.stringify(userData));
+      }
+
+      return userData;
     },
     logoutUser(state: User) {
-      state.loggedIn = false;
+      const emptyUserData = {
+        loggedIn: false,
+        allowExtraEmails: true,
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      };
+      localStorage.setItem("userData", JSON.stringify(emptyUserData));
+      sessionStorage.setItem("userData", JSON.stringify(emptyUserData));
+
+      return emptyUserData;
     },
   },
 });

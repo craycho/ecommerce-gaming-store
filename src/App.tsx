@@ -12,6 +12,7 @@ import { resultsLoader } from "./pages/Results";
 import WishlistPage from "./pages/Wishlist";
 import SignupPage from "./pages/Signup";
 
+/**@todo Use sessionStorage and localStorage za pamcenje logina. */
 /**@todo errorElement not rendered when an error is thrown. */
 /**@todo Auto scroll to top on page refresh. */
 /**@todo openOnFocus doesn't work. */

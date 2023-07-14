@@ -67,7 +67,6 @@ function MainNavigation() {
   const navigate = useNavigate();
   const cart = useSelector((state: RootState) => state.cart.cart);
   const { wishlist, user: userData } = useSelector((state: RootState) => state);
-  // console.log(userData);
 
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
