@@ -1,46 +1,32 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getUserData } from "../util/get-localStorage";
 
-interface User {
+interface UserData {
   loggedIn: boolean;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   allowExtraEmails: boolean;
-}
-
-interface LoggedInUserData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  allowExtraEmails: boolean;
+  profilePicture: string | null;
 }
 
 interface LoginProps {
-  userData: LoggedInUserData;
+  userData: UserData;
   rememberMe: boolean;
 }
 
-const initialState: User = getUserData();
+const initialState: UserData = getUserData();
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loginUser(state: User, action: PayloadAction<LoginProps>): User {
+    loginUser(state: UserData, action: PayloadAction<LoginProps>): UserData {
       const userData = { ...action.payload.userData, loggedIn: true };
-
-      if (action.payload.rememberMe) {
-        localStorage.setItem("userData", JSON.stringify(userData));
-      } else {
-        sessionStorage.setItem("userData", JSON.stringify(userData));
-      }
-
       return userData;
     },
-    logoutUser(state: User) {
+    logoutUser(state: UserData): UserData {
       const emptyUserData = {
         loggedIn: false,
         allowExtraEmails: true,
@@ -48,11 +34,13 @@ const userSlice = createSlice({
         lastName: "",
         email: "",
         password: "",
+        profilePicture: null,
       };
-      localStorage.setItem("userData", JSON.stringify(emptyUserData));
-      sessionStorage.setItem("userData", JSON.stringify(emptyUserData));
 
       return emptyUserData;
+    },
+    changeProfilePicture(state: UserData, action: PayloadAction<string>) {
+      state.profilePicture = action.payload;
     },
   },
 });

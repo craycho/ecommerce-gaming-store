@@ -29,6 +29,7 @@ interface User {
   email: string;
   password: string;
   allowExtraEmails: boolean;
+  profilePicture: string | null;
 }
 
 const defaultUserData = {
@@ -38,6 +39,7 @@ const defaultUserData = {
   lastName: "",
   email: "",
   password: "",
+  profilePicture: null,
 };
 
 export const getUserData = (): User => {

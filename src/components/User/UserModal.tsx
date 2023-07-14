@@ -36,7 +36,6 @@ const ProfilePicture = styled("img")({
   height: 200,
   width: 500,
   objectFit: "cover",
-  objectPosition: "top",
 });
 
 const ProfilePictureButton = styled(Avatar)({
@@ -48,12 +47,7 @@ const ProfilePictureButton = styled(Avatar)({
   boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.75)",
 });
 
-const ChangeButton = styled(Button)({
-  fontSize: 12,
-});
-
 const UserInfo = styled(Typography)({
-  //   position: "relative",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
   overflow: "hidden",
@@ -120,13 +114,42 @@ function ProductsTab({ children, index, value }: TabPanelProps) {
   );
 }
 
+const emptyUserData = {
+  loggedIn: false,
+  allowExtraEmails: true,
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  profilePicture: null,
+};
+
 function UserModal({ userModalOpen, handleClose }: ModalData) {
   const dispatch = useDispatch();
   const userData = useSelector((state: RootState) => state.user);
+
   const [currentTab, setCurrentTab] = useState<number>(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setCurrentTab(newValue);
+  };
+
+  const handlePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    console.log(file);
+
+    if (file) {
+      const reader = new FileReader();
+
+      // When the file is loaded the event triggers
+      reader.addEventListener("load", (e) => {
+        const dataURL = e.target?.result as string; // base64 img
+
+        dispatch(userActions.changeProfilePicture(dataURL));
+      });
+      // Reads file content and converts it to a dataURL (base64 string). Fires load event when read successfully.
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -138,12 +161,27 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
       aria-describedby="modal-modal-description"
     >
       <Box sx={modalStyle}>
-        <ProfilePicture src={DefaultProfilePicture} alt="profile-picture" />
-        <Tooltip title="Change picture" placement="left">
-          <ProfilePictureButton>
-            <CameraIcon />
-          </ProfilePictureButton>
-        </Tooltip>
+        <ProfilePicture
+          src={userData.profilePicture || DefaultProfilePicture}
+          alt="profile-picture"
+          sx={{ objectPosition: userData.profilePicture ? "middle" : "top" }}
+        />
+        <Box component="div" id="change-picture">
+          <label htmlFor="picture-input">
+            <Tooltip title="Change picture" placement="left">
+              <ProfilePictureButton>
+                <CameraIcon />
+              </ProfilePictureButton>
+            </Tooltip>
+          </label>
+          <input
+            id="picture-input"
+            type="file"
+            accept="image/png, image/jpeg"
+            onChange={handlePictureUpload}
+            style={{ display: "none" }}
+          />
+        </Box>
         {/* <Box p={0} sx={{ display: "flex", justifyContent: "center" }}> */}
         <Grid container rowSpacing={3.7} columnSpacing={3} m={0} mb={6}>
           <Grid item xs={6} position="relative">
@@ -191,6 +229,8 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
         <Tooltip title="Logout" placement="top">
           <LogoutButton
             onClick={() => {
+              localStorage.setItem("userData", JSON.stringify(emptyUserData));
+              sessionStorage.setItem("userData", JSON.stringify(emptyUserData));
               dispatch(userActions.logoutUser());
               handleClose();
             }}

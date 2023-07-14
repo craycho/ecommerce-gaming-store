@@ -47,6 +47,17 @@ function LoginForm({ handleClose }: LoginProps) {
         const userData = existingUsersData[user];
 
         if (existingUserEmail === email && existingUserPassword === password) {
+          if (rememberMe) {
+            localStorage.setItem(
+              "userData",
+              JSON.stringify({ ...userData, loggedIn: true })
+            );
+          } else {
+            sessionStorage.setItem(
+              "userData",
+              JSON.stringify({ ...userData, loggedIn: true })
+            );
+          }
           dispatch(userActions.loginUser({ userData, rememberMe }));
           handleClose();
           break;
