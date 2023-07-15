@@ -93,6 +93,7 @@ function Signup() {
         email: email,
         password: password,
         allowExtraEmails: allowExtraEmails,
+        profilePicture: "",
       };
 
       // Post request

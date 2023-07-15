@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getUserData } from "../util/get-localStorage";
+import { useRouteLoaderData } from "react-router-dom";
 
 interface UserData {
   loggedIn: boolean;
@@ -8,7 +9,8 @@ interface UserData {
   email: string;
   password: string;
   allowExtraEmails: boolean;
-  profilePicture: string | null;
+  profilePicture: string;
+  id: string;
 }
 
 interface LoginProps {
@@ -23,8 +25,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     loginUser(state: UserData, action: PayloadAction<LoginProps>): UserData {
-      const userData = { ...action.payload.userData, loggedIn: true };
-      return userData;
+      return { ...action.payload.userData, loggedIn: true };
     },
     logoutUser(state: UserData): UserData {
       const emptyUserData = {
@@ -34,7 +35,8 @@ const userSlice = createSlice({
         lastName: "",
         email: "",
         password: "",
-        profilePicture: null,
+        profilePicture: "",
+        id: "",
       };
 
       return emptyUserData;

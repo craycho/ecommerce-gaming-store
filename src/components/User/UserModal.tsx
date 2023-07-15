@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/index";
+import { RootState, useAppDispatch } from "../../store/index";
 import { userActions } from "../../store/user-slice";
+import { patchProfilePicture } from "../../store/user-actions";
+
 import {
   Avatar,
   Box,
@@ -121,11 +123,12 @@ const emptyUserData = {
   lastName: "",
   email: "",
   password: "",
-  profilePicture: null,
+  profilePicture: "",
 };
 
 function UserModal({ userModalOpen, handleClose }: ModalData) {
   const dispatch = useDispatch();
+  const appDispatch = useAppDispatch();
   const userData = useSelector((state: RootState) => state.user);
 
   const [currentTab, setCurrentTab] = useState<number>(0);
@@ -136,16 +139,26 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
 
   const handlePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
-    console.log(file);
+    // console.log(file);
 
     if (file) {
       const reader = new FileReader();
 
-      // When the file is loaded the event triggers
       reader.addEventListener("load", (e) => {
         const dataURL = e.target?.result as string; // base64 img
 
         dispatch(userActions.changeProfilePicture(dataURL));
+        appDispatch(patchProfilePicture({ userData, dataURL }));
+
+        // Neophodno samo radi current session updatea, ostale handlea fetch kod logina
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({ ...userData, profilePicture: dataURL })
+        );
+        sessionStorage.setItem(
+          "userData",
+          JSON.stringify({ ...userData, profilePicture: dataURL })
+        );
       });
       // Reads file content and converts it to a dataURL (base64 string). Fires load event when read successfully.
       reader.readAsDataURL(file);
