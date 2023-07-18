@@ -4,6 +4,8 @@ import { RootState, useAppDispatch } from "../../store/index";
 import { userActions } from "../../store/user-slice";
 import { patchProfilePicture } from "../../store/user-actions";
 
+import ChangeUserData from "./ChangeUserData";
+
 import {
   Avatar,
   Box,
@@ -16,6 +18,7 @@ import {
   Stack,
   Tabs,
   Tab,
+  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -60,6 +63,8 @@ const ChangeSpan = styled(Typography)({
   left: 25,
   top: 50,
   textOverflow: "visible",
+  zIndex: 1,
+  color: "grey",
 
   "&:hover": {
     cursor: "pointer",
@@ -99,6 +104,30 @@ interface TabPanelProps {
   value: number;
 }
 
+/* function ChangeUserData() {
+  return (
+    <Box sx={{ marginTop: 0.2, position: "absolute", zIndex: 1 }}>
+      <TextField
+        id="firstName-change"
+        size="small"
+        sx={{
+          width: 125,
+        }}
+        inputProps={{
+          style: {
+            height: 8,
+            paddingLeft: 7,
+            fontSize: 14,
+          },
+        }}
+      />
+      <IconButton sx={{ padding: 0, top: -2 }}>
+        <CheckBoxIcon sx={{ fontSize: 28 }} />
+      </IconButton>
+    </Box>
+  );
+} */
+
 function ProductsTab({ children, index, value }: TabPanelProps) {
   return (
     <div
@@ -130,12 +159,9 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
   const dispatch = useDispatch();
   const appDispatch = useAppDispatch();
   const userData = useSelector((state: RootState) => state.user);
+  const [changeDataVisible, setChangeDataVisible] = useState<boolean>(false);
 
   const [currentTab, setCurrentTab] = useState<number>(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setCurrentTab(newValue);
-  };
 
   const handlePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -145,12 +171,12 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
       const reader = new FileReader();
 
       reader.addEventListener("load", (e) => {
-        const dataURL = e.target?.result as string; // base64 img
+        const dataURL = e.target?.result as string; // dataURL = base64 img
 
         dispatch(userActions.changeProfilePicture(dataURL));
         appDispatch(patchProfilePicture({ userData, dataURL }));
 
-        // Neophodno samo radi current session updatea, ostale handlea fetch kod logina
+        // Neophodno samo radi updatea trenutnog sessiona, fetch request prilikom logina updatea u protivnom
         localStorage.setItem(
           "userData",
           JSON.stringify({ ...userData, profilePicture: dataURL })
@@ -163,6 +189,10 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
       // Reads file content and converts it to a dataURL (base64 string). Fires load event when read successfully.
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+    setCurrentTab(newValue);
   };
 
   return (
@@ -201,41 +231,29 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
             <UserInfo variant="body1">
               <strong style={{ marginRight: 5 }}>First name:</strong>
               {userData.firstName}
-              <ChangeSpan
-                variant="caption"
-                color="grey"
-                sx={{ cursor: "pointer" }}
-              >
-                Change
-              </ChangeSpan>
             </UserInfo>
+            <ChangeUserData dataType="firstName" />
           </Grid>
           <Grid item xs={6} position="relative">
-            <UserInfo variant="body1" display="inline">
+            <UserInfo variant="body1">
               <strong style={{ marginRight: 5 }}>Last name:</strong>
               {userData.lastName}
             </UserInfo>
-            <ChangeSpan variant="caption" color="grey">
-              Change
-            </ChangeSpan>
+            <ChangeUserData dataType="lastName" />
           </Grid>
           <Grid item xs={6} position="relative">
             <UserInfo variant="body1">
               <strong style={{ marginRight: 5 }}>E-mail:</strong>
               {userData.email}
             </UserInfo>
-            <ChangeSpan variant="caption" color="grey">
-              Change
-            </ChangeSpan>
+            <ChangeUserData dataType="email" />
           </Grid>
           <Grid item xs={6} position="relative">
             <UserInfo variant="body1">
               <strong style={{ marginRight: 5 }}>Password:</strong>
               {userData.password.replace(/./g, "*")}
             </UserInfo>
-            <ChangeSpan variant="caption" color="grey">
-              Change
-            </ChangeSpan>
+            <ChangeUserData dataType="password" />
           </Grid>
         </Grid>
         {/* </Box> */}
@@ -258,7 +276,7 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
         <Box p={1.5} pt={0}>
           <Tabs
             value={currentTab}
-            onChange={handleChange}
+            onChange={handleChangeTab}
             aria-label="Order tabs"
             sx={{ marginBottom: 1.5 }}
           >

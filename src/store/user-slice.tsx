@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getUserData } from "../util/get-localStorage";
-import { useRouteLoaderData } from "react-router-dom";
+// import { useRouteLoaderData } from "react-router-dom";
 
 interface UserData {
   loggedIn: boolean;
@@ -16,6 +16,11 @@ interface UserData {
 interface LoginProps {
   userData: UserData;
   rememberMe: boolean;
+}
+
+interface ChangeUserData {
+  dataType: string;
+  currentInput: string;
 }
 
 const initialState: UserData = getUserData();
@@ -43,6 +48,27 @@ const userSlice = createSlice({
     },
     changeProfilePicture(state: UserData, action: PayloadAction<string>) {
       state.profilePicture = action.payload;
+    },
+    changeUserData(state: UserData, action: PayloadAction<ChangeUserData>) {
+      const inputValue = action.payload.currentInput;
+
+      switch (action.payload.dataType) {
+        case "firstName":
+          state.firstName = inputValue;
+          break;
+
+        case "lastName":
+          state.lastName = inputValue;
+          break;
+
+        case "email":
+          state.email = inputValue;
+          break;
+
+        case "password":
+          state.password = inputValue;
+          break;
+      }
     },
   },
 });

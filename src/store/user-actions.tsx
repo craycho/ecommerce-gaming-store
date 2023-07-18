@@ -12,7 +12,7 @@ interface User {
   id: string;
 }
 
-interface ActionProps {
+interface PictureProps {
   userData: User;
   dataURL: string;
 }
@@ -20,13 +20,13 @@ interface ActionProps {
 export const patchProfilePicture = function ({
   userData,
   dataURL,
-}: ActionProps) {
+}: PictureProps) {
   return async (dispatch: AppDispatch) => {
     const response = await fetch(
       "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
     );
     if (!response.ok) {
-      throw new Error("Could not fetch product data.");
+      throw new Error("Could not change profile picture.");
     }
     const firebaseUsersData = await response.json();
 
@@ -34,8 +34,8 @@ export const patchProfilePicture = function ({
       const firebaseUserEmail: string = firebaseUsersData[user].email;
 
       if (firebaseUserEmail === userData.email) {
-        console.log(firebaseUserEmail);
-        const postResponse = await fetch(
+        // console.log(firebaseUserEmail);
+        const patchResponse = await fetch(
           `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${user}.json`,
           {
             method: "PATCH",
@@ -45,7 +45,52 @@ export const patchProfilePicture = function ({
             body: JSON.stringify({ profilePicture: dataURL }), // Updates existing attribute
           }
         );
-        console.log(postResponse);
+        if (!patchResponse.ok) {
+          throw new Error("Could not change profile picture.");
+        }
+      }
+    }
+  };
+};
+
+interface DataProps {
+  userData: User;
+  dataType: string;
+  newValue: string;
+}
+
+export const patchUserData = function ({
+  userData,
+  dataType,
+  newValue,
+}: DataProps) {
+  return async (dispatch: AppDispatch) => {
+    const response = await fetch(
+      "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+    );
+    if (!response.ok) {
+      throw new Error("Could not change profile picture.");
+    }
+    const firebaseUsersData = await response.json();
+
+    for (const user in firebaseUsersData) {
+      const firebaseUserEmail: string = firebaseUsersData[user].email;
+
+      if (firebaseUserEmail === userData.email) {
+        console.log(firebaseUserEmail);
+        const patchResponse = await fetch(
+          `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${user}.json`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ [dataType]: newValue }),
+          }
+        );
+        if (!patchResponse.ok) {
+          throw new Error("Could not change profile picture.");
+        }
       }
     }
   };

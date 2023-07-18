@@ -67,7 +67,7 @@ function MainNavigation() {
   const navigate = useNavigate();
   const cart = useSelector((state: RootState) => state.cart.cart);
   const { wishlist, user: userData } = useSelector((state: RootState) => state);
-  console.log(userData);
+  // console.log(userData);
 
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
@@ -126,12 +126,14 @@ function MainNavigation() {
           </IconWithBadge>
 
           {userData.loggedIn ? (
-            <Box display="flex" alignItems="center" gap={1.2}>
-              <Avatar
-                onClick={() => setUserModalOpen(true)}
-                sx={{ cursor: "pointer" }}
-                src={userData.profilePicture}
-              />
+            <Box
+              display="flex"
+              alignItems="center"
+              gap={1.2}
+              onClick={() => setUserModalOpen(true)}
+              sx={{ cursor: "pointer" }}
+            >
+              <Avatar src={userData.profilePicture} />
               {userData.firstName}
             </Box>
           ) : (
