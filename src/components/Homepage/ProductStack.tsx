@@ -6,6 +6,7 @@ import ProductCard from "./ProductCard";
 import getRandomProducts from "../../util/random-products";
 
 import { Box, Fade, Stack } from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 
 interface ProductData {
   category: string;
@@ -26,10 +27,10 @@ interface Product {
 
 interface StackProps {
   type: string;
-  // setScroll: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function ProductStack({ type }: StackProps) {
+  const carouselPageCount = [1, 2, 3];
   const products = useSelector((state: RootState) => state.cart.products);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 

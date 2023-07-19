@@ -3,29 +3,12 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../store/index";
 import { fetchProducts } from "../store/products-actions";
 
-import ProductStack from "../components/Homepage/ProductStack";
+import ProductCarousel from "../components/Homepage/ProductCarousel";
 import HeroStack from "../components/Homepage/HeroStack";
 import NextGenDescription from "../components/Layout/Description";
 import Newsletter from "../components/Layout/Newsletter";
 
 import { Box, CircularProgress, Typography } from "@mui/material";
-
-// interface ProductData {
-//   category: string;
-//   description: string;
-//   image: string;
-//   imageAlt: string;
-//   new: boolean;
-//   onSale: boolean;
-//   price: number;
-//   thumbnail: string;
-//   title: string;
-// }
-
-// interface Product {
-//   id: string;
-//   data: ProductData;
-// }
 
 /* Memoized selector, radi kao obicni al ne runa svaki put
 const productsSelector = (state: RootState) => state.cart;
@@ -63,15 +46,15 @@ function Home() {
           <Typography variant="h5" mb={3} align="center" fontWeight={700}>
             You might be interested in:
           </Typography>
-          <ProductStack type="random" />
+          <ProductCarousel type="random" />
           <Typography variant="h5" mb={3} align="center" fontWeight={700}>
             Currently on sale:
           </Typography>
-          <ProductStack type="onSale" />
+          <ProductCarousel type="onSale" />
           <Typography variant="h5" mb={3} align="center" fontWeight={700}>
             New arrivals:
           </Typography>
-          <ProductStack type="new" />
+          <ProductCarousel type="new" />
         </>
       )}
       <Box

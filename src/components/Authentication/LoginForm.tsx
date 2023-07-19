@@ -110,7 +110,7 @@ function LoginForm({ handleClose }: LoginProps) {
             error={showEmailError === true}
             helperText={
               showEmailError === true &&
-              "Sorry, we can't find an account with this email address. Try creating a new account (LINK)"
+              "Sorry, we can't find an account with this email address. Try creating a new account."
             }
           />
           <TextField
