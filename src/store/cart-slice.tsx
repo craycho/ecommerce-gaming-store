@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { getLocalStorage } from "../util/get-localStorage";
+import { getLocalStorage, getLocalTotalPrice } from "../util/get-localStorage";
+import { getTotalPrice } from "../util/get-total-price";
+import { truncate } from "fs";
 
 interface ProductData {
   category: string;
@@ -22,11 +24,13 @@ interface Product {
 interface StateData {
   products: Product[];
   cart: Product[];
+  totalPrice: number;
 }
 
 const initialState: StateData = {
   products: [],
   cart: getLocalStorage("cart"),
+  totalPrice: getLocalTotalPrice(),
 };
 
 const cartSlice = createSlice({
@@ -55,6 +59,16 @@ const cartSlice = createSlice({
           ? existingProduct.quantity++
           : (existingProduct.quantity = 1);
       }
+
+      const totalPrice = getTotalPrice(
+        addedProduct.data.onSale,
+        addedProduct.data.price,
+        1,
+        state.totalPrice,
+        true
+      );
+
+      state.totalPrice = totalPrice;
     },
     removeFromCart(state: StateData, action: PayloadAction<Product>) {
       const removedProduct = action.payload;
@@ -70,6 +84,15 @@ const cartSlice = createSlice({
         } else {
           existingProduct.quantity--;
         }
+
+        const totalPrice = getTotalPrice(
+          removedProduct.data.onSale,
+          removedProduct.data.price,
+          1,
+          state.totalPrice,
+          false
+        );
+        state.totalPrice = totalPrice;
       }
     },
     removeAllFromCart(state: StateData, action: PayloadAction<Product>) {
@@ -82,6 +105,15 @@ const cartSlice = createSlice({
         state.cart = state.cart.filter(
           (product) => product.id !== existingProduct.id
         );
+
+        const totalPrice = getTotalPrice(
+          removedProduct.data.onSale,
+          removedProduct.data.price,
+          existingProduct.quantity as number,
+          state.totalPrice,
+          false
+        );
+        state.totalPrice = totalPrice;
       }
     },
   },

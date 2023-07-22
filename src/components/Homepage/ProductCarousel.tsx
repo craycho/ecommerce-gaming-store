@@ -20,7 +20,7 @@ function ProductCarousel({ type }: { type: string }) {
       }}
     >
       {carouselPageCount.map(() => (
-        <ProductStack type={type} />
+        <ProductStack key={Math.random()} type={type} />
       ))}
     </Carousel>
   );

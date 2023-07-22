@@ -30,7 +30,6 @@ interface StackProps {
 }
 
 function ProductStack({ type }: StackProps) {
-  const carouselPageCount = [1, 2, 3];
   const products = useSelector((state: RootState) => state.cart.products);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
