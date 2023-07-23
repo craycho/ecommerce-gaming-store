@@ -11,6 +11,7 @@ import ResultsPage from "./pages/Results";
 import { resultsLoader } from "./pages/Results";
 import WishlistPage from "./pages/Wishlist";
 import SignupPage from "./pages/Signup";
+import CheckoutPage from "./pages/Checkout";
 
 /**@todo Uradi post request za mijenjanje profile picture u user-actions */
 /**@todo Login on successful sign up */
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
       },
       { path: "/wishlist", element: <WishlistPage /> },
       { path: "/signup", element: <SignupPage /> },
+      { path: "/checkout", element: <CheckoutPage /> },
     ],
   },
 ]);
