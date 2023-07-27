@@ -8,17 +8,23 @@ interface CountryType {
   suggested?: boolean;
 }
 
-function CountryDropdown() {
-  const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
-    null
-  );
+interface CountryProps {
+  selectedCountry: CountryType | null;
+  setSelectedCountry: React.Dispatch<React.SetStateAction<CountryType | null>>;
+  setCountryError: React.Dispatch<React.SetStateAction<boolean | null>>;
+}
 
+function CountryDropdown({
+  selectedCountry,
+  setSelectedCountry,
+  setCountryError,
+}: CountryProps) {
   const countrySelectHandler = (
     event: SyntheticEvent,
     selection: CountryType | null
   ) => {
-    console.log(selection);
     setSelectedCountry(selection);
+    setCountryError(false);
   };
 
   return (

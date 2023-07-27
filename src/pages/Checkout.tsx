@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Params, useLoaderData } from "react-router-dom";
 import ProductMain from "../components/Product/ProductMain";
 
@@ -34,25 +34,43 @@ interface Product {
   quantity?: number;
 }
 
+interface CountryType {
+  code: string;
+  label: string;
+  phone: string;
+  suggested?: boolean;
+}
+
 function CheckoutPage() {
   // Type assertion. "Overwriteamo" tip jer znamo bolje koji ce biti od automatskog inferanja. Slicno :ProductData ali poredi subtypes a ne exact types.
   const product = useLoaderData() as Product;
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
+    null
+  );
+  const [countryError, setCountryError] = useState<boolean | null>(null);
+  const [deliveryMethod, setDeliveryMethod] = useState<number>(0);
 
   return (
     <Box sx={{ width: "83%", margin: "0 auto" }}>
-      <Stack direction="row" spacing={2} justifyContent="center" mb={5}>
+      <Stack direction="row" spacing={2} justifyContent="center" mb={5} mt={5}>
         <Container>
-          <Typography variant="h6" fontWeight={700} mt={4}>
+          <Typography variant="h6" fontWeight={700}>
             1. Delivery method
           </Typography>
           <Typography variant="body2" color="GrayText" mt={1} mb={1}>
             Country
           </Typography>
-          <CountryDropdown />
+          {countryError && (
+            <Typography variant="body2" color="red" mb={1}>
+              Please select a country first.
+            </Typography>
+          )}
+          <CountryDropdown
+            selectedCountry={selectedCountry}
+            setSelectedCountry={setSelectedCountry}
+            setCountryError={setCountryError}
+          />
+
           <Paper
             elevation={3}
             sx={{
@@ -61,7 +79,10 @@ function CheckoutPage() {
               margin: "2.5rem 0",
             }}
           >
-            <DeliveryPicker />
+            <DeliveryPicker
+              deliveryMethod={deliveryMethod}
+              setDeliveryMethod={setDeliveryMethod}
+            />
           </Paper>
           <Typography variant="h6" fontWeight={700} mt={4}>
             2. Payment
@@ -77,10 +98,13 @@ function CheckoutPage() {
             <Typography variant="subtitle1" fontSize={18} fontWeight={700}>
               Your information
             </Typography>
-            <CheckoutForm />
+            <CheckoutForm
+              selectedCountry={selectedCountry}
+              setCountryError={setCountryError}
+            />
           </Paper>
         </Container>
-        <CheckoutCart />
+        <CheckoutCart deliveryMethod={deliveryMethod} />
       </Stack>
     </Box>
   );

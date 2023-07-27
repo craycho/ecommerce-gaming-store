@@ -1,6 +1,17 @@
 import { AppDispatch } from "../store/index";
 import { cartActions } from "./cart-slice";
 
+interface Order {
+  selectedCountry: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  postcode: string;
+  email: string;
+  allowExtraEmails: boolean;
+  cart: string[];
+}
+
 interface User {
   loggedIn: boolean;
   firstName: string;
@@ -9,6 +20,7 @@ interface User {
   password: string;
   allowExtraEmails: boolean;
   profilePicture: string;
+  orders: Order[];
   id: string;
 }
 
@@ -34,7 +46,6 @@ export const patchProfilePicture = function ({
       const firebaseUserEmail: string = firebaseUsersData[user].email;
 
       if (firebaseUserEmail === userData.email) {
-        // console.log(firebaseUserEmail);
         const patchResponse = await fetch(
           `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${user}.json`,
           {

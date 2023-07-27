@@ -13,10 +13,17 @@ import {
 } from "@mui/material";
 import DeliveryOption from "./DeliveryOption";
 
-function DeliveryPicker() {
-  const [deliveryMethod, setDeliveryMethod] = useState<string>("DHLHome");
+interface DeliveryProps {
+  deliveryMethod: number;
+  setDeliveryMethod: React.Dispatch<React.SetStateAction<number>>;
+}
 
-  const deliveryMethodHandler = () => {};
+function DeliveryPicker({ deliveryMethod, setDeliveryMethod }: DeliveryProps) {
+  const deliveryMethodHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDeliveryMethod(+event.target.value);
+  };
 
   return (
     <FormControl>
@@ -30,20 +37,20 @@ function DeliveryPicker() {
         }}
       >
         <FormControlLabel
-          value="DHL Home"
+          value={0}
           defaultChecked
           control={<Radio />}
           label={<DeliveryOption name="DHL Home" />}
         />
         <Divider />
         <FormControlLabel
-          value="DPD Home"
+          value={1}
           control={<Radio />}
           label={<DeliveryOption name="DPD Home" />}
         />
         <Divider />
         <FormControlLabel
-          value="DHL Express"
+          value={2}
           control={<Radio />}
           label={<DeliveryOption name="DHL Express" />}
         />

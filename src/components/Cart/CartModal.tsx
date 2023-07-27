@@ -103,7 +103,10 @@ function CartModal({ cartOpen, handleClose }: ModalProps) {
                 size="large"
                 fullWidth
                 color="secondary"
-                onClick={() => navigate("/checkout")}
+                onClick={() => {
+                  handleClose();
+                  navigate("/checkout");
+                }}
                 sx={{ mt: 2, height: 55 }}
               >
                 Checkout

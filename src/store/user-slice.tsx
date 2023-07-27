@@ -2,6 +2,16 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getUserData } from "../util/get-localStorage";
 // import { useRouteLoaderData } from "react-router-dom";
 
+interface Order {
+  selectedCountry: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  postcode: string;
+  email: string;
+  allowExtraEmails: boolean;
+  cart: string[];
+}
 interface UserData {
   loggedIn: boolean;
   firstName: string;
@@ -10,6 +20,7 @@ interface UserData {
   password: string;
   allowExtraEmails: boolean;
   profilePicture: string;
+  orders: Order[];
   id: string;
 }
 
@@ -41,6 +52,7 @@ const userSlice = createSlice({
         email: "",
         password: "",
         profilePicture: "",
+        orders: [],
         id: "",
       };
 

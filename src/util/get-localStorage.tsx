@@ -28,6 +28,17 @@ export const getLocalTotalPrice = (): number => {
   else return 0;
 };
 
+interface Order {
+  selectedCountry: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  postcode: string;
+  email: string;
+  allowExtraEmails: boolean;
+  cart: string[];
+}
+
 interface User {
   loggedIn: boolean;
   firstName: string;
@@ -36,6 +47,7 @@ interface User {
   password: string;
   allowExtraEmails: boolean;
   profilePicture: string;
+  orders: Order[];
   id: string;
 }
 
@@ -47,6 +59,7 @@ const defaultUserData = {
   email: "",
   password: "",
   profilePicture: "",
+  orders: [],
   id: "",
 };
 

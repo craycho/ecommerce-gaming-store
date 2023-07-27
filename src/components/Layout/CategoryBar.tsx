@@ -7,7 +7,7 @@ const CategoryBox = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "#393d44",
+  backgroundColor: "#36393f",
   color: "whitesmoke",
 });
 
@@ -34,9 +34,16 @@ function CategoryBar() {
             <Link
               key={category}
               to={`/${categoryUrl}`}
-              style={{ textDecoration: "none", color: "whitesmoke" }}
+              style={{
+                textDecoration: "none",
+                color: "whitesmoke",
+              }}
             >
-              <Typography variant="subtitle1" fontWeight={700}>
+              <Typography
+                variant="subtitle1"
+                fontWeight={700}
+                sx={{ "&:hover": { color: "orangered" } }}
+              >
                 {category}
               </Typography>
             </Link>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { userActions } from "../../store/user-slice";
@@ -96,6 +96,7 @@ const OrdersTab = styled(Tab)({
 interface ModalData {
   userModalOpen: boolean;
   handleClose: () => void;
+  currentOrders: string[];
 }
 
 interface TabPanelProps {
@@ -153,19 +154,17 @@ const emptyUserData = {
   email: "",
   password: "",
   profilePicture: "",
+  orders: [],
 };
 
-function UserModal({ userModalOpen, handleClose }: ModalData) {
+function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
   const dispatch = useDispatch();
   const appDispatch = useAppDispatch();
   const userData = useSelector((state: RootState) => state.user);
-  const [changeDataVisible, setChangeDataVisible] = useState<boolean>(false);
-
   const [currentTab, setCurrentTab] = useState<number>(0);
 
   const handlePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
-    // console.log(file);
 
     if (file) {
       const reader = new FileReader();
@@ -194,6 +193,8 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setCurrentTab(newValue);
   };
+
+  console.log(currentOrders);
 
   return (
     <Modal
@@ -284,7 +285,11 @@ function UserModal({ userModalOpen, handleClose }: ModalData) {
             <OrdersTab label="Delivered" />
           </Tabs>
           <ProductsTab value={currentTab} index={0}>
-            Current products
+            {currentOrders.length > 0
+              ? currentOrders.map((order) => (
+                  <Typography variant="body1">{order}</Typography>
+                ))
+              : "No orders have been placed yet."}
           </ProductsTab>
           <ProductsTab value={currentTab} index={1}>
             No products have been delivered yet.

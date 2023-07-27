@@ -72,11 +72,33 @@ function MainNavigation() {
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [userModalOpen, setUserModalOpen] = useState<boolean>(false);
+  const [currentOrders, setCurrentOrders] = useState<string[]>([]);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const cartTotalAmount = cart.reduce(
     (accumulator, product) => accumulator + (product.quantity ?? 0),
     0
   );
+
+  const fetchOrders = async () => {
+    const response = await fetch(
+      "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+    );
+    const firebaseUsersData = await response.json();
+
+    for (const firebaseUser in firebaseUsersData) {
+      const currentUser = firebaseUsersData[firebaseUser];
+
+      if (currentUser.email === userData.email) {
+        let userOrders: string[] = [];
+
+        for (const order in currentUser.orders) {
+          userOrders.push(order);
+        }
+        setCurrentOrders(userOrders);
+        console.log(currentOrders);
+      }
+    }
+  };
 
   return (
     <AppBar position="sticky">
@@ -130,7 +152,10 @@ function MainNavigation() {
               display="flex"
               alignItems="center"
               gap={1.2}
-              onClick={() => setUserModalOpen(true)}
+              onClick={() => {
+                setUserModalOpen(true);
+                fetchOrders();
+              }}
               sx={{ cursor: "pointer" }}
             >
               <Avatar src={userData.profilePicture} />
@@ -163,6 +188,7 @@ function MainNavigation() {
       <UserModal
         userModalOpen={userModalOpen}
         handleClose={() => setUserModalOpen(false)}
+        currentOrders={currentOrders}
       />
     </AppBar>
   );
