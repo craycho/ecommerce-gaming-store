@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { json, useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
 import validateInput from "../../util/validate-input";
@@ -10,12 +10,22 @@ import {
   Container,
   FormControlLabel,
   Grid,
-  Link,
   TextField,
   Typography,
 } from "@mui/material";
-import NextgenLogo from "../../assets/nextgen-logo-black.png";
 import { useSelector } from "react-redux";
+
+// interface User {
+//   loggedIn: boolean;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   password: string;
+//   allowExtraEmails: boolean;
+//   profilePicture: string;
+//   orders: Order[];
+//   id: string;
+// }
 
 interface Order {
   selectedCountry: string;
@@ -26,18 +36,6 @@ interface Order {
   email: string;
   allowExtraEmails: boolean;
   cart: string[];
-}
-
-interface User {
-  loggedIn: boolean;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  allowExtraEmails: boolean;
-  profilePicture: string;
-  orders: Order[];
-  id: string;
 }
 
 interface CountryType {
@@ -81,21 +79,21 @@ function CheckoutForm({ selectedCountry, setCountryError }: FormProps) {
     const validLastNameInput = validateInput("lastName", lastName);
     setLastNameValid(validLastNameInput);
 
-    const validAddressInput = /\d/.test(address); // Regex for "contains only digits"
+    const validAddressInput = /\d/.test(address); // Regex for "does it contain digit"
     setAddressValid(validAddressInput);
 
-    const validPostcodeInput = postcode.length >= 5 && !/\D/.test(postcode);
+    const validPostcodeInput = postcode.length >= 5 && !/\D/.test(postcode); // Does it contain anything other than digit
     setPostCodeValid(validPostcodeInput);
 
     const validEmailInput: boolean = validateInput("email", email);
     setEmailValid(validEmailInput);
 
-    // Places order if country is selected and all fields are valid
     if (!selectedCountry) {
       setCountryError(true);
       window.scrollTo(0, 0);
     }
 
+    // Places order if country is selected and all fields are valid
     if (
       selectedCountry &&
       validNameInput &&
@@ -117,7 +115,7 @@ function CheckoutForm({ selectedCountry, setCountryError }: FormProps) {
         cart: cartProducts,
       };
 
-      // 1. Fetches existing user data
+      // 1. Fetches existing user data to find current user
       const response = await fetch(
         "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
       );

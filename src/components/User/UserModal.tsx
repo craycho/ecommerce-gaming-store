@@ -5,6 +5,7 @@ import { userActions } from "../../store/user-slice";
 import { patchProfilePicture } from "../../store/user-actions";
 
 import ChangeUserData from "./ChangeUserData";
+import UserOrderItem from "./UserOrderItem";
 
 import {
   Avatar,
@@ -93,10 +94,22 @@ const OrdersTab = styled(Tab)({
   fontSize: 13,
 });
 
+interface Order {
+  selectedCountry: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  postcode: string;
+  email: string;
+  allowExtraEmails: boolean;
+  cart: string[];
+  id: string;
+}
+
 interface ModalData {
   userModalOpen: boolean;
   handleClose: () => void;
-  currentOrders: string[];
+  currentOrders: Order[];
 }
 
 interface TabPanelProps {
@@ -105,43 +118,15 @@ interface TabPanelProps {
   value: number;
 }
 
-/* function ChangeUserData() {
-  return (
-    <Box sx={{ marginTop: 0.2, position: "absolute", zIndex: 1 }}>
-      <TextField
-        id="firstName-change"
-        size="small"
-        sx={{
-          width: 125,
-        }}
-        inputProps={{
-          style: {
-            height: 8,
-            paddingLeft: 7,
-            fontSize: 14,
-          },
-        }}
-      />
-      <IconButton sx={{ padding: 0, top: -2 }}>
-        <CheckBoxIcon sx={{ fontSize: 28 }} />
-      </IconButton>
-    </Box>
-  );
-} */
-
-function ProductsTab({ children, index, value }: TabPanelProps) {
+function OrderList({ children, index, value }: TabPanelProps) {
   return (
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`orders-tabpanel-${index}`}
+      aria-labelledby={`orders-tab-${index}`}
     >
-      {value === index && (
-        <Box sx={{ p: 2 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
     </div>
   );
 }
@@ -193,8 +178,6 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setCurrentTab(newValue);
   };
-
-  console.log(currentOrders);
 
   return (
     <Modal
@@ -274,31 +257,42 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
           My orders
         </Typography>
         <Divider />
-        <Box p={1.5} pt={0}>
+        <Box p={1.5} pt={0} pb={0.5}>
           <Tabs
             value={currentTab}
             onChange={handleChangeTab}
             aria-label="Order tabs"
-            sx={{ marginBottom: 1.5 }}
+            sx={{ marginBottom: 0.5 }}
           >
             <OrdersTab label="Current" />
             <OrdersTab label="Delivered" />
           </Tabs>
-          <ProductsTab value={currentTab} index={0}>
-            {currentOrders.length > 0
-              ? currentOrders.map((order) => (
-                  <Typography variant="body1">{order}</Typography>
-                ))
-              : "No orders have been placed yet."}
-          </ProductsTab>
-          <ProductsTab value={currentTab} index={1}>
+          <OrderList value={currentTab} index={0}>
+            <Stack direction="row" spacing={2.5}>
+              {currentOrders.length > 0
+                ? currentOrders.map((order, i) => (
+                    <UserOrderItem
+                      userOrder={order.cart}
+                      index={i}
+                      key={order.id + i}
+                      keyId={order.id + i}
+                    />
+                  ))
+                : "No orders have been placed yet."}
+            </Stack>
+          </OrderList>
+          <OrderList value={currentTab} index={1}>
             No products have been delivered yet.
-          </ProductsTab>
+          </OrderList>
         </Box>
       </Box>
     </Modal>
   );
 }
+
+/* <Typography variant="body1" key={order.id}>
+                      {order.cart}
+                    </Typography> */
 
 export default UserModal;
 

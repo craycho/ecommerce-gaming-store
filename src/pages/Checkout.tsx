@@ -111,8 +111,3 @@ function CheckoutPage() {
 }
 
 export default CheckoutPage;
-
-interface LoaderData {
-  request: Request;
-  params: Params;
-}

@@ -58,10 +58,17 @@ const UserIcon = styled(LoginIcon)({
   },
 });
 
-// const WelcomeMessage = styled(Typography)({
-//   position: "absolute",
-//   right: 150,
-// });
+interface Order {
+  selectedCountry: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  postcode: string;
+  email: string;
+  allowExtraEmails: boolean;
+  cart: string[];
+  id: string;
+}
 
 function MainNavigation() {
   const navigate = useNavigate();
@@ -72,7 +79,7 @@ function MainNavigation() {
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [userModalOpen, setUserModalOpen] = useState<boolean>(false);
-  const [currentOrders, setCurrentOrders] = useState<string[]>([]);
+  const [currentOrders, setCurrentOrders] = useState<Order[]>([]);
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const cartTotalAmount = cart.reduce(
     (accumulator, product) => accumulator + (product.quantity ?? 0),
@@ -89,16 +96,18 @@ function MainNavigation() {
       const currentUser = firebaseUsersData[firebaseUser];
 
       if (currentUser.email === userData.email) {
-        let userOrders: string[] = [];
+        let userOrders: Order[] = [];
 
         for (const order in currentUser.orders) {
-          userOrders.push(order);
+          // userOrders.push(order);
+          userOrders.push({ ...currentUser.orders[`${order}`], id: order });
         }
         setCurrentOrders(userOrders);
-        console.log(currentOrders);
       }
     }
   };
+
+  // console.log(currentOrders);
 
   return (
     <AppBar position="sticky">
