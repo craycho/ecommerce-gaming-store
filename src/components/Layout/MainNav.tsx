@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/index";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store/index";
+import { fetchCart } from "../../store/cart-actions";
+
 import AutocompleteSearch from "./Autocomplete";
 import CartModal from "../Cart/CartModal";
 import LoginModal from "../Authentication/LoginModal";
@@ -21,6 +23,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import LoginIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
+import { cartActions } from "../../store/cart-slice";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   position: "relative",
@@ -72,6 +75,8 @@ interface Order {
 
 function MainNavigation() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const appDispatch = useAppDispatch();
   const cart = useSelector((state: RootState) => state.cart.cart);
   const { wishlist, user: userData } = useSelector((state: RootState) => state);
   // console.log(userData);
@@ -107,7 +112,13 @@ function MainNavigation() {
     }
   };
 
-  // console.log(currentOrders);
+  useEffect(() => {
+    if (userData.loggedIn) {
+      appDispatch(fetchCart(userData.id));
+    } else {
+      dispatch(cartActions.replaceCart([]));
+    }
+  }, [userData.loggedIn]);
 
   return (
     <AppBar position="sticky">

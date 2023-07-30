@@ -153,17 +153,25 @@ export const removeAllFromCart = function (
   };
 };
 
-// export const fetchCart = function (userId: string) {
-//   return async (dispatch: AppDispatch) => {
-//     const response = await fetch(
-//       `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/cart.json`
-//     );
+export const fetchCart = function (userId: string) {
+  return async (dispatch: AppDispatch) => {
+    const response = await fetch(
+      `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/cart.json`
+    );
+    if (!response.ok) {
+      throw new Error("Couldn't fetch cart.");
+    }
+    const cartData = await response.json();
+    if (cartData) {
+      const cartArray: Product[] = [];
 
-//     if (!response.ok) {
-//       throw new Error("Could not fetch cart data.");
-//     }
-//     const cartData = await response.json();
-
-//     console.log(cartData);
-//   };
-// };
+      for (const cartItem in cartData) {
+        const currentItem: Product = cartData[`${cartItem}`];
+        cartArray.push(currentItem);
+      }
+      dispatch(cartActions.replaceCart(cartArray));
+    } else {
+      dispatch(cartActions.replaceCart([]));
+    }
+  };
+};

@@ -103,13 +103,13 @@ function Signup() {
       // Post request
       console.log(JSON.stringify(userData));
       const response = await fetch(
-        "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json",
+        `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${randomId}.json`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ [randomId]: userData }),
+          body: JSON.stringify(userData),
         }
       );
 

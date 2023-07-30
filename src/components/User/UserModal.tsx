@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { userActions } from "../../store/user-slice";
-import { patchProfilePicture } from "../../store/user-actions";
+import { logoutUserLocal, patchProfilePicture } from "../../store/user-actions";
 
 import ChangeUserData from "./ChangeUserData";
 import UserOrderItem from "./UserOrderItem";
@@ -246,7 +246,7 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
             onClick={() => {
               localStorage.setItem("userData", JSON.stringify(emptyUserData));
               sessionStorage.setItem("userData", JSON.stringify(emptyUserData));
-              dispatch(userActions.logoutUser());
+              appDispatch(logoutUserLocal());
               handleClose();
             }}
           >

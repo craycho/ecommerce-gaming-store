@@ -1,5 +1,5 @@
 import { AppDispatch } from "../store/index";
-import { cartActions } from "./cart-slice";
+import { userActions } from "./user-slice";
 
 interface Order {
   selectedCountry: string;
@@ -104,5 +104,13 @@ export const patchUserData = function ({
         }
       }
     }
+  };
+};
+
+export const logoutUserLocal = function () {
+  return async (dispatch: AppDispatch) => {
+    localStorage.setItem("cart", JSON.stringify([]));
+
+    dispatch(userActions.logoutUser());
   };
 };

@@ -28,7 +28,7 @@ interface StateData {
 
 const initialState: StateData = {
   products: [],
-  cart: getLocalStorage("cart"),
+  cart: [], // getLocalStorage("cart")
   totalPrice: getLocalTotalPrice(),
 };
 
@@ -43,6 +43,10 @@ const cartSlice = createSlice({
       const newProducts = action.payload;
       state.products = newProducts;
       // return newProducts;  Neophodno kada state nije objekat (nema automatskog dereferenciranja sa ".")
+    },
+    replaceCart(state: StateData, action: PayloadAction<Product[]>) {
+      const userCart = action.payload;
+      state.cart = userCart;
     },
     addToCartState(state: StateData, action: PayloadAction<Product>) {
       const addedProduct = action.payload;
