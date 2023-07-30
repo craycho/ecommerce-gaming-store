@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getLocalStorage, getLocalTotalPrice } from "../util/get-localStorage";
 import { getTotalPrice } from "../util/get-total-price";
-import { truncate } from "fs";
 
 interface ProductData {
   category: string;
@@ -45,7 +44,7 @@ const cartSlice = createSlice({
       state.products = newProducts;
       // return newProducts;  Neophodno kada state nije objekat (nema automatskog dereferenciranja sa ".")
     },
-    addToCart(state: StateData, action: PayloadAction<Product>) {
+    addToCartState(state: StateData, action: PayloadAction<Product>) {
       const addedProduct = action.payload;
       // existingProduct je pointer (reference value)
       const existingProduct = state.cart.find(
@@ -70,7 +69,7 @@ const cartSlice = createSlice({
 
       state.totalPrice = totalPrice;
     },
-    removeFromCart(state: StateData, action: PayloadAction<Product>) {
+    removeFromCartState(state: StateData, action: PayloadAction<Product>) {
       const removedProduct = action.payload;
       const existingProduct = state.cart.find(
         (product) => product.id === removedProduct.id
@@ -95,7 +94,7 @@ const cartSlice = createSlice({
         state.totalPrice = totalPrice;
       }
     },
-    removeAllFromCart(state: StateData, action: PayloadAction<Product>) {
+    removeAllFromCartState(state: StateData, action: PayloadAction<Product>) {
       const removedProduct = action.payload;
       const existingProduct = state.cart.find(
         (product) => product.id === removedProduct.id

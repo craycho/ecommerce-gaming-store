@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
-import { cartActions } from "../../store/cart-slice";
 import { wishlistActions } from "../../store/wishlist-slice";
+import { addToCart } from "../../store/cart-actions";
 import { Link } from "react-router-dom";
 
 import {
@@ -21,23 +21,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import FiberNewIcon from "@mui/icons-material/FiberNew";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCartOutlined";
-
-interface Product {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface CardProps {
-  id: string;
-  data: Product;
-}
 
 const NewIcon = styled(FiberNewIcon)({
   position: "absolute",
@@ -91,12 +74,32 @@ const AddCartNotification = styled("div")({
   transition: "opacity 500ms fade-in-out",
 });
 
-function ProductCard({ id, data }: CardProps) {
+interface Product {
+  category: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  new: boolean;
+  onSale: boolean;
+  price: number;
+  thumbnail: string;
+  title: string;
+}
+
+interface CardProps {
+  id: string;
+  data: Product;
+  quantity?: number;
+}
+
+function ProductCard({ product }: { product: CardProps }) {
   const dispatch = useAppDispatch();
   const wishlist = useSelector((state: RootState) => state.wishlist);
+  const userData = useSelector((state: RootState) => state.user);
+
   const [openCartNotification, setOpenCartNotification] =
     useState<boolean>(false);
-  const { price, onSale, new: isNew, title, category, image } = data;
+  const { price, onSale, new: isNew, title, category, image } = product.data;
   const saleAmount = +(price * 0.3).toFixed(2);
   const onSalePrice = onSale ? (price - saleAmount).toFixed(2) : price;
   const urlString = `/${category.toLowerCase()}/${title
@@ -104,30 +107,24 @@ function ProductCard({ id, data }: CardProps) {
     .replaceAll(" ", "-")}`;
 
   const wishlistHandler = () => {
-    dispatch(wishlistActions.toggleWishlist({ id, data }));
+    dispatch(
+      wishlistActions.toggleWishlist({ id: product.id, data: product.data })
+    );
   };
 
   const addToCartHandler = () => {
+    dispatch(addToCart(product, userData.id));
+
     setOpenCartNotification(true);
-    dispatch(cartActions.addToCart({ id, data }));
     setTimeout(() => {
       setOpenCartNotification(false);
     }, 1000);
   };
-  /* const closeNotificationHandler = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenCartNotification(false);
-  }; */
 
   const isInWishlist = () => {
-    // const wishlistProduct = wishlist.find((product) => product.id === id);
-    return wishlist.find((product) => product.id === id) ? true : false;
+    return wishlist.find((wishlistProduct) => wishlistProduct.id === product.id)
+      ? true
+      : false;
   };
 
   return (

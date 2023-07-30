@@ -1,6 +1,11 @@
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { cartActions } from "../../store/cart-slice";
+import {
+  addToCart,
+  removeFromCart,
+  removeAllFromCart,
+} from "../../store/cart-actions";
 
 import {
   Box,
@@ -17,24 +22,6 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
 
 const AddCartIcon = styled(AddShoppingCartIcon)({
   position: "absolute",
@@ -84,8 +71,27 @@ const PriceBox = styled(Box)({
   justifyContent: "space-between",
 });
 
+interface ProductData {
+  category: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  new: boolean;
+  onSale: boolean;
+  price: number;
+  thumbnail: string;
+  title: string;
+}
+
+interface Product {
+  id: string;
+  data: ProductData;
+  quantity?: number;
+}
+
 function CartItem({ product }: { product: Product }) {
   const cart = useSelector((state: RootState) => state.cart.cart);
+  const userId = useSelector((state: RootState) => state.user.id);
   const dispatch = useAppDispatch();
 
   const saleAmount = +(product.data.price * 0.3).toFixed(2);
@@ -101,15 +107,15 @@ function CartItem({ product }: { product: Product }) {
     : product.data.price;
 
   const increaseQuantity = () => {
-    dispatch(cartActions.addToCart(product));
+    dispatch(addToCart(product, userId));
   };
 
   const decreaseQuantity = () => {
-    dispatch(cartActions.removeFromCart(product));
+    dispatch(removeFromCart(product, userId));
   };
 
   const deleteFromCart = () => {
-    dispatch(cartActions.removeAllFromCart(product));
+    dispatch(removeAllFromCart(product, userId));
   };
 
   return (

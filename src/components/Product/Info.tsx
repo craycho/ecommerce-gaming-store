@@ -1,5 +1,6 @@
-import { cartActions } from "../../store/cart-slice";
-import { useAppDispatch } from "../../store";
+import { useSelector } from "react-redux";
+import { addToCart } from "../../store/cart-actions";
+import { useAppDispatch, RootState } from "../../store";
 
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 
@@ -21,11 +22,12 @@ interface Product {
 }
 
 function Info({ product }: { product: Product }) {
+  const userId = useSelector((state: RootState) => state.user.id);
   const { category, title, description, price } = product.data;
   const dispatch = useAppDispatch();
 
   const addToCartHandler = () => {
-    dispatch(cartActions.addToCart(product));
+    dispatch(addToCart(product, userId));
   };
 
   return (

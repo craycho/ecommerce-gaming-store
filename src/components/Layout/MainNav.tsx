@@ -95,7 +95,7 @@ function MainNavigation() {
     for (const firebaseUser in firebaseUsersData) {
       const currentUser = firebaseUsersData[firebaseUser];
 
-      if (currentUser.email === userData.email) {
+      if (currentUser.id === userData.id) {
         let userOrders: Order[] = [];
 
         for (const order in currentUser.orders) {

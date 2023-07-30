@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 
 import {
   Box,
@@ -6,15 +6,17 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
+  Paper,
   Stack,
   styled,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { generateRandomNumber } from "../../util/random-number";
 
 const ItemBox = styled(Box)({
   width: 100,
-  height: 80,
+  height: 85,
   overflowX: "hidden",
   overflowY: "hidden",
 
@@ -42,7 +44,7 @@ function UserOrderItem({ userOrder, index, keyId }: OrderItemProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   return (
-    <>
+    <Paper elevation={3} sx={{ p: 1 }}>
       <ItemBox
         onClick={() => {
           setDialogOpen(true);
@@ -84,12 +86,14 @@ function UserOrderItem({ userOrder, index, keyId }: OrderItemProps) {
         <DialogContent>
           <Stack direction="column" spacing={2}>
             {userOrder.map((order) => (
-              <Typography variant="body1">{order}</Typography>
+              <Typography variant="body1" key={keyId + generateRandomNumber()}>
+                {order}
+              </Typography>
             ))}
           </Stack>
         </DialogContent>
       </OrderDialogBox>
-    </>
+    </Paper>
   );
 }
 

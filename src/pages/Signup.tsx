@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { json, useNavigate } from "react-router-dom";
 import validateInput from "../util/validate-input";
+import { nanoid, random } from "nanoid";
 
 import {
   Box,
@@ -87,7 +88,10 @@ function Signup() {
       validEmailInput &&
       validPasswordInput
     ) {
+      const randomId = nanoid();
+
       const userData = {
+        id: randomId,
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -101,11 +105,11 @@ function Signup() {
       const response = await fetch(
         "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json",
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(userData),
+          body: JSON.stringify({ [randomId]: userData }),
         }
       );
 

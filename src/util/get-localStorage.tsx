@@ -40,6 +40,7 @@ interface Order {
 }
 
 interface User {
+  id: string;
   loggedIn: boolean;
   firstName: string;
   lastName: string;
@@ -48,7 +49,6 @@ interface User {
   allowExtraEmails: boolean;
   profilePicture: string;
   orders: Order[];
-  id: string;
 }
 
 const defaultUserData = {

@@ -23,6 +23,7 @@ interface ProductData {
 interface Product {
   id: string;
   data: ProductData;
+  quantity?: number;
 }
 
 interface StackProps {
@@ -68,11 +69,7 @@ function ProductStack({ type }: StackProps) {
           <Box sx={{ width: "90%", margin: "0 auto 40px auto" }}>
             <Stack direction="row" spacing={1} justifyContent="space-evenly">
               {displayedProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  data={product.data}
-                />
+                <ProductCard key={product.id} product={product} />
               ))}
             </Stack>
           </Box>

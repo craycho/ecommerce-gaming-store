@@ -15,18 +15,6 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 
-// interface User {
-//   loggedIn: boolean;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   password: string;
-//   allowExtraEmails: boolean;
-//   profilePicture: string;
-//   orders: Order[];
-//   id: string;
-// }
-
 interface Order {
   selectedCountry: string;
   firstName: string;

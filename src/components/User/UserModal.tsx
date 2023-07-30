@@ -76,7 +76,7 @@ const ChangeSpan = styled(Typography)({
 const LogoutButton = styled(IconButton)({
   position: "absolute",
   right: 13,
-  bottom: 142,
+  top: 347,
 
   width: 60,
   height: 40,
@@ -268,7 +268,7 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
             <OrdersTab label="Delivered" />
           </Tabs>
           <OrderList value={currentTab} index={0}>
-            <Stack direction="row" spacing={2.5}>
+            <Stack direction="row" spacing={2.5} sx={{ overflowX: "auto" }}>
               {currentOrders.length > 0
                 ? currentOrders.map((order, i) => (
                     <UserOrderItem

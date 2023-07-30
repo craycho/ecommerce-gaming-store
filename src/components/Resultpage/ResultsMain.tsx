@@ -73,7 +73,7 @@ function ResultsMain({
               <Grid container spacing={2} mb={4.5}>
                 {currentProducts.map((product) => (
                   <Grid item xs={3} key={product.id}>
-                    <ProductCard id={product.id} data={product.data} />
+                    <ProductCard product={product} />
                   </Grid>
                 ))}
               </Grid>

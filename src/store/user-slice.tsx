@@ -13,6 +13,7 @@ interface Order {
   cart: string[];
 }
 interface UserData {
+  id: string;
   loggedIn: boolean;
   firstName: string;
   lastName: string;
@@ -21,7 +22,6 @@ interface UserData {
   allowExtraEmails: boolean;
   profilePicture: string;
   orders: Order[];
-  id: string;
 }
 
 interface LoginProps {
