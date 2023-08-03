@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import CartItem from "../Cart/CartItem";
-import calcTotalPrice from "../../util/get-total-price";
+import calcTotalPrice from "../../util/calc-total-price";
 
 import { Box, Button, Stack, styled, Typography } from "@mui/material";
 

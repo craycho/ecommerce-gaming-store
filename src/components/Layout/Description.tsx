@@ -2,7 +2,7 @@ import { Container, Typography } from "@mui/material";
 
 function NextGenDescription() {
   return (
-    <Container maxWidth="md" sx={{ marginBottom: 3 }}>
+    <Container maxWidth="md" sx={{ mb: 3 }}>
       <Typography variant="h4" fontWeight={700} textAlign="center" mb={2}>
         Who are we?
       </Typography>

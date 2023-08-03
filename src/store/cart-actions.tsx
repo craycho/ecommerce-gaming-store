@@ -35,6 +35,8 @@ export const addToCart = function (productData: Product, userId: string) {
 
     // Checks if the product already exists in cart. If it does, only updates quantity.
     if (existingProduct && existingProduct.quantity) {
+      dispatch(cartActions.addToCartState(productData));
+
       const patchResponse = await fetch(
         `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/cart/${productData.id}.json`,
         {
@@ -48,8 +50,9 @@ export const addToCart = function (productData: Product, userId: string) {
       if (!patchResponse.ok) {
         throw new Error("Could not add product to cart.");
       }
-      dispatch(cartActions.addToCartState(productData));
     } else {
+      dispatch(cartActions.addToCartState(productData)); // Redux cart update (w/o sideeffects)
+
       const patchResponse = await fetch(
         `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/cart/${productData.id}.json`,
         {
@@ -63,7 +66,6 @@ export const addToCart = function (productData: Product, userId: string) {
       if (!patchResponse.ok) {
         throw new Error("Could not add product to cart.");
       }
-      dispatch(cartActions.addToCartState(productData)); // Redux cart update (w/o sideeffects)
     }
   };
 };
@@ -84,6 +86,8 @@ export const removeFromCart = function (productData: Product, userId: string) {
 
     // Checks if the product already exists in cart. If it does, only updates quantity.
     if (existingProduct && existingProduct.quantity) {
+      dispatch(cartActions.removeFromCartState(productData));
+
       if (existingProduct.quantity > 1) {
         const patchResponse = await fetch(
           `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/cart/${productData.id}.json`,
@@ -98,8 +102,9 @@ export const removeFromCart = function (productData: Product, userId: string) {
         if (!patchResponse.ok) {
           throw new Error("Could not add product to cart.");
         }
-        dispatch(cartActions.removeFromCartState(productData));
       } else {
+        dispatch(cartActions.removeAllFromCartState(productData));
+
         const deleteResponse = await fetch(
           `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/cart/${productData.id}.json`,
           {
@@ -110,7 +115,6 @@ export const removeFromCart = function (productData: Product, userId: string) {
         if (!deleteResponse.ok) {
           throw new Error("Could not remove product from cart.");
         }
-        dispatch(cartActions.removeAllFromCartState(productData));
       }
     } else {
       throw new Error("Could not remove product from cart.");
@@ -136,6 +140,8 @@ export const removeAllFromCart = function (
     }
 
     if (existingProduct && existingProduct.quantity) {
+      dispatch(cartActions.removeAllFromCartState(productData));
+
       const deleteResponse = await fetch(
         `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/cart/${productData.id}.json`,
         {
@@ -145,8 +151,6 @@ export const removeAllFromCart = function (
       if (!deleteResponse.ok) {
         throw new Error("Could not remove product from cart.");
       }
-
-      dispatch(cartActions.removeAllFromCartState(productData));
     } else {
       throw new Error("Could not remove product from cart.");
     }

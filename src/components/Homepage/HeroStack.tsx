@@ -36,7 +36,7 @@ const HeroStack = forwardRef(function ({ products }: HeroProps, ref) {
   );
 
   return (
-    <Box sx={{ width: "85%" }} margin="30px auto" ref={ref}>
+    <Box sx={{ width: "85%" }} margin="30px auto 40px auto" ref={ref}>
       <Stack direction="row" gap={1.5} justifyContent="center">
         <HeroProduct
           key={steelseriesArctis?.id}

@@ -7,6 +7,7 @@ import ProductCarousel from "../components/Homepage/ProductCarousel";
 import HeroStack from "../components/Homepage/HeroStack";
 import NextGenDescription from "../components/Layout/Description";
 import Newsletter from "../components/Layout/Newsletter";
+import BannerStack from "../components/Homepage/BannerStack";
 
 import { Box, CircularProgress, Typography } from "@mui/material";
 
@@ -17,9 +18,28 @@ const memoizedProducts = createSelector(
   (products) => products
 ); */
 
+interface ProductData {
+  category: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  new: boolean;
+  onSale: boolean;
+  price: number;
+  thumbnail: string;
+  title: string;
+}
+
+interface Product {
+  id: string;
+  data: ProductData;
+  quantity?: number;
+}
+
 function Home() {
   const dispatch = useAppDispatch();
   const products = useSelector((state: RootState) => state.cart.products);
+  const productsRef = useRef<Product[]>([]);
   const heroRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -43,16 +63,23 @@ function Home() {
       ) : (
         <>
           <HeroStack products={products} ref={heroRef} />
-          <Typography variant="h5" mb={3} align="center" fontWeight={700}>
-            You might be interested in:
+          <Typography mb={3} align="center" fontWeight={700} fontSize={26}>
+            Recommended products
           </Typography>
           <ProductCarousel type="random" />
-          <Typography variant="h5" mb={3} align="center" fontWeight={700}>
-            Currently on sale:
+          <Typography
+            mb={2.8}
+            mt={5}
+            align="center"
+            fontWeight={700}
+            fontSize={26}
+          >
+            Currently on sale
           </Typography>
           <ProductCarousel type="onSale" />
-          <Typography variant="h5" mb={3} align="center" fontWeight={700}>
-            New arrivals:
+          <BannerStack />
+          <Typography mb={2.8} align="center" fontWeight={700} fontSize={26}>
+            New arrivals
           </Typography>
           <ProductCarousel type="new" />
         </>
@@ -62,7 +89,8 @@ function Home() {
           backgroundColor: "#f4f5f7",
           padding: "40px 0",
           border: "1px lightgrey solid",
-          marginBottom: 8,
+          marginBottom: 6,
+          marginTop: 6,
         }}
       >
         <NextGenDescription />

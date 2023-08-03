@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
-import { cartActions } from "../../store/cart-slice";
 import {
   addToCart,
   removeFromCart,

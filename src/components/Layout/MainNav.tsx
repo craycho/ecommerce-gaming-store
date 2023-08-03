@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { fetchCart } from "../../store/cart-actions";
+import { cartActions } from "../../store/cart-slice";
 
 import AutocompleteSearch from "./Autocomplete";
 import CartModal from "../Cart/CartModal";
@@ -14,16 +15,22 @@ import {
   Avatar,
   Badge,
   Box,
+  Stack,
   styled,
   Toolbar,
   Typography,
 } from "@mui/material";
+import NextgenLogo from "../../assets/nextgen-logo-white.png";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import WishlistIcon from "@mui/icons-material/Favorite";
 import LoginIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
-import { cartActions } from "../../store/cart-slice";
+
+const logoStyle = {
+  cursor: "pointer",
+  transition: "all 0.1s ease",
+};
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   position: "relative",
@@ -48,6 +55,7 @@ const IconWithBadge = styled(Badge)({
   "& .MuiBadge-badge": {
     padding: "0 0",
     display: "flex",
+    backgroundColor: "orangered",
 
     height: 18,
     minWidth: 18,
@@ -79,7 +87,6 @@ function MainNavigation() {
   const appDispatch = useAppDispatch();
   const cart = useSelector((state: RootState) => state.cart.cart);
   const { wishlist, user: userData } = useSelector((state: RootState) => state);
-  // console.log(userData);
 
   const [currentInput, setCurrentInput] = useState<string | null>(null);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
@@ -123,25 +130,33 @@ function MainNavigation() {
   return (
     <AppBar position="sticky">
       <StyledToolbar>
-        <Link
-          to="/"
-          style={{ textDecoration: "none", color: "white" }}
-          onClick={() => setCurrentInput("")}
-        >
-          <Typography
-            variant="h5"
-            fontWeight={700}
-            sx={{
-              display: { xs: "none", sm: "block" },
-              cursor: "pointer",
-              "&:hover": {
-                color: (theme) => theme.palette.secondary.main,
-              },
-            }}
+        <Stack direction="row" spacing={2} alignItems="center" sx={logoStyle}>
+          <Box
+            component="img"
+            alt="Nextgen logo"
+            src={NextgenLogo}
+            sx={{ height: 45, width: 40, mt: 0.5, color: "#F4F4F6" }}
+          />
+          <Link
+            to="/"
+            style={{ textDecoration: "none" }}
+            onClick={() => setCurrentInput("")}
           >
-            NEXTGEN
-          </Typography>
-        </Link>
+            <Typography
+              fontSize={22}
+              fontWeight={700}
+              sx={{
+                lineHeight: 1.2,
+                mt: 0.2,
+                display: { xs: "none", sm: "block" },
+                color: "#F4F4F6",
+              }}
+            >
+              Nextgen
+              <br /> Gaming
+            </Typography>
+          </Link>
+        </Stack>
         <SportsEsportsIcon
           fontSize="large"
           sx={{ display: { xs: "block", sm: "none" } }}
@@ -156,15 +171,15 @@ function MainNavigation() {
           </Box>
           <IconWithBadge
             badgeContent={wishlist.length}
-            color="error"
             sx={{
+              color: "#F4F4F6",
               cursor: "pointer",
               "&:hover": {
                 color: "red",
               },
             }}
           >
-            <FavoriteIcon onClick={() => navigate("/wishlist")} />
+            <WishlistIcon onClick={() => navigate("/wishlist")} />
           </IconWithBadge>
 
           {userData.loggedIn ? (
@@ -176,7 +191,7 @@ function MainNavigation() {
                 setUserModalOpen(true);
                 fetchOrders();
               }}
-              sx={{ cursor: "pointer" }}
+              sx={{ color: "#F4F4F6", cursor: "pointer" }}
             >
               <Avatar src={userData.profilePicture} />
               {userData.firstName}
@@ -189,6 +204,7 @@ function MainNavigation() {
             badgeContent={cartTotalAmount}
             color="secondary"
             sx={{
+              color: "#F4F4F6",
               cursor: "pointer",
               "&:hover": {
                 color: (theme) => theme.palette.secondary.main,

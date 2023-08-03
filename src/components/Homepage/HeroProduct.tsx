@@ -1,9 +1,23 @@
+import { Link, useNavigate } from "react-router-dom";
+
 import CorsairHero from "../../assets/corsair-k95-hero.jpg";
 import SteelseriesHero from "../../assets/steelseries-hero.jpg";
 import NoblechairsHero from "../../assets/noble-chair-hero.jpg";
 
 import { Box, Button, Fade, styled, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+
+const imageBoxStyle = {
+  width: "100%",
+  height: 530,
+  backgroundSize: "cover",
+  backgroundPosition: "center center",
+  backgroundRepeat: "no-repeat",
+  borderRadius: 1,
+
+  "&:hover": {
+    cursor: "pointer",
+  },
+};
 
 interface ProductData {
   category: string;
@@ -29,6 +43,7 @@ interface ProductProps {
 }
 
 function HeroProduct({ product, promo }: ProductProps) {
+  const navigate = useNavigate();
   const productTitle = product?.data.title;
   const productUrl = `/${product?.data.category.toLowerCase()}/${product?.data.title
     .toLowerCase()
@@ -48,14 +63,10 @@ function HeroProduct({ product, promo }: ProductProps) {
       <Box
         position="relative"
         sx={{
-          width: "100%",
-          height: 500,
+          ...imageBoxStyle,
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55)), url('${heroImage}')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
-          backgroundRepeat: "no-repeat",
-          borderRadius: 1,
         }}
+        onClick={() => navigate(productUrl)}
       >
         <Box
           style={{
@@ -92,6 +103,9 @@ function HeroProduct({ product, promo }: ProductProps) {
                 backgroundColor: "orangered",
                 marginTop: 1,
                 padding: "8px 18px",
+                "&:hover": {
+                  backgroundColor: "#d03c06",
+                },
               }}
             >
               Buy now

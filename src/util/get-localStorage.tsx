@@ -22,12 +22,6 @@ export const getLocalStorage = (selector: string): Product[] => {
   else return [];
 };
 
-export const getLocalTotalPrice = (): number => {
-  const totalPrice = localStorage.getItem("totalPrice");
-  if (totalPrice) return JSON.parse(totalPrice);
-  else return 0;
-};
-
 interface Order {
   selectedCountry: string;
   firstName: string;

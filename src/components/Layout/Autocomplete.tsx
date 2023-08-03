@@ -9,7 +9,7 @@ import { Autocomplete, TextField, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("div")(({ theme }) => ({
-  backgroundColor: "white",
+  backgroundColor: "#F4F4F6",
   borderRadius: "30px",
   width: "35%",
   height: 40,
@@ -28,7 +28,7 @@ const SearchButton = styled("button")({
   alignItems: "center",
   justifyContent: "center",
   backgroundColor: "orangered",
-  color: "white",
+  color: "#F4F4F6",
   width: 60,
   height: 40,
   border: "none",
@@ -115,9 +115,9 @@ function AutocompleteSearch({
               },
             }}
             placeholder="Search for products..."
-            // sx={{
-            //   ".MuiInputBase-input": { fontSize: 15 },
-            // }}
+            /*  sx={{
+              ".MuiInputBase-input": { fontSize: 16 },
+            }} */
           />
         )}
         filterOptions={(options, state): string[] => {

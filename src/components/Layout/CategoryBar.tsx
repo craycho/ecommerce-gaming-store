@@ -7,7 +7,7 @@ const CategoryBox = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "#36393f",
+  backgroundColor: "#343434",
   color: "whitesmoke",
 });
 
@@ -36,7 +36,7 @@ function CategoryBar() {
               to={`/${categoryUrl}`}
               style={{
                 textDecoration: "none",
-                color: "whitesmoke",
+                color: "#F4F4F6",
               }}
             >
               <Typography

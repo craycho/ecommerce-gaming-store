@@ -6,7 +6,6 @@ import ProductCard from "./ProductCard";
 import getRandomProducts from "../../util/random-products";
 
 import { Box, Fade, Stack } from "@mui/material";
-import Carousel from "react-material-ui-carousel";
 
 interface ProductData {
   category: string;
@@ -66,7 +65,7 @@ function ProductStack({ type }: StackProps) {
     <>
       {products && (
         <Fade in={true} timeout={750}>
-          <Box sx={{ width: "90%", margin: "0 auto 40px auto" }}>
+          <Box sx={{ width: "85%", margin: "0 auto 40px auto" }}>
             <Stack direction="row" spacing={1} justifyContent="space-evenly">
               {displayedProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />

@@ -9,13 +9,14 @@ function ProductCarousel({ type }: { type: string }) {
     <Carousel
       navButtonsAlwaysVisible
       animation="slide"
-      duration={800}
+      duration={900}
       interval={10000}
       swipe={true}
       sx={{ mb: 3 }}
       navButtonsWrapperProps={{
         style: {
-          height: "84%",
+          height: "81%",
+          margin: "0 1.3%",
         },
       }}
     >

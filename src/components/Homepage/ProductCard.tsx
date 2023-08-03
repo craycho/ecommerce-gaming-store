@@ -61,7 +61,7 @@ const AddCartNotification = styled("div")({
   position: "absolute",
   bottom: 160,
   right: 5,
-  width: 70,
+  width: 60,
   height: 35,
   padding: "2px 10px",
   backgroundColor: "orangered",
@@ -120,7 +120,6 @@ function ProductCard({ product }: { product: CardProps }) {
       setOpenCartNotification(false);
     }, 1000);
   };
-
   const isInWishlist = () => {
     return wishlist.find((wishlistProduct) => wishlistProduct.id === product.id)
       ? true
@@ -132,8 +131,8 @@ function ProductCard({ product }: { product: CardProps }) {
     <Card
       sx={{
         position: "relative",
-        maxWidth: 320,
-        minWidth: 270,
+        maxWidth: 300,
+        minWidth: 260,
         paddingBottom: 1.7,
       }}
     >
@@ -143,7 +142,7 @@ function ProductCard({ product }: { product: CardProps }) {
           /* loading="lazy" */
           image={image}
           title={title}
-          sx={{ height: 200, objectFit: "contain" }}
+          sx={{ height: 180, objectFit: "contain" }}
         />
       </Link>
       <WishlistIcon

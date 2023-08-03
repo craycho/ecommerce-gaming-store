@@ -46,7 +46,12 @@ function Newsletter() {
         <Button
           variant="contained"
           endIcon={<EmailIcon />}
-          sx={{ backgroundColor: "orangered" }}
+          sx={{
+            backgroundColor: "orangered",
+            "&:hover": {
+              backgroundColor: "#d03c06",
+            },
+          }}
         >
           Subscribe
         </Button>

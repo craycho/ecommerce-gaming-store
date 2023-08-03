@@ -10,6 +10,22 @@ import VisaLogo from "../../assets/visa-logo-transparent.png";
 import MastercardLogo from "../../assets/mastercard-logo-transparent.png";
 import PaypalLogo from "../../assets/paypal-logo-transparent.png";
 import StripeLogo from "../../assets/stripe-logo-transparent.png";
+import NextgenLogo from "../../assets/nextgen-logo-black.png";
+
+const backgroundStyle = {
+  backgroundColor: "#f4f5f7",
+  padding: "40px 0",
+  border: "1px lightgrey solid",
+  flexGrow: 1,
+};
+
+const logoStyle = {
+  position: "absolute",
+  top: 0,
+  left: -60,
+  height: 50,
+  width: 45,
+};
 
 const paymentData = [
   {
@@ -32,18 +48,23 @@ const paymentData = [
 
 function Footer() {
   return (
-    <Box
-      sx={{
-        backgroundColor: "#f4f5f7",
-        padding: "40px 0",
-        border: "1px lightgrey solid",
-        flexGrow: 1,
-      }}
-    >
+    <Box sx={backgroundStyle}>
       <Stack direction="row" justifyContent="space-evenly">
         <Stack direction="column">
-          <Typography variant="h4">NEXTGEN</Typography>
-          <Typography variant="body1">NextGen Gaming</Typography>
+          <Typography
+            variant="h4"
+            fontWeight={700}
+            sx={{ position: "relative" }}
+          >
+            <Box
+              component="img"
+              alt="Next Gen logo"
+              src={NextgenLogo}
+              sx={logoStyle}
+            />
+            NEXTGEN
+          </Typography>
+          <Typography variant="body1">Nextgen Gaming</Typography>
           <Typography variant="body1">Skenderija 1</Typography>
           <Typography variant="body1">71000 Sarajevo</Typography>
           <Typography variant="body1">Bosnia and Herzegovina</Typography>
