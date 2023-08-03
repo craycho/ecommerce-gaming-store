@@ -43,7 +43,6 @@ interface CountryType {
 
 function CheckoutPage() {
   // Type assertion. "Overwriteamo" tip jer znamo bolje koji ce biti od automatskog inferanja. Slicno :ProductData ali poredi subtypes a ne exact types.
-  const product = useLoaderData() as Product;
   const [selectedCountry, setSelectedCountry] = useState<CountryType | null>(
     null
   );

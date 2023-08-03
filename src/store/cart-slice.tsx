@@ -1,6 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { getLocalStorage, getLocalTotalPrice } from "../util/get-localStorage";
-import { getTotalPrice } from "../util/get-total-price";
 
 interface ProductData {
   category: string;
@@ -23,13 +21,13 @@ interface Product {
 interface StateData {
   products: Product[];
   cart: Product[];
-  totalPrice: number;
+  // totalPrice: number;
 }
 
 const initialState: StateData = {
   products: [],
   cart: [], // getLocalStorage("cart")
-  totalPrice: getLocalTotalPrice(),
+  // totalPrice: 0, getLocalTotalPrice(),
 };
 
 const cartSlice = createSlice({
@@ -63,15 +61,15 @@ const cartSlice = createSlice({
           : (existingProduct.quantity = 1);
       }
 
-      const totalPrice = getTotalPrice(
-        addedProduct.data.onSale,
-        addedProduct.data.price,
-        1,
-        state.totalPrice,
-        true
-      );
+      // const totalPrice = getTotalPrice(
+      //   addedProduct.data.onSale,
+      //   addedProduct.data.price,
+      //   1,
+      //   state.totalPrice,
+      //   true
+      // );
 
-      state.totalPrice = totalPrice;
+      // state.totalPrice = totalPrice;
     },
     removeFromCartState(state: StateData, action: PayloadAction<Product>) {
       const removedProduct = action.payload;
@@ -88,14 +86,14 @@ const cartSlice = createSlice({
           existingProduct.quantity--;
         }
 
-        const totalPrice = getTotalPrice(
-          removedProduct.data.onSale,
-          removedProduct.data.price,
-          1,
-          state.totalPrice,
-          false
-        );
-        state.totalPrice = totalPrice;
+        // const totalPrice = getTotalPrice(
+        //   removedProduct.data.onSale,
+        //   removedProduct.data.price,
+        //   1,
+        //   state.totalPrice,
+        //   false
+        // );
+        // state.totalPrice = totalPrice;
       }
     },
     removeAllFromCartState(state: StateData, action: PayloadAction<Product>) {
@@ -109,14 +107,14 @@ const cartSlice = createSlice({
           (product) => product.id !== existingProduct.id
         );
 
-        const totalPrice = getTotalPrice(
-          removedProduct.data.onSale,
-          removedProduct.data.price,
-          existingProduct.quantity as number,
-          state.totalPrice,
-          false
-        );
-        state.totalPrice = totalPrice;
+        // const totalPrice = getTotalPrice(
+        //   removedProduct.data.onSale,
+        //   removedProduct.data.price,
+        //   existingProduct.quantity as number,
+        //   state.totalPrice,
+        //   false
+        // );
+        // state.totalPrice = totalPrice;
       }
     },
   },

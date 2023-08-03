@@ -13,7 +13,7 @@ import WishlistPage from "./pages/Wishlist";
 import SignupPage from "./pages/Signup";
 import CheckoutPage from "./pages/Checkout";
 
-/**@todo Uradi post request za mijenjanje profile picture u user-actions */
+/**@todo Login ne radi nakon logouta */
 /**@todo Login on successful sign up */
 /**@todo errorElement not rendered when an error is thrown. */
 /**@todo Auto scroll to top on page refresh. */

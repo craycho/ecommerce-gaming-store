@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import CartItem from "./CartItem";
 
+import calcTotalPrice from "../../util/get-total-price";
+
 import {
   Box,
   Button,
@@ -30,16 +32,53 @@ const CartWrapper = styled(Box)({
   overflowY: "scroll",
 });
 
+interface ProductData {
+  category: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  new: boolean;
+  onSale: boolean;
+  price: number;
+  thumbnail: string;
+  title: string;
+}
+
+interface Product {
+  id: string;
+  data: ProductData;
+  quantity?: number;
+}
+
 interface ModalProps {
   cartOpen: boolean;
   handleClose: () => void;
 }
 
+/* const calcTotalPrice = (cartArray: Product[]) => {
+  let totalPrice: number = 0;
+
+  if (cartArray.length < 1) {
+    return 0;
+  } else {
+    for (const item of cartArray) {
+      const itemPrice = item.data.onSale
+        ? +(item.data.price - item.data.price * 0.3).toFixed(2)
+        : +item.data.price.toFixed(2);
+
+      const totalItemPrice = itemPrice * (item.quantity ?? 1);
+
+      totalPrice += totalItemPrice;
+    }
+
+    return +totalPrice.toFixed(2);
+  }
+}; */
+
 function CartModal({ cartOpen, handleClose }: ModalProps) {
   const navigate = useNavigate();
   const cart = useSelector((state: RootState) => state.cart);
-  const totalPrice = cart.totalPrice;
-  // console.log(cart);
+  const totalPrice = calcTotalPrice(cart.cart);
 
   return (
     <Paper component="div" elevation={5}>

@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import CartItem from "../Cart/CartItem";
+import calcTotalPrice from "../../util/get-total-price";
 
 import { Box, Button, Stack, styled, Typography } from "@mui/material";
-import { useState } from "react";
 
 const boxStyle = {
   width: 1000,
@@ -27,7 +27,7 @@ function CheckoutCart({ deliveryMethod }: { deliveryMethod: number }) {
   const cart = useSelector((state: RootState) => state.cart);
   const deliveryPrice =
     deliveryMethod === 0 ? 8.95 : deliveryMethod === 1 ? 19.99 : 99.99;
-  const totalPrice = cart.totalPrice;
+  const totalPrice = calcTotalPrice(cart.cart);
 
   return (
     <Box sx={boxStyle}>
