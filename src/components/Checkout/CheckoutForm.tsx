@@ -258,8 +258,8 @@ function CheckoutForm({ selectedCountry, setCountryError }: FormProps) {
           <Grid item xs={12} mt={2}>
             {showDemoMessage && (
               <Typography color="red" variant="subtitle2">
-                * This is a demo website and no payment gateway has been
-                implemented yet. Redirecting in 3 seconds.
+                Order successful. <br />* This is a demo website and no payment
+                gateway has been implemented yet. Redirecting in 3 seconds.
               </Typography>
             )}
           </Grid>

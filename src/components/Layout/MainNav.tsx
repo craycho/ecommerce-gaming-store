@@ -62,6 +62,22 @@ const IconWithBadge = styled(Badge)({
   },
 });
 
+const wishlistStyle = {
+  color: "#F4F4F6",
+  cursor: "pointer",
+  "&:hover": {
+    color: "red",
+  },
+};
+
+const cartStyle = {
+  color: "#F4F4F6",
+  cursor: "pointer",
+  "&:hover": {
+    color: "orangered",
+  },
+};
+
 const UserIcon = styled(LoginIcon)({
   cursor: "pointer",
   "&:hover": {
@@ -98,7 +114,7 @@ function MainNavigation() {
     0
   );
 
-  const fetchOrders = async () => {
+  const fetchUserOrders = async () => {
     const response = await fetch(
       "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
     );
@@ -136,6 +152,7 @@ function MainNavigation() {
             alt="Nextgen logo"
             src={NextgenLogo}
             sx={{ height: 45, width: 40, mt: 0.5, color: "#F4F4F6" }}
+            onClick={() => navigate("/")}
           />
           <Link
             to="/"
@@ -146,7 +163,7 @@ function MainNavigation() {
               fontSize={22}
               fontWeight={700}
               sx={{
-                lineHeight: 1.2,
+                lineHeight: 1.15,
                 mt: 0.2,
                 display: { xs: "none", sm: "block" },
                 color: "#F4F4F6",
@@ -171,13 +188,8 @@ function MainNavigation() {
           </Box>
           <IconWithBadge
             badgeContent={wishlist.length}
-            sx={{
-              color: "#F4F4F6",
-              cursor: "pointer",
-              "&:hover": {
-                color: "red",
-              },
-            }}
+            color="secondary"
+            sx={wishlistStyle}
           >
             <WishlistIcon onClick={() => navigate("/wishlist")} />
           </IconWithBadge>
@@ -189,7 +201,7 @@ function MainNavigation() {
               gap={1.2}
               onClick={() => {
                 setUserModalOpen(true);
-                fetchOrders();
+                fetchUserOrders();
               }}
               sx={{ color: "#F4F4F6", cursor: "pointer" }}
             >
@@ -203,13 +215,7 @@ function MainNavigation() {
           <IconWithBadge
             badgeContent={cartTotalAmount}
             color="secondary"
-            sx={{
-              color: "#F4F4F6",
-              cursor: "pointer",
-              "&:hover": {
-                color: (theme) => theme.palette.secondary.main,
-              },
-            }}
+            sx={cartStyle}
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCartIcon />

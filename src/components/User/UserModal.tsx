@@ -268,7 +268,14 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
             <OrdersTab label="Delivered" />
           </Tabs>
           <OrderList value={currentTab} index={0}>
-            <Stack direction="row" spacing={2.5} sx={{ overflowX: "auto" }}>
+            <Stack
+              direction="row"
+              spacing={2.5}
+              sx={{
+                overflowX: "auto",
+                pb: 2,
+              }}
+            >
               {currentOrders.length > 0
                 ? currentOrders.map((order, i) => (
                     <UserOrderItem
@@ -289,6 +296,10 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
     </Modal>
   );
 }
+
+/* "::-webkit-scrollbar": {
+                  color: "red",
+                }, */
 
 /* <Typography variant="body1" key={order.id}>
                       {order.cart}

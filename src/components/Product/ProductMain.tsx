@@ -3,7 +3,7 @@ import MainImage from "./MainImage";
 import ImageGrid from "./ImageGrid";
 import Info from "./Info";
 
-import { Box, Fade, Stack } from "@mui/material";
+import { Box, Fade, Grid, Stack } from "@mui/material";
 
 interface ProductData {
   category: string;
@@ -29,7 +29,7 @@ function ProductMain({ product }: { product: Product }) {
   return (
     <Fade in={true} timeout={700}>
       <Box sx={{ margin: "4rem auto", width: "80%" }}>
-        <Stack
+        {/* <Stack
           columnGap={8}
           sx={{ flexDirection: { xs: "column", md: "row" } }}
         >
@@ -39,114 +39,36 @@ function ProductMain({ product }: { product: Product }) {
             onSelect={setSelectedImage}
           />
           <MainImage mainImage={productImages[selectedImage]} />
-          {/* <Info
-            title={product?.data.title}
-            description={product?.data.description}
-            price={product?.data.price}
-            category={product?.data.category}
-          /> */}
           <Info product={product} />
-        </Stack>
+        </Stack> */}
+        <Grid
+          container
+          columnSpacing={5}
+          sx={{
+            ".MuiGrid-root": {
+              "&:first-child": {
+                pl: 0,
+              },
+            },
+          }}
+        >
+          <Grid item xs={1.5}>
+            <ImageGrid
+              images={productImages}
+              selectedImage={selectedImage}
+              onSelect={setSelectedImage}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <MainImage mainImage={productImages[selectedImage]} />
+          </Grid>
+          <Grid item xs={4.5}>
+            <Info product={product} />
+          </Grid>
+        </Grid>
       </Box>
     </Fade>
   );
 }
 
 export default ProductMain;
-
-/* NEWER GRID
-
-  <Grid
-        container
-        direction="row"
-        columnSpacing={5}
-        justifyContent="center"
-        sx={{ margin: "0 auto", width: "90%" }}
-      >
-        <Grid item sm={1} display="flex" justifyContent="center" width="100%">
-          <ImageGrid
-            images={productImages}
-            selectedImage={selectedImage}
-            onSelect={setSelectedImage}
-          />
-        </Grid>
-        <Grid item sm={6}>
-          <MainImage mainImage={productImages[selectedImage]} />
-        </Grid>
-        <Grid item sm={5}>
-          <Info
-            title={productData.data.title}
-            description={productData.data.description}
-            price={productData.data.price}
-            category={productData.data.category}
-          />
-        </Grid>
-      </Grid>
-*/
-
-/* <Grid
-        container
-        direction="row"
-        spacing={8}
-        justifyContent="center"
-        sx={{ maxWidth: 1100 }}
-      >
-        <Grid item sm={1} display="flex" justifyContent="center" width="100%">
-          <ImageGrid
-            images={productImages}
-            selectedImage={selectedImage}
-            onSelect={setSelectedImage}
-          />
-        </Grid>
-        <Grid item sm={6}>
-          <MainImage mainImage={productImages[selectedImage]} />
-        </Grid>
-        <Grid item sm={5}>
-          <Info
-            title={productData.data.title}
-            description={productData.data.description}
-            price={productData.data.price}
-            category={productData.data.category}
-          />
-        </Grid>
-      </Grid> */
-
-/*  <Stack columnGap={8} sx={{ flexDirection: { xs: "column", md: "row" } }}>
-        <ImageGrid
-          images={productImages}
-          selectedImage={selectedImage}
-          onSelect={setSelectedImage}
-        />
-        <MainImage mainImage={productImages[selectedImage]} />
-        <Info
-          title={productData.data.title}
-          description={productData.data.description}
-          price={productData.data.price}
-          category={productData.data.category}
-        />
-      </Stack> */
-
-/* ------------- WITH REDUX -------------
-  // Casting radi nepotrebnog "string | undefined" type. Nikad nisu undefined.
-  const { category, productId } = useParams() as {
-    category: string;
-    productId: string;
-  };
-  const productTitle = productId.replaceAll("-", " ");
-  const products = useSelector((state: RootState) => state.cart); 
-  
-  const currentProduct = products.find(
-    (product) =>
-    product.data.category.toLowerCase().includes(category) &&
-    product.data.title.toLowerCase().includes(productTitle)
-    );
-    
-  */
-
-/*  if (!currentProduct) {
-   return (
-     <Typography variant="h6" mt={5} ml={5}>
-     There was an error displaying your product.
-     </Typography>
-     );
-    } */
