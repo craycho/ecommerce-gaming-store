@@ -29,24 +29,12 @@ function ProductMain({ product }: { product: Product }) {
   return (
     <Fade in={true} timeout={700}>
       <Box sx={{ margin: "4rem auto", width: "80%" }}>
-        {/* <Stack
-          columnGap={8}
-          sx={{ flexDirection: { xs: "column", md: "row" } }}
-        >
-          <ImageGrid
-            images={productImages}
-            selectedImage={selectedImage}
-            onSelect={setSelectedImage}
-          />
-          <MainImage mainImage={productImages[selectedImage]} />
-          <Info product={product} />
-        </Stack> */}
         <Grid
           container
           columnSpacing={5}
           sx={{
             ".MuiGrid-root": {
-              "&:first-child": {
+              "&:first-of-type": {
                 pl: 0,
               },
             },

@@ -5,7 +5,7 @@ import cartReducer from "./cart-slice";
 import {
   updateLocalCart,
   updateLocalWishlist,
-} from "../util/update-localStorage";
+} from "../util/update-local-storage";
 import wishlistReducer from "./wishlist-slice";
 import userReducer from "./user-slice";
 

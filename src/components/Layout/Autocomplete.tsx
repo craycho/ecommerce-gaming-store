@@ -50,6 +50,7 @@ function AutocompleteSearch({
 }: AutocompleteProps) {
   const navigate = useNavigate();
   const products = useSelector((state: RootState) => state.cart.products);
+
   const inputOptions = products.map((product) => product.data.title);
 
   window.addEventListener("popstate", () => {

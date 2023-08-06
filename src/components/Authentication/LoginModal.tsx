@@ -1,5 +1,5 @@
 import LoginForm from "./LoginForm";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 
 const modalStyle = {
   position: "absolute",

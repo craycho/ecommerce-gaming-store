@@ -1,30 +1,12 @@
-import { forwardRef } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import HeroProduct from "./HeroProduct";
 
 import { Box, Stack } from "@mui/material";
 
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
+const HeroStack = function () {
+  const products = useSelector((state: RootState) => state.cart.products);
 
-interface Product {
-  id: string;
-  data: ProductData;
-}
-
-interface HeroProps {
-  products: Product[];
-}
-
-const HeroStack = forwardRef(function ({ products }: HeroProps, ref) {
   const steelseriesArctis = products.find((product) =>
     product.data.title.includes("Steelseries Arctis")
   );
@@ -36,7 +18,7 @@ const HeroStack = forwardRef(function ({ products }: HeroProps, ref) {
   );
 
   return (
-    <Box sx={{ width: "85%" }} margin="30px auto 40px auto" ref={ref}>
+    <Box sx={{ width: "85%" }} margin="30px auto 40px auto">
       <Stack direction="row" gap={1.5} justifyContent="center">
         <HeroProduct
           key={steelseriesArctis?.id}
@@ -56,6 +38,6 @@ const HeroStack = forwardRef(function ({ products }: HeroProps, ref) {
       </Stack>
     </Box>
   );
-});
+};
 
 export default HeroStack;

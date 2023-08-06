@@ -15,11 +15,37 @@ import {
 } from "@mui/material";
 import NextgenLogo from "../../assets/nextgen-logo-black.png";
 
-interface LoginProps {
+interface Order {
+  selectedCountry: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  postcode: string;
+  email: string;
+  allowExtraEmails: boolean;
+  cart: string[];
+}
+interface User {
+  id: string;
+  loggedIn: boolean;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  allowExtraEmails: boolean;
+  profilePicture: string;
+  orders: Order[];
+}
+
+interface FetchData {
+  [key: string]: User; // "Index signature", allows dynamic keys of the same, defined type
+}
+
+interface PropsType {
   handleClose: () => void;
 }
 
-function LoginForm({ handleClose }: LoginProps) {
+function LoginForm({ handleClose }: PropsType) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -39,12 +65,12 @@ function LoginForm({ handleClose }: LoginProps) {
       const existingUsersResponse = await fetch(
         "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
       );
-      const existingUsersData = await existingUsersResponse.json();
+      const existingUsersData: FetchData = await existingUsersResponse.json();
 
       for (const user in existingUsersData) {
         const existingUserEmail: string = existingUsersData[user].email;
         const existingUserPassword: string = existingUsersData[user].password;
-        const userData = existingUsersData[user];
+        const userData: User = existingUsersData[user];
 
         if (existingUserEmail === email && existingUserPassword === password) {
           if (rememberMe) {
@@ -60,7 +86,7 @@ function LoginForm({ handleClose }: LoginProps) {
           }
           dispatch(userActions.loginUser({ userData, rememberMe }));
           handleClose();
-          break;
+          break; // No need to check further iterations
         } else if (existingUserEmail !== email) {
           setShowEmailError(true);
         } else if (

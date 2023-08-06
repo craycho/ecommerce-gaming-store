@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { getLocalStorage } from "../util/get-localStorage";
+import { getLocalStorage } from "../util/get-local-storage";
 
 interface ProductData {
   category: string;

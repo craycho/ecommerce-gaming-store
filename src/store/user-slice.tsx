@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { getUserData } from "../util/get-localStorage";
+import { getUserData } from "../util/get-local-storage";
 // import { useRouteLoaderData } from "react-router-dom";
 
 interface Order {

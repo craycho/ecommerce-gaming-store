@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { userActions } from "../../store/user-slice";
@@ -10,7 +10,6 @@ import UserOrderItem from "./UserOrderItem";
 import {
   Avatar,
   Box,
-  Button,
   Divider,
   Grid,
   IconButton,
@@ -19,7 +18,6 @@ import {
   Stack,
   Tabs,
   Tab,
-  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -57,20 +55,6 @@ const UserInfo = styled(Typography)({
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
   overflow: "hidden",
-});
-
-const ChangeSpan = styled(Typography)({
-  position: "absolute",
-  left: 25,
-  top: 50,
-  textOverflow: "visible",
-  zIndex: 1,
-  color: "grey",
-
-  "&:hover": {
-    cursor: "pointer",
-    color: "#ca3737",
-  },
 });
 
 const LogoutButton = styled(IconButton)({
