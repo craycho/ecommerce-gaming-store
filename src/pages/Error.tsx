@@ -5,7 +5,6 @@ function ErrorPage() {
   if (isRouteErrorResponse(error)) {
     return (
       <>
-        {/* <MainNavigation /> */}
         <h2>Something went wrong!</h2>
         <h3>{error.status}</h3>
         <p>{error.statusText}</p>

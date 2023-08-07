@@ -40,10 +40,7 @@ function ResultsMain({
     setCurrentProducts(results.slice(0, 16));
   }, [searchTerm]);
 
-  const handlePagination = (
-    event: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
+  const handlePagination = (event: React.ChangeEvent<any>, value: number) => {
     window.scrollTo(0, 0);
     setPage(value);
     const startIndex = (value - 1) * 16;

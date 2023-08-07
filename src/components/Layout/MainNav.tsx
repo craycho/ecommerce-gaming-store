@@ -152,12 +152,19 @@ function MainNavigation() {
             alt="Nextgen logo"
             src={NextgenLogo}
             sx={{ height: 45, width: 40, mt: 0.5, color: "#F4F4F6" }}
-            onClick={() => navigate("/")}
+            onClick={() => {
+              window.scrollTo(0, 0);
+              setCurrentInput("");
+              navigate("/");
+            }}
           />
           <Link
             to="/"
             style={{ textDecoration: "none" }}
-            onClick={() => setCurrentInput("")}
+            onClick={() => {
+              window.scrollTo(0, 0);
+              setCurrentInput("");
+            }}
           >
             <Typography
               fontSize={22}
@@ -203,7 +210,7 @@ function MainNavigation() {
                 setUserModalOpen(true);
                 fetchUserOrders();
               }}
-              sx={{ color: "#F4F4F6", cursor: "pointer" }}
+              sx={{ color: "#F4F4F6", cursor: "pointer", letterSpacing: 0.3 }}
             >
               <Avatar src={userData.profilePicture} />
               {userData.firstName}

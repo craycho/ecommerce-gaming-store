@@ -8,7 +8,7 @@ import NextGenDescription from "../components/Homepage/Description";
 import Newsletter from "../components/Homepage/Newsletter";
 import BannerStack from "../components/Homepage/BannerStack";
 
-import { CircularProgress, Typography } from "@mui/material";
+import { CircularProgress, styled, Typography } from "@mui/material";
 
 /* Memoized selector, radi kao obicni al ne runa svaki put
 const productsSelector = (state: RootState) => state.cart;
@@ -16,6 +16,13 @@ const memoizedProducts = createSelector(
   productsSelector,
   (products) => products
 ); */
+
+const CategoryTitle = styled(Typography)({
+  textAlign: "center",
+  fontWeight: 700,
+  fontSize: 26,
+  letterSpacing: 0.8,
+});
 
 function Home() {
   const dispatch = useAppDispatch();
@@ -41,24 +48,12 @@ function Home() {
       ) : (
         <>
           <HeroStack />
-          <Typography mb={3} align="center" fontWeight={700} fontSize={26}>
-            Recommended products
-          </Typography>
+          <CategoryTitle sx={{ mb: 3 }}>Recommended products</CategoryTitle>
           <ProductCarousel type="random" />
-          <Typography
-            mb={2.8}
-            mt={5}
-            align="center"
-            fontWeight={700}
-            fontSize={26}
-          >
-            Currently on sale
-          </Typography>
+          <CategoryTitle sx={{ mt: 5, mb: 3 }}>Currently on sale</CategoryTitle>
           <ProductCarousel type="onSale" />
           <BannerStack />
-          <Typography mb={2.8} align="center" fontWeight={700} fontSize={26}>
-            New arrivals
-          </Typography>
+          <CategoryTitle sx={{ mb: 3 }}>New arrivals</CategoryTitle>
           <ProductCarousel type="new" />
         </>
       )}

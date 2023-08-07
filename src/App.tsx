@@ -1,20 +1,22 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import ErrorPage from "./pages/Error";
 import RootLayout from "./components/Layout/Root";
 import Home from "./pages/Home";
-import Product from "./pages/Product";
-import { productLoader } from "./pages/Product";
-import CategoryPage from "./pages/Category";
-import { categoryLoader } from "./pages/Category";
-import ResultsPage from "./pages/Results";
-import { resultsLoader } from "./pages/Results";
+import ErrorPage from "./pages/Error";
+import Product, { productLoader } from "./pages/Product";
+import CategoryPage, { categoryLoader } from "./pages/Category";
+import ResultsPage, { resultsLoader } from "./pages/Results";
 import WishlistPage from "./pages/Wishlist";
 import SignupPage from "./pages/Signup";
 import CheckoutPage from "./pages/Checkout";
+import FaqPage from "./pages/Faq";
+import TermsConditionsPage from "./pages/TermsConditions";
+import CustomerServicePage from "./pages/CustomerService";
 
+/**@todo Implement mailto feature on email click */
 /**@todo Login ne radi nakon logouta */
 /**@todo Login on successful sign up */
+/**@todo Hide navbar and show when scrolling up */
 /**@todo errorElement not rendered when an error is thrown. */
 /**@todo Auto scroll to top on page refresh. */
 /**@todo openOnFocus doesn't work. */
@@ -44,6 +46,9 @@ const router = createBrowserRouter([
       { path: "/wishlist", element: <WishlistPage /> },
       { path: "/signup", element: <SignupPage /> },
       { path: "/checkout", element: <CheckoutPage /> },
+      { path: "/faq", element: <FaqPage /> },
+      { path: "/terms-conditions", element: <TermsConditionsPage /> },
+      { path: "/customer-service", element: <CustomerServicePage /> },
     ],
   },
 ]);

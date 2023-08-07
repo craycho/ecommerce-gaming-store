@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import {
   Box,
   ImageList,
@@ -27,6 +29,15 @@ const logoStyle = {
   width: 45,
 };
 
+const linkStyle = {
+  cursor: "pointer",
+  letterSpacing: 0.5,
+  "&:hover": {
+    // fontWeight: 700,
+    color: "orangered",
+  },
+};
+
 const paymentData = [
   {
     img: VisaLogo,
@@ -47,6 +58,8 @@ const paymentData = [
 ];
 
 function Footer() {
+  const navigate = useNavigate();
+
   return (
     <Box sx={backgroundStyle}>
       <Stack direction="row" justifyContent="space-evenly">
@@ -72,52 +85,110 @@ function Footer() {
           <Typography variant="body1">info@nextgengaming.com</Typography>
         </Stack>
         <Stack direction="column">
-          <Typography variant="body1" fontWeight={700} mb={1}>
+          <Typography
+            variant="body1"
+            fontWeight={700}
+            letterSpacing={0.6}
+            mb={1}
+          >
             Popular categories
           </Typography>
-          <Typography variant="body1">Keyboards</Typography>
-          <Typography variant="body1">Mice</Typography>
-          <Typography variant="body1">Mousepads</Typography>
-          <Typography variant="body1">Monitors</Typography>
-          <Typography variant="body1">Gaming Chairs</Typography>
+          <Typography
+            variant="body1"
+            component="span"
+            sx={linkStyle}
+            onClick={() => navigate("/keyboards")}
+          >
+            Keyboards
+          </Typography>
+          <Typography
+            variant="body1"
+            component="span"
+            sx={linkStyle}
+            onClick={() => navigate("/mice")}
+          >
+            Mice
+          </Typography>
+          <Typography
+            variant="body1"
+            component="span"
+            sx={linkStyle}
+            onClick={() => navigate("/mousepads")}
+          >
+            Mousepads
+          </Typography>
+          <Typography
+            variant="body1"
+            component="span"
+            sx={linkStyle}
+            onClick={() => navigate("/monitors")}
+          >
+            Monitors
+          </Typography>
+          <Typography
+            variant="body1"
+            component="span"
+            sx={linkStyle}
+            onClick={() => navigate("/chairs")}
+          >
+            Gaming Chairs
+          </Typography>
         </Stack>
         <Stack direction="column">
-          <Stack direction="column">
-            <Typography variant="body1" fontWeight={700} mb={1}>
-              Customer service
-            </Typography>
-            <Typography variant="body1">
-              Frequently asked questions (FAQ)
-            </Typography>
-            <Typography variant="body1">Terms & Conditions</Typography>
-            <Typography variant="body1">Customer service</Typography>
-          </Stack>
+          <Typography
+            variant="body1"
+            fontWeight={700}
+            letterSpacing={0.6}
+            mb={1}
+          >
+            Customer service
+          </Typography>
+          <Typography
+            variant="body1"
+            component="span"
+            sx={linkStyle}
+            onClick={() => navigate("/faq")}
+          >
+            Frequently asked questions (FAQ)
+          </Typography>
+          <Typography
+            variant="body1"
+            component="span"
+            sx={linkStyle}
+            onClick={() => navigate("/terms-conditions")}
+          >
+            Terms & Conditions
+          </Typography>
+          <Typography
+            variant="body1"
+            component="span"
+            sx={linkStyle}
+            onClick={() => navigate("/customer-service")}
+          >
+            Customer service
+          </Typography>
         </Stack>
-        <Stack direction="column">
-          <Stack direction="column">
-            <ImageList
-              sx={{ width: 170, height: 130 }}
-              cols={2}
-              rowHeight={55}
-              gap={15}
+        <ImageList
+          sx={{ width: 170, height: 130 }}
+          cols={2}
+          rowHeight={55}
+          gap={15}
+        >
+          {paymentData.map((item) => (
+            <ImageListItem
+              key={item.img}
+              sx={{ display: "flex", alignItems: "center" }}
             >
-              {paymentData.map((item) => (
-                <ImageListItem
-                  key={item.img}
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
-                  <img
-                    src={`${item.img}`}
-                    srcSet={`${item.img}`}
-                    alt={item.title}
-                    loading="lazy"
-                    style={{ width: 75, height: 50 }}
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </Stack>
-        </Stack>
+              <img
+                src={`${item.img}`}
+                srcSet={`${item.img}`}
+                alt={item.title}
+                loading="lazy"
+                style={{ width: 75, height: 50 }}
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
       </Stack>
     </Box>
   );

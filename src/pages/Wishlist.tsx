@@ -28,7 +28,7 @@ const DeleteAllButton = styled(Button)({
   },
 });
 
-function CartModal() {
+function Wishlist() {
   const dispatch = useAppDispatch();
   const wishlist = useSelector((state: RootState) => state.wishlist);
 
@@ -74,4 +74,4 @@ function CartModal() {
   );
 }
 
-export default CartModal;
+export default Wishlist;
