@@ -13,7 +13,10 @@ const validateInput = (type: string, inputValue: string): boolean => {
       !containsSpecialChars(inputValue) && inputValue.trim() !== "";
     return isValid;
   } else if (type === "email") {
-    const validEmail = inputValue.includes("@") && inputValue.trim() !== "";
+    const validEmail =
+      !inputValue.includes(" ") &&
+      inputValue.includes("@") &&
+      inputValue.trim() !== "";
     return validEmail;
   } else if (type === "password") {
     return !(inputValue.trim().length < 8);

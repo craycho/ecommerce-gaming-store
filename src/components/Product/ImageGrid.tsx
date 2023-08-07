@@ -23,7 +23,7 @@ function ImageGrid({ images, selectedImage, onSelect }: GridProps) {
                 : "solid 1px lightgrey",
             borderRadius: "1px",
             cursor: "pointer",
-            objectFit: "cover",
+            objectFit: "contain",
           }}
           onClick={() => onSelect(index)}
         />

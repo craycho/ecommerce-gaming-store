@@ -6,10 +6,15 @@ function MainImage({ mainImage }: { mainImage: string }) {
       sx={{
         display: "flex",
         alignItems: "center",
-        minHeight: 400,
       }}
     >
-      <img src={mainImage} width="100%" />
+      <Box
+        component="img"
+        src={mainImage}
+        width="100%"
+        height={450}
+        sx={{ objectFit: "contain" }}
+      />
     </Box>
   );
 }

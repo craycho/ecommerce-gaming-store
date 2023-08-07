@@ -2,6 +2,7 @@ import { useState, forwardRef } from "react";
 
 import {
   Box,
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -98,19 +99,3 @@ function UserOrderItem({ userOrder, index, keyId }: OrderItemProps) {
 }
 
 export default UserOrderItem;
-
-/* <Stack direction="column" spacing={1}>
-        {userOrder.map((order) => order)}
-      </Stack> */
-
-/* <Typography variant="subtitle2" fontWeight={700} mb={0.7}>
-          Order #{index + 1}
-        </Typography>
-        <Stack direction="column">
-          {userOrder.map((order) => (
-            <Typography key={keyId + generateRandomNumber()}>
-              {order}
-            </Typography>
-          ))}
-          /
-        </Stack> */

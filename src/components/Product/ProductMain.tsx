@@ -28,18 +28,8 @@ function ProductMain({ product }: { product: Product }) {
 
   return (
     <Fade in={true} timeout={700}>
-      <Box sx={{ margin: "4rem auto", width: "80%" }}>
-        <Grid
-          container
-          columnSpacing={5}
-          sx={{
-            ".MuiGrid-root": {
-              "&:first-of-type": {
-                pl: 0,
-              },
-            },
-          }}
-        >
+      <Box sx={{ margin: "4rem auto", width: "85%" }}>
+        <Grid container columnSpacing={8} justifyContent="center">
           <Grid item xs={1.5}>
             <ImageGrid
               images={productImages}
@@ -47,7 +37,7 @@ function ProductMain({ product }: { product: Product }) {
               onSelect={setSelectedImage}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={5.5}>
             <MainImage mainImage={productImages[selectedImage]} />
           </Grid>
           <Grid item xs={4.5}>

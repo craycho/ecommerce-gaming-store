@@ -22,9 +22,11 @@ interface Product {
 }
 
 function Info({ product }: { product: Product }) {
-  const userId = useSelector((state: RootState) => state.user.id);
-  const { category, title, description, price } = product.data;
   const dispatch = useAppDispatch();
+  const userId = useSelector((state: RootState) => state.user.id);
+  const { category, title, description, price, onSale } = product.data;
+  const saleAmount = +(price * 0.3).toFixed(2);
+  const onSalePrice = (price - saleAmount).toFixed(2);
 
   const addToCartHandler = () => {
     dispatch(addToCart(product, userId));
@@ -34,18 +36,29 @@ function Info({ product }: { product: Product }) {
     <Stack direction="column">
       <Typography variant="subtitle1">{category}</Typography>
       <Divider />
-      <Box mt={2}>
+      <Box mt={1}>
         <Typography variant="h3">{title}</Typography>
-        <Typography variant="subtitle1" mt={2}>
+        <Typography variant="subtitle1" mt={2} textAlign="justify">
           {description}
         </Typography>
-        <Typography variant="h5" mt={2}>
-          ${price}
-        </Typography>
+        <Box display="flex" gap={1.75} mt={1.5}>
+          <Typography
+            variant="h5"
+            color={onSale ? "orangered" : "primary"}
+            mt={0.2}
+          >
+            {onSale ? onSalePrice : price} €
+          </Typography>
+          {onSale && (
+            <Typography variant="h6" color="GrayText">
+              <s>({price})</s> €
+            </Typography>
+          )}
+        </Box>
       </Box>
       <Button
         variant="contained"
-        sx={{ marginTop: 3 }}
+        sx={{ marginTop: 2.5 }}
         onClick={addToCartHandler}
       >
         Add to cart

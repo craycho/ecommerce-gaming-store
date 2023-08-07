@@ -177,7 +177,7 @@ function ProductCard({ product }: { product: CardProps }) {
               {onSale ? onSalePrice : price} €
             </Typography>
             {onSale && (
-              <Typography variant="body2" color="primary.light">
+              <Typography variant="body2" color="GrayText">
                 <s>({price})</s> €
               </Typography>
             )}

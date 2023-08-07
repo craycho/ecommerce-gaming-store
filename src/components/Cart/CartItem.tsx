@@ -179,7 +179,7 @@ function CartItem({ product }: { product: Product }) {
                 {totalPrice} €
               </Typography>
               {product.data.onSale && (
-                <Typography variant="body2" color="primary.light">
+                <Typography variant="body2" color="GrayText">
                   <s>({totalPriceWithoutDiscount.toFixed(2)})</s> €
                 </Typography>
               )}

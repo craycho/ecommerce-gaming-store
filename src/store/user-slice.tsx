@@ -82,6 +82,9 @@ const userSlice = createSlice({
           break;
       }
     },
+    subscribeToNewsLetter(state: UserData) {
+      state.allowExtraEmails = true;
+    },
   },
 });
 

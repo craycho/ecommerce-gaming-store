@@ -4,8 +4,8 @@ import { fetchProducts } from "../store/products-actions";
 
 import ProductCarousel from "../components/Homepage/ProductCarousel";
 import HeroStack from "../components/Homepage/HeroStack";
-import NextGenDescription from "../components/Layout/Description";
-import Newsletter from "../components/Layout/Newsletter";
+import NextGenDescription from "../components/Homepage/Description";
+import Newsletter from "../components/Homepage/Newsletter";
 import BannerStack from "../components/Homepage/BannerStack";
 
 import { CircularProgress, Typography } from "@mui/material";

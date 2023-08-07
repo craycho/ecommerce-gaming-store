@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { json, useNavigate } from "react-router-dom";
+
 import validateInput from "../util/validate-input";
-import { nanoid, random } from "nanoid";
+import { nanoid } from "nanoid";
 
 import {
   Box,
@@ -11,10 +12,18 @@ import {
   FormControlLabel,
   Grid,
   Link,
+  styled,
   TextField,
   Typography,
 } from "@mui/material";
 import NextgenLogo from "../assets/nextgen-logo-black.png";
+
+const BoxWrapper = styled(Box)({
+  marginTop: 6,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+});
 
 function Signup() {
   const navigate = useNavigate();
@@ -127,14 +136,7 @@ function Signup() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 6,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+      <BoxWrapper>
         <Box
           component="img"
           alt="Next Gen logo"
@@ -238,7 +240,7 @@ function Signup() {
             </Link>
           </Box>
         </Box>
-      </Box>
+      </BoxWrapper>
     </Container>
   );
 }

@@ -163,13 +163,19 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
     setCurrentTab(newValue);
   };
 
+  const handleLogout = () => {
+    localStorage.setItem("userData", JSON.stringify(emptyUserData));
+    sessionStorage.setItem("userData", JSON.stringify(emptyUserData));
+    appDispatch(logoutUserLocal());
+    handleClose();
+  };
+
   return (
     <Modal
       disableAutoFocus
       open={userModalOpen}
       onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
+      aria-labelledby="user-modal-window"
     >
       <Box sx={modalStyle}>
         <ProfilePicture
@@ -193,7 +199,6 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
             style={{ display: "none" }}
           />
         </Box>
-        {/* <Box p={0} sx={{ display: "flex", justifyContent: "center" }}> */}
         <Grid container rowSpacing={3.7} columnSpacing={3} m={0} mb={6}>
           <Grid item xs={6} position="relative">
             <UserInfo variant="body1">
@@ -224,16 +229,8 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
             <ChangeUserData dataType="password" />
           </Grid>
         </Grid>
-        {/* </Box> */}
         <Tooltip title="Logout" placement="top">
-          <LogoutButton
-            onClick={() => {
-              localStorage.setItem("userData", JSON.stringify(emptyUserData));
-              sessionStorage.setItem("userData", JSON.stringify(emptyUserData));
-              appDispatch(logoutUserLocal());
-              handleClose();
-            }}
-          >
+          <LogoutButton onClick={handleLogout}>
             <LogoutIcon />
           </LogoutButton>
         </Tooltip>
@@ -254,7 +251,7 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
           <OrderList value={currentTab} index={0}>
             <Stack
               direction="row"
-              spacing={2.5}
+              spacing={1.5}
               sx={{
                 overflowX: "auto",
                 pb: 2,
@@ -281,61 +278,4 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
   );
 }
 
-/* "::-webkit-scrollbar": {
-                  color: "red",
-                }, */
-
-/* <Typography variant="body1" key={order.id}>
-                      {order.cart}
-                    </Typography> */
-
 export default UserModal;
-
-/* <Stack
-            pt={2}
-            pl={3}
-            pb={2}
-            spacing={2.5}
-            width="fit-content"
-            overflow="hidden"
-          >
-            <Typography variant="body1">
-              <strong style={{ marginRight: 5 }}>First name:</strong>
-              {userData.firstName}
-            </Typography>
-            <Typography variant="body1" display="inline">
-              <strong style={{ marginRight: 5 }}>Last name:</strong>
-              {userData.lastName}
-            </Typography>
-            <Typography variant="body1">
-              <strong style={{ marginRight: 5 }}>E-mail:</strong>
-              {userData.email}
-            </Typography>
-            <Typography variant="body1">
-              <strong style={{ marginRight: 5 }}>Password:</strong>
-              {userData.password.replace(/./g, "*")}
-            </Typography>
-          </Stack>
-
-           <Stack p={2} pb={1} mr={1} spacing={1.5} width="20%">
-            <ChangeButton variant="contained" size="small">
-              Change
-            </ChangeButton>
-            <ChangeButton variant="contained" size="small">
-              Change
-            </ChangeButton>
-            <ChangeButton variant="contained" size="small">
-              Change
-            </ChangeButton>
-            <ChangeButton variant="contained" size="small">
-              Change
-            </ChangeButton>
-          </Stack> 
-          <Stack p={2} pb={1} mr={1} spacing={3} width="20%">
-            <Typography variant="caption" color="grey">
-              Change
-            </Typography>
-            <Typography variant="caption">Change</Typography>
-            <Typography variant="caption">Change</Typography>
-            <Typography variant="caption">Change</Typography>
-          </Stack> */
