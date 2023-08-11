@@ -43,7 +43,7 @@ function CategoryBar() {
                 variant="subtitle1"
                 fontWeight={700}
                 letterSpacing={0.5}
-                sx={{ "&:hover": { color: "orangered" } }}
+                sx={{ "&:hover": { color: "#d03c06" } }}
               >
                 {category}
               </Typography>

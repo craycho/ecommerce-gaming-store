@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getUserData } from "../util/get-local-storage";
-// import { useRouteLoaderData } from "react-router-dom";
 
 interface Order {
   selectedCountry: string;
@@ -24,10 +23,10 @@ interface UserData {
   orders: Order[];
 }
 
-interface LoginProps {
-  userData: UserData;
-  rememberMe: boolean;
-}
+// interface LoginProps {
+//   userData: UserData;
+//   rememberMe: boolean;
+// }
 
 interface ChangeUserData {
   dataType: string;
@@ -40,8 +39,8 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loginUser(state: UserData, action: PayloadAction<LoginProps>): UserData {
-      return { ...action.payload.userData, loggedIn: true };
+    loginUser(state: UserData, action: PayloadAction<UserData>): UserData {
+      return { ...action.payload, loggedIn: true };
     },
     logoutUser(state: UserData): UserData {
       const emptyUserData = {

@@ -69,7 +69,10 @@ function CartModal({ cartOpen, handleClose }: ModalProps) {
                 variant="contained"
                 size="large"
                 fullWidth
-                onClick={handleClose}
+                onClick={() => {
+                  handleClose();
+                  navigate("/");
+                }}
               >
                 Start shopping
               </Button>

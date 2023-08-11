@@ -84,7 +84,7 @@ function LoginForm({ handleClose }: PropsType) {
               JSON.stringify({ ...userData, loggedIn: true })
             );
           }
-          dispatch(userActions.loginUser({ userData, rememberMe }));
+          dispatch(userActions.loginUser(userData));
           handleClose();
           break; // No need to check further iterations
         } else if (existingUserEmail !== email) {
@@ -176,7 +176,15 @@ function LoginForm({ handleClose }: PropsType) {
             type="button"
             fullWidth
             variant="contained"
-            sx={{ mt: 1.5, mb: 2, backgroundColor: "orangered", height: 45 }}
+            sx={{
+              mt: 1.5,
+              mb: 2,
+              backgroundColor: "orangered",
+              height: 45,
+              "&:hover": {
+                backgroundColor: "#d03c06",
+              },
+            }}
             onClick={() => {
               handleClose();
               navigate("/signup");

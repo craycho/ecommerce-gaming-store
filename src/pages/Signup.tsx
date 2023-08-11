@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { json, useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { userActions } from "../store/user-slice";
 import validateInput from "../util/validate-input";
+
 import { nanoid } from "nanoid";
 
 import {
+  Alert,
   Box,
   Button,
   Checkbox,
@@ -19,14 +22,40 @@ import {
 import NextgenLogo from "../assets/nextgen-logo-black.png";
 
 const BoxWrapper = styled(Box)({
-  marginTop: 6,
+  marginTop: "3rem",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
 });
 
+interface Order {
+  selectedCountry: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  postcode: string;
+  email: string;
+  allowExtraEmails: boolean;
+  cart: string[];
+}
+interface UserData {
+  id: string;
+  loggedIn: boolean;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  allowExtraEmails: boolean;
+  profilePicture: string;
+  orders: Order[];
+}
+
 function Signup() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [successMessageVisible, setSuccessMessageVisible] =
+    useState<boolean>(false);
+
   const [firstNameValid, setFirstNameValid] = useState<boolean | null>(null);
   const [lastNameValid, setLastNameValid] = useState<boolean | null>(null);
 
@@ -77,7 +106,6 @@ function Signup() {
           setEmailValid(true);
         }
       } catch (err) {
-        console.log("Error fetching the existing user data.");
         throw new Error(
           "Error fetching the existing user data. Please refresh the page and try again."
         );
@@ -97,6 +125,7 @@ function Signup() {
       validEmailInput &&
       validPasswordInput
     ) {
+      setSuccessMessageVisible(true);
       const randomId = nanoid();
 
       const userData = {
@@ -110,7 +139,6 @@ function Signup() {
       };
 
       // Post request
-      console.log(JSON.stringify(userData));
       const response = await fetch(
         `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${randomId}.json`,
         {
@@ -122,6 +150,19 @@ function Signup() {
         }
       );
 
+      setTimeout(() => {
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({ ...userData, loggedIn: true })
+        );
+        dispatch(
+          userActions.loginUser({ ...userData, orders: [], loggedIn: true })
+        );
+
+        navigate("/");
+        setSuccessMessageVisible(false);
+      }, 2000);
+
       if (response.status === 422 || response.status === 401) {
         return response;
       }
@@ -129,8 +170,6 @@ function Signup() {
       if (!response.ok) {
         throw json({ message: "Could not submit user data." }, { status: 500 });
       }
-
-      navigate("/");
     }
   };
 
@@ -226,11 +265,28 @@ function Signup() {
               />
             </Grid>
           </Grid>
+          {successMessageVisible && (
+            <Alert
+              severity="success"
+              sx={{ maxWidth: "xs", margin: "0 auto", mt: 2 }}
+            >
+              Your sign up was successful! Logging you in and returning to the
+              store.
+            </Alert>
+          )}
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, height: 45, backgroundColor: "orangered" }}
+            sx={{
+              mt: 3,
+              mb: 2,
+              height: 45,
+              backgroundColor: "orangered",
+              "&:hover": {
+                backgroundColor: "#d03c06",
+              },
+            }}
           >
             Sign Up
           </Button>

@@ -49,6 +49,10 @@ function CheckoutPage() {
   const [countryError, setCountryError] = useState<boolean | null>(null);
   const [deliveryMethod, setDeliveryMethod] = useState<number>(0);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Box sx={{ width: "83%", margin: "0 auto" }}>
       <Stack direction="row" spacing={2} justifyContent="center" mb={5} mt={5}>

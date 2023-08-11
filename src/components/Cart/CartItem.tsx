@@ -89,7 +89,6 @@ interface Product {
 }
 
 function CartItem({ product }: { product: Product }) {
-  const cart = useSelector((state: RootState) => state.cart.cart);
   const userId = useSelector((state: RootState) => state.user.id);
   const dispatch = useAppDispatch();
 

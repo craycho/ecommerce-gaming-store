@@ -25,8 +25,8 @@ export const addToCart = function (productData: Product, userId: string) {
 
     const localCart = localStorage.getItem("cart");
     if (!localCart) return [];
-    const cartData: Product[] = JSON.parse(localCart);
 
+    const cartData: Product[] = JSON.parse(localCart);
     for (const cartItem of cartData) {
       if (cartItem.id === productData.id) {
         existingProduct = cartItem;

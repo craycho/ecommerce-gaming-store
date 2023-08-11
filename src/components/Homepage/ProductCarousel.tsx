@@ -10,7 +10,7 @@ function ProductCarousel({ type }: { type: string }) {
       navButtonsAlwaysVisible
       animation="slide"
       duration={900}
-      interval={10000}
+      interval={15000}
       swipe={true}
       sx={{ mb: 3 }}
       navButtonsWrapperProps={{
