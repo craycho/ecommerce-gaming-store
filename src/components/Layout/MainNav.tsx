@@ -139,7 +139,8 @@ function MainNavigation() {
     if (userData.loggedIn) {
       appDispatch(fetchCart(userData.id));
     } else {
-      dispatch(cartActions.replaceCart([]));
+      // dispatch(cartActions.replaceCart([]));
+      appDispatch(fetchCart("loggedOutUser"));
     }
   }, [userData.loggedIn]);
 

@@ -13,11 +13,14 @@ import {
   CardContent,
   CardMedia,
   Fade,
+  keyframes,
   Snackbar,
   styled,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import FiberNewIcon from "@mui/icons-material/FiberNew";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCartOutlined";
@@ -74,6 +77,36 @@ const AddCartNotification = styled("div")({
   transition: "opacity 500ms fade-in-out",
 });
 
+const fadeInOut = keyframes(`0% {
+  opacity: 0;
+  transform: translateY(2px);
+}
+50% {
+  opacity: 1;
+  transform: translateY(0);
+}
+80% {
+  opacity: 1;
+}
+100% {
+  opacity: 0;
+  transform: translateY(-2px);
+}`);
+const AddCartPopup = styled("div")({
+  position: "absolute",
+  bottom: 122,
+  right: 8,
+
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 5,
+  borderRadius: "50%",
+  backgroundColor: "#ff4400c9",
+  color: "#F4F4F6",
+  animation: `${fadeInOut} 1s forwards`,
+});
+
 interface Product {
   category: string;
   description: string;
@@ -113,7 +146,9 @@ function ProductCard({ product }: { product: CardProps }) {
   };
 
   const addToCartHandler = () => {
-    dispatch(addToCart(product, userData.id));
+    userData.loggedIn
+      ? dispatch(addToCart(product, userData.id))
+      : dispatch(addToCart(product, "loggedOutUser"));
 
     setOpenCartNotification(true);
     setTimeout(() => {
@@ -149,9 +184,17 @@ function ProductCard({ product }: { product: CardProps }) {
         onClick={wishlistHandler}
         sx={{ color: isInWishlist() ? "red" : "lightgrey" }}
       />
-      <AddCartIcon onClick={addToCartHandler} />
-      {openCartNotification && (
-        <AddCartNotification>Added to cart</AddCartNotification>
+
+      {openCartNotification ? (
+        <AddCartPopup>
+          <CheckCircleIcon />
+        </AddCartPopup>
+      ) : (
+        <Tooltip title="Add to cart" placement="top" arrow>
+          <Fade in={true} timeout={200}>
+            <AddCartIcon onClick={addToCartHandler} />
+          </Fade>
+        </Tooltip>
       )}
       {isNew && <NewIcon />}
       <CardContent sx={{ height: 130 }}>
@@ -198,3 +241,13 @@ function ProductCard({ product }: { product: CardProps }) {
 }
 
 export default ProductCard;
+
+/* {openCartNotification ? (
+        <AddCartPopup>
+          Added to cart <CheckCircleIcon sx={{ ml: 0.4, mb: 0.3 }} />
+        </AddCartPopup>
+      ) : (
+        <Tooltip title="Add to cart" placement="top" arrow>
+          <AddCartIcon onClick={addToCartHandler} />
+        </Tooltip>
+      )} */
