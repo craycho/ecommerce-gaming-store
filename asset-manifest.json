@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/book-finder-app/static/css/main.93a0497a.css",
-    "main.js": "/book-finder-app/static/js/main.d39a8182.js",
-    "static/media/razer-huntsman-elite-banner.jpg": "/book-finder-app/static/media/razer-huntsman-elite-banner.134a5ada450c7042ce4c.jpg",
-    "static/media/steelseries-hero.jpg": "/book-finder-app/static/media/steelseries-hero.80cfde9409714c9755e9.jpg",
-    "static/media/corsair-scimitar-banner-flipped.jpg": "/book-finder-app/static/media/corsair-scimitar-banner-flipped.4075a1393918d33f5ae3.jpg",
-    "static/media/noble-chair-hero.jpg": "/book-finder-app/static/media/noble-chair-hero.d8d7a8d38b9cf058bcb6.jpg",
-    "static/media/corsair-k95-hero.jpg": "/book-finder-app/static/media/corsair-k95-hero.3508adf0265d816050c4.jpg",
-    "static/media/mastercard-logo-transparent.png": "/book-finder-app/static/media/mastercard-logo-transparent.c5ffc404807c3c9ed2dc.png",
-    "index.html": "/book-finder-app/index.html",
-    "main.93a0497a.css.map": "/book-finder-app/static/css/main.93a0497a.css.map",
-    "main.d39a8182.js.map": "/book-finder-app/static/js/main.d39a8182.js.map"
+    "main.css": "/ecommerce-gaming-store/static/css/main.93a0497a.css",
+    "main.js": "/ecommerce-gaming-store/static/js/main.dffc406c.js",
+    "static/media/razer-huntsman-elite-banner.jpg": "/ecommerce-gaming-store/static/media/razer-huntsman-elite-banner.134a5ada450c7042ce4c.jpg",
+    "static/media/steelseries-hero.jpg": "/ecommerce-gaming-store/static/media/steelseries-hero.80cfde9409714c9755e9.jpg",
+    "static/media/corsair-scimitar-banner-flipped.jpg": "/ecommerce-gaming-store/static/media/corsair-scimitar-banner-flipped.4075a1393918d33f5ae3.jpg",
+    "static/media/noble-chair-hero.jpg": "/ecommerce-gaming-store/static/media/noble-chair-hero.d8d7a8d38b9cf058bcb6.jpg",
+    "static/media/corsair-k95-hero.jpg": "/ecommerce-gaming-store/static/media/corsair-k95-hero.3508adf0265d816050c4.jpg",
+    "static/media/mastercard-logo-transparent.png": "/ecommerce-gaming-store/static/media/mastercard-logo-transparent.c5ffc404807c3c9ed2dc.png",
+    "index.html": "/ecommerce-gaming-store/index.html",
+    "main.93a0497a.css.map": "/ecommerce-gaming-store/static/css/main.93a0497a.css.map",
+    "main.dffc406c.js.map": "/ecommerce-gaming-store/static/js/main.dffc406c.js.map"
   },
   "entrypoints": [
     "static/css/main.93a0497a.css",
-    "static/js/main.d39a8182.js"
+    "static/js/main.dffc406c.js"
   ]
 }
