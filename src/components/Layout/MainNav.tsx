@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { fetchCart } from "../../store/cart-actions";
-import { cartActions } from "../../store/cart-slice";
 
 import AutocompleteSearch from "./Autocomplete";
 import CartModal from "../Cart/CartModal";

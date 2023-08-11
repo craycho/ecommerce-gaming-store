@@ -22,21 +22,6 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const AddCartIcon = styled(AddShoppingCartIcon)({
-  position: "absolute",
-  bottom: 122,
-  right: 8,
-  borderRadius: "50%",
-  padding: 5,
-  fontSize: 33,
-  backgroundColor: "#b3b3b3",
-  color: "white",
-  "&:hover": {
-    cursor: "pointer",
-    backgroundColor: "#ff4500",
-  },
-});
-
 const ProductTitle = styled(Typography)({
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
@@ -105,15 +90,15 @@ function CartItem({ product }: { product: Product }) {
     : product.data.price;
 
   const increaseQuantity = () => {
-    dispatch(addToCart(product, userId));
+    dispatch(addToCart(product, userId || "loggedOutUser"));
   };
 
   const decreaseQuantity = () => {
-    dispatch(removeFromCart(product, userId));
+    dispatch(removeFromCart(product, userId || "loggedOutUser"));
   };
 
   const deleteFromCart = () => {
-    dispatch(removeAllFromCart(product, userId));
+    dispatch(removeAllFromCart(product, userId || "loggedOutUser"));
   };
 
   return (
@@ -135,7 +120,7 @@ function CartItem({ product }: { product: Product }) {
             sx={{
               width: "20%",
               height: 90,
-              backgroundSize: "contain", // objectFit ne radi?
+              backgroundSize: "contain", // objectFit ne radi ffs
             }}
             image={product.data.image}
             title={product.data.title}
