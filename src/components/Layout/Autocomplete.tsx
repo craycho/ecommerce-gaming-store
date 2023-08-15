@@ -49,7 +49,7 @@ function AutocompleteSearch({
   setCurrentInput,
 }: AutocompleteProps) {
   const navigate = useNavigate();
-  const products = useSelector((state: RootState) => state.cart.products);
+  const products = useSelector((state: RootState) => state.products);
 
   const inputOptions = products.map((product) => product.data.title);
 

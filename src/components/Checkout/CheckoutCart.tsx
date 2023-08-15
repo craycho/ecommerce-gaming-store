@@ -27,15 +27,15 @@ function CheckoutCart({ deliveryMethod }: { deliveryMethod: number }) {
   const cart = useSelector((state: RootState) => state.cart);
   const deliveryPrice =
     deliveryMethod === 0 ? 8.95 : deliveryMethod === 1 ? 19.99 : 99.99;
-  const totalPrice = calcTotalPrice(cart.cart);
+  const totalPrice = calcTotalPrice(cart);
 
   return (
     <Box sx={boxStyle}>
-      {cart.cart.length > 0 ? (
+      {cart.length > 0 ? (
         <>
           <CartWrapper>
             <Stack direction="column" spacing={2}>
-              {cart.cart.map((product) => (
+              {cart.map((product) => (
                 <CartItem key={product.id} product={product} />
               ))}
             </Stack>

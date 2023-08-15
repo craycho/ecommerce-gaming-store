@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { fetchCart } from "../../store/cart-actions";
 import { Order } from "../../util/type-definitions";
@@ -85,10 +85,10 @@ const UserIcon = styled(LoginIcon)({
   },
 });
 
-function MainNavigation() {
+function Navbar() {
   const navigate = useNavigate();
   const appDispatch = useAppDispatch();
-  const cart = useSelector((state: RootState) => state.cart.cart);
+  const cart = useSelector((state: RootState) => state.cart);
   const { wishlist, user: userData } = useSelector((state: RootState) => state);
 
   const [currentInput, setCurrentInput] = useState<string | null>(null);
@@ -114,7 +114,6 @@ function MainNavigation() {
         let userOrders: Order[] = [];
 
         for (const order in currentUser.orders) {
-          // userOrders.push(order);
           userOrders.push({ ...currentUser.orders[`${order}`], id: order });
         }
         setCurrentOrders(userOrders);
@@ -126,7 +125,6 @@ function MainNavigation() {
     if (userData.loggedIn) {
       appDispatch(fetchCart(userData.id));
     } else {
-      // dispatch(cartActions.replaceCart([]));
       appDispatch(fetchCart("loggedOutUser"));
     }
   }, [userData.loggedIn]);
@@ -231,7 +229,7 @@ function MainNavigation() {
   );
 }
 
-export default MainNavigation;
+export default Navbar;
 
 /* WORKING SEARCH CATEGORY DROPDOWN
 

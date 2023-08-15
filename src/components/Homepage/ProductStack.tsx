@@ -13,7 +13,7 @@ interface StackProps {
 }
 
 function ProductStack({ type }: StackProps) {
-  const products = useSelector((state: RootState) => state.cart.products);
+  const products = useSelector((state: RootState) => state.products);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
   useEffect(() => {

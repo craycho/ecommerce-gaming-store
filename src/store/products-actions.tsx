@@ -1,5 +1,5 @@
 import { AppDispatch } from "../store/index";
-import { cartActions } from "./cart-slice";
+import { productsActions } from "./products-slice";
 import { Product } from "../util/type-definitions";
 
 export const fetchProducts = function () {
@@ -12,7 +12,7 @@ export const fetchProducts = function () {
           (productId) => parsedProducts[productId]
         );
 
-        dispatch(cartActions.initProducts(productsArray));
+        dispatch(productsActions.initProducts(productsArray));
       } else {
         const response = await fetch(
           "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"
@@ -25,7 +25,8 @@ export const fetchProducts = function () {
           })
         );
 
-        dispatch(cartActions.initProducts(productsArray));
+        dispatch(productsActions.initProducts(productsArray));
+
         localStorage.setItem("cachedProducts", JSON.stringify(productsArray));
       }
     } catch (error) {

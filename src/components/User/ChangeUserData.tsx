@@ -6,14 +6,7 @@ import { patchUserData } from "../../store/user-actions";
 
 import validateInput from "../../util/validate-input";
 
-import {
-  Box,
-  IconButton,
-  InputAdornment,
-  styled,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, styled, TextField, Typography } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 const ChangeSpan = styled(Typography)({

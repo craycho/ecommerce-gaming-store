@@ -26,7 +26,7 @@ interface FormProps {
 function CheckoutForm({ selectedCountry, setCountryError }: FormProps) {
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.user);
-  const cart = useSelector((state: RootState) => state.cart.cart);
+  const cart = useSelector((state: RootState) => state.cart);
 
   const [firstNameValid, setFirstNameValid] = useState<boolean | null>(null);
   const [lastNameValid, setLastNameValid] = useState<boolean | null>(null);
