@@ -36,7 +36,11 @@ const router = createBrowserRouter([
         element: <Product />,
         loader: productLoader,
       },
-      { path: "/:category", element: <CategoryPage />, loader: categoryLoader },
+      {
+        path: "/category/:categoryName",
+        element: <CategoryPage />,
+        loader: categoryLoader,
+      },
       {
         path: "/search/:currentInput",
         element: <ResultsPage />,

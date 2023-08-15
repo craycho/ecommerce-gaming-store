@@ -33,7 +33,7 @@ function CategoryBar() {
           return (
             <Link
               key={category}
-              to={`/${categoryUrl}`}
+              to={`/category/${categoryUrl}`}
               style={{
                 textDecoration: "none",
                 color: "#F4F4F6",

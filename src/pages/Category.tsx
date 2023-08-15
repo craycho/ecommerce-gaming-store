@@ -1,26 +1,26 @@
-import { Params, useLoaderData, useParams } from "react-router-dom";
-import ResultsMain from "../components/Resultpage/ResultsMain";
+import { useLoaderData, useParams, Params } from "react-router-dom";
 import { Product } from "../util/type-definitions";
+import ResultsMain from "../components/Resultpage/ResultsMain";
 
 function CategoryPage() {
-  const products = useLoaderData() as Product[];
-  const { category } = useParams();
+  const { categoryName } = useParams();
+  const products = useLoaderData() as Product[]; // Used instead of useSelector because of first time URL visit
   const results = products.filter((product) => {
     const productCategory = product.data.category.toLowerCase();
-    return category ? productCategory.includes(category) : [];
+    return categoryName ? productCategory.includes(categoryName) : [];
   });
 
-  return <ResultsMain results={results} searchTerm={category} />;
+  return <ResultsMain results={results} searchTerm={categoryName} />;
 }
 
 export default CategoryPage;
 
-interface LoaderData {
-  request: Request;
-  params: Params;
-}
+// interface LoaderData {
+//   request: Request;
+//   params: Params;
+// }
 
-export async function categoryLoader({ request, params }: LoaderData) {
+export async function categoryLoader({ params }: { params: Params }) {
   try {
     const res = await fetch(
       "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"

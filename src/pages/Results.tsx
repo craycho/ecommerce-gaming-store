@@ -4,7 +4,9 @@ import { Product } from "../util/type-definitions";
 
 function ResultsPage() {
   const products = useLoaderData() as Product[];
-  const { currentInput: searchTerm } = useParams();
+  const { currentInput } = useParams();
+  const searchTerm = currentInput?.replaceAll("-", " ").toLowerCase() || "";
+
   const results = products.filter((product) => {
     const productTitle = product.data.title.toLowerCase();
     return searchTerm ? productTitle.includes(searchTerm) : [];
