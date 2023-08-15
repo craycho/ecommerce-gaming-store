@@ -1,10 +1,19 @@
-import { Params, useLoaderData, useParams } from "react-router-dom";
+import {
+  Params,
+  useLoaderData,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import ResultsMain from "../components/Resultpage/ResultsMain";
 import { Product } from "../util/type-definitions";
 
 function ResultsPage() {
+  const [searchParams] = useSearchParams();
+  console.log(searchParams.get("q"));
+  const currentInput = searchParams.get("q");
+
   const products = useLoaderData() as Product[];
-  const { currentInput } = useParams();
+  // const { currentInput } = useParams();
   const searchTerm = currentInput?.replaceAll("-", " ").toLowerCase() || "";
 
   const results = products.filter((product) => {

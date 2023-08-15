@@ -126,11 +126,16 @@ function AutocompleteSearch({
 
         navigate(productUrl);
       } else {
-        const searchUrl = `/search/${newValue
-          ?.toString()
-          .replaceAll(" ", "-")}`;
+        // Koristenje route parameters umjesto query parameters
+        // const searchUrl = `/search/${newValue
+        //   ?.toString()
+        //   .replaceAll(" ", "-")}`;
+        // navigate("/search");
 
-        navigate(searchUrl);
+        navigate({
+          pathname: "/search",
+          search: `?q=${newValue?.toString().replaceAll(" ", "-")}`,
+        });
       }
     } else {
       setCurrentInput(null);

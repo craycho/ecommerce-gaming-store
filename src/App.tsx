@@ -14,7 +14,6 @@ import TermsConditionsPage from "./pages/TermsConditions";
 import CustomerServicePage from "./pages/CustomerService";
 
 /**@todo Search multiple words connected with "-" */
-/**@todo Implement search sa query params. */
 
 /**@todo errorElement not rendered when an error is thrown. */
 /**@todo Hide navbar and show when scrolling up */
@@ -42,7 +41,7 @@ const router = createBrowserRouter([
         loader: categoryLoader,
       },
       {
-        path: "/search/:currentInput",
+        path: "/search",
         element: <ResultsPage />,
         loader: resultsLoader,
       },
