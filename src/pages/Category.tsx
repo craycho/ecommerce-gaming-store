@@ -1,4 +1,4 @@
-import { useLoaderData, useParams, Params } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { Product } from "../util/type-definitions";
 import ResultsMain from "../components/Resultpage/ResultsMain";
 
@@ -15,12 +15,7 @@ function CategoryPage() {
 
 export default CategoryPage;
 
-// interface LoaderData {
-//   request: Request;
-//   params: Params;
-// }
-
-export async function categoryLoader({ params }: { params: Params }) {
+export async function categoryLoader() {
   try {
     const res = await fetch(
       "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"

@@ -6,8 +6,10 @@ export interface Order {
   postcode: string;
   email: string;
   allowExtraEmails: boolean;
-  cart: string[];
+  cart: Product[];
   id?: string;
+  date?: string;
+  deliveryMethod?: number;
 }
 export interface User {
   id: string;

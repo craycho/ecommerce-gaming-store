@@ -71,6 +71,7 @@ function CheckoutPage() {
             <CheckoutForm
               selectedCountry={selectedCountry}
               setCountryError={setCountryError}
+              deliveryMethod={deliveryMethod}
             />
           </Paper>
         </Container>

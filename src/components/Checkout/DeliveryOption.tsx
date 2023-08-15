@@ -1,4 +1,4 @@
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import DHLIcon from "../../assets/dhl-icon.png";
 import DPDIcon from "../../assets/dpd-icon.png";
 

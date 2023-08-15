@@ -1,8 +1,10 @@
-import { useState, forwardRef } from "react";
+import { useState } from "react";
+import { generateRandomNumber } from "../../util/random-number";
+import { generateDate } from "../../util/generate-date";
+import { Product } from "../../util/type-definitions";
 
 import {
   Box,
-  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -10,10 +12,8 @@ import {
   Paper,
   Stack,
   styled,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import { generateRandomNumber } from "../../util/random-number";
 
 const ItemBox = styled(Box)({
   width: 100,
@@ -33,16 +33,23 @@ const OrderInfo = styled(Typography)({
   overflow: "hidden",
 });
 
-const OrderDialogBox = styled(Dialog)({});
-
 interface OrderItemProps {
-  userOrder: string[];
+  userOrder: Product[];
+  orderDate: string;
+  deliveryMethod: number;
   index: number;
   keyId: string;
 }
 
-function UserOrderItem({ userOrder, index, keyId }: OrderItemProps) {
+function UserOrderItem({
+  userOrder,
+  orderDate,
+  deliveryMethod,
+  index,
+  keyId,
+}: OrderItemProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const deliveryDate = generateDate(deliveryMethod);
 
   return (
     <Paper elevation={3} sx={{ p: 1 }}>
@@ -57,12 +64,12 @@ function UserOrderItem({ userOrder, index, keyId }: OrderItemProps) {
         <Stack direction="column">
           {userOrder.map((order) => (
             <OrderInfo variant="body1" key={keyId + generateRandomNumber()}>
-              {order}
+              x{order.quantity || "1"} {order.data.title}
             </OrderInfo>
           ))}
         </Stack>
       </ItemBox>
-      <OrderDialogBox open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <DialogTitle fontWeight={700}>
           <Stack
             direction="row"
@@ -75,10 +82,10 @@ function UserOrderItem({ userOrder, index, keyId }: OrderItemProps) {
             </Typography>
             <Stack direction="column">
               <Typography variant="body2" fontSize={13} textAlign="right">
-                <strong>Placed on:</strong> 29.07.2023.
+                <strong>Placed on:</strong> {orderDate}
               </Typography>
               <Typography variant="body2" fontSize={13} textAlign="right">
-                <strong>Expected arrival:</strong> 12.08.2023.
+                <strong>Expected arrival:</strong> {deliveryDate}
               </Typography>
             </Stack>
           </Stack>
@@ -88,12 +95,12 @@ function UserOrderItem({ userOrder, index, keyId }: OrderItemProps) {
           <Stack direction="column" spacing={2}>
             {userOrder.map((order) => (
               <Typography variant="body1" key={keyId + generateRandomNumber()}>
-                {order}
+                <strong>x{order.quantity || "1"}</strong> {order.data.title}
               </Typography>
             ))}
           </Stack>
         </DialogContent>
-      </OrderDialogBox>
+      </Dialog>
     </Paper>
   );
 }

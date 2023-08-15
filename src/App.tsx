@@ -13,12 +13,10 @@ import FaqPage from "./pages/Faq";
 import TermsConditionsPage from "./pages/TermsConditions";
 import CustomerServicePage from "./pages/CustomerService";
 
-/**@todo Search multiple words connected with "-" */
-
+/**@todo openOnFocus doesn't work. */
 /**@todo errorElement not rendered when an error is thrown. */
 /**@todo Hide navbar and show when scrolling up */
 /**@todo Implement mailto feature on email click */
-/**@todo openOnFocus doesn't work. */
 
 const router = createBrowserRouter([
   {

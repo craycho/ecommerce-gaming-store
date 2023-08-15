@@ -148,10 +148,6 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
     }
   };
 
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
-    setCurrentTab(newValue);
-  };
-
   const handleLogout = () => {
     localStorage.setItem("userData", JSON.stringify(emptyUserData));
     sessionStorage.setItem("userData", JSON.stringify(emptyUserData));
@@ -230,7 +226,7 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
         <Box p={1.5} pt={0} pb={0.5}>
           <Tabs
             value={currentTab}
-            onChange={handleChangeTab}
+            onChange={(_, newValue: number) => setCurrentTab(newValue)}
             aria-label="Order tabs"
             sx={{ marginBottom: 0.5 }}
           >
@@ -250,6 +246,8 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
                 ? currentOrders.map((order, i) => (
                     <UserOrderItem
                       userOrder={order.cart}
+                      orderDate={order.date || "01/01/2023"}
+                      deliveryMethod={order.deliveryMethod || 0}
                       index={i}
                       key={order.id || "" + i}
                       keyId={order.id || "" + i}

@@ -39,6 +39,7 @@ interface ModalProps {
 
 function CartModal({ cartOpen, handleClose }: ModalProps) {
   const navigate = useNavigate();
+  const { loggedIn } = useSelector((state: RootState) => state.user);
   const cart = useSelector((state: RootState) => state.cart);
   const totalPrice = calcTotalPrice(cart);
 
@@ -102,19 +103,21 @@ function CartModal({ cartOpen, handleClose }: ModalProps) {
               <Typography variant="subtitle2" color="GrayText" p={1} pt={0}>
                 Including VAT
               </Typography>
-              <Button
-                variant="contained"
-                size="large"
-                fullWidth
-                color="secondary"
-                onClick={() => {
-                  handleClose();
-                  navigate("/checkout");
-                }}
-                sx={{ mt: 2, height: 55 }}
-              >
-                Checkout
-              </Button>
+              {loggedIn && (
+                <Button
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  color="secondary"
+                  onClick={() => {
+                    handleClose();
+                    navigate("/checkout");
+                  }}
+                  sx={{ mt: 2, height: 55 }}
+                >
+                  Checkout
+                </Button>
+              )}
             </>
           )}
         </Box>
