@@ -81,7 +81,7 @@ function ResultsMain({
             Unfortunately, no products were found matching your search criteria.
           </Typography>
           <Typography variant="body1" width={500} mt={2}>
-            Try changing your search terms and search again.
+            Consider changing your search terms and try again.
           </Typography>
         </Box>
       )}

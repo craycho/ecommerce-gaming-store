@@ -5,7 +5,7 @@ import { RootState, useAppDispatch } from "../../store/index";
 import { fetchCart } from "../../store/cart-actions";
 import { Order } from "../../util/type-definitions";
 
-import AutocompleteSearch from "./Autocomplete";
+import AutocompleteSearch from "./AutocompleteSearch";
 import CartModal from "../Cart/CartModal";
 import LoginModal from "../Authentication/LoginModal";
 import UserModal from "../User/UserModal";
@@ -31,6 +31,12 @@ const logoStyle = {
   cursor: "pointer",
   transition: "all 0.1s ease",
 };
+const logoTextStyle = {
+  lineHeight: 1.15,
+  mt: 0.2,
+  display: { xs: "none", sm: "block" },
+  color: "#F4F4F6",
+};
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   position: "relative",
@@ -45,7 +51,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
-const Icons = styled(Box)({
+const IconsBox = styled(Box)({
   display: "flex",
   alignItems: "center",
   gap: 25,
@@ -62,7 +68,7 @@ const IconWithBadge = styled(Badge)({
   },
 });
 
-const wishlistStyle = {
+const wishlistIconStyle = {
   color: "#F4F4F6",
   cursor: "pointer",
   "&:hover": {
@@ -70,20 +76,25 @@ const wishlistStyle = {
   },
 };
 
-const cartStyle = {
+const AvatarBox = styled(Box)({
   color: "#F4F4F6",
   cursor: "pointer",
-  "&:hover": {
-    color: "orangered",
-  },
-};
-
+  letterSpacing: 0.3,
+});
 const UserIcon = styled(LoginIcon)({
   cursor: "pointer",
   "&:hover": {
     color: (theme: any) => theme.palette.secondary.main,
   },
 });
+
+const cartIconStyle = {
+  color: "#F4F4F6",
+  cursor: "pointer",
+  "&:hover": {
+    color: "orangered",
+  },
+};
 
 function Navbar() {
   const navigate = useNavigate();
@@ -121,6 +132,14 @@ function Navbar() {
     }
   };
 
+  const handleGotoHomepage = (isLink: boolean) => {
+    if (!isLink) {
+      navigate("/");
+    }
+    window.scrollTo(0, 0);
+    setCurrentInput("");
+  };
+
   useEffect(() => {
     if (userData.loggedIn) {
       appDispatch(fetchCart(userData.id));
@@ -138,57 +157,38 @@ function Navbar() {
             alt="Nextgen logo"
             src={NextgenLogo}
             sx={{ height: 45, width: 40, mt: 0.5, color: "#F4F4F6" }}
-            onClick={() => {
-              window.scrollTo(0, 0);
-              setCurrentInput("");
-              navigate("/");
-            }}
+            onClick={() => handleGotoHomepage(false)}
           />
           <Link
             to="/"
             style={{ textDecoration: "none" }}
-            onClick={() => {
-              window.scrollTo(0, 0);
-              setCurrentInput("");
-            }}
+            onClick={() => handleGotoHomepage(true)}
           >
-            <Typography
-              fontSize={22}
-              fontWeight={700}
-              sx={{
-                lineHeight: 1.15,
-                mt: 0.2,
-                display: { xs: "none", sm: "block" },
-                color: "#F4F4F6",
-              }}
-            >
+            <Typography fontSize={22} fontWeight={700} sx={logoTextStyle}>
               Nextgen
-              <br /> Gaming
+              <br />
+              Gaming
             </Typography>
           </Link>
         </Stack>
-        <SportsEsportsIcon
-          fontSize="large"
-          sx={{ display: { xs: "block", sm: "none" } }}
-        />
         <AutocompleteSearch
           currentInput={currentInput}
           setCurrentInput={setCurrentInput}
         />
-        <Icons>
+        <IconsBox>
           <Box sx={{ display: { xs: "block", sm: "none" } }}>
             <SearchIcon fontSize="large" />
           </Box>
           <IconWithBadge
             badgeContent={wishlist.length}
             color="secondary"
-            sx={wishlistStyle}
+            sx={wishlistIconStyle}
           >
             <WishlistIcon onClick={() => navigate("/wishlist")} />
           </IconWithBadge>
 
           {userData.loggedIn ? (
-            <Box
+            <AvatarBox
               display="flex"
               alignItems="center"
               gap={1.2}
@@ -196,11 +196,10 @@ function Navbar() {
                 setUserModalOpen(true);
                 fetchUserOrders();
               }}
-              sx={{ color: "#F4F4F6", cursor: "pointer", letterSpacing: 0.3 }}
             >
               <Avatar src={userData.profilePicture} />
               {userData.firstName}
-            </Box>
+            </AvatarBox>
           ) : (
             <UserIcon onClick={() => setLoginModalOpen(true)} />
           )}
@@ -208,12 +207,12 @@ function Navbar() {
           <IconWithBadge
             badgeContent={cartTotalAmount}
             color="secondary"
-            sx={cartStyle}
+            sx={cartIconStyle}
             onClick={() => setCartOpen(true)}
           >
             <ShoppingCartIcon />
           </IconWithBadge>
-        </Icons>
+        </IconsBox>
       </StyledToolbar>
       <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />
       <LoginModal
