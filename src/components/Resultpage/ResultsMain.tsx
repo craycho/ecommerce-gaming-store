@@ -22,7 +22,7 @@ function ResultsMain({
     // Resetuje trenutno displayane produkte svaki novi search
     window.scrollTo(0, 0);
     setCurrentProducts(results.slice(0, 16));
-  }, [searchTerm]);
+  }, [searchTerm, results]);
 
   const handlePagination = (event: React.ChangeEvent<any>, value: number) => {
     window.scrollTo(0, 0);

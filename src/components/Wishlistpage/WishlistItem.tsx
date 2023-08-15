@@ -52,7 +52,6 @@ const PriceBox = styled(Box)({
 });
 
 function WishlistItem({ product }: { product: Product }) {
-  const wishlist = useSelector((state: RootState) => state.wishlist);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -60,10 +59,6 @@ function WishlistItem({ product }: { product: Product }) {
   const individualPrice = product.data.onSale
     ? +(product.data.price - saleAmount).toFixed(2)
     : product.data.price;
-
-  const clearWishlist = () => {
-    dispatch(wishlistActions.clearWishlist());
-  };
 
   const buyHandler = () => {
     const productUrl = `/${product.data.category.toLowerCase()}/${product.data.title

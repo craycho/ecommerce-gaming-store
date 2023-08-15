@@ -8,14 +8,11 @@ import { ProductData } from "../../util/type-definitions";
 
 import {
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
   Fade,
   keyframes,
-  Snackbar,
   styled,
   Tooltip,
   Typography,
@@ -61,23 +58,6 @@ const AddCartIcon = styled(AddShoppingCartIcon)({
   },
 });
 
-const AddCartNotification = styled("div")({
-  position: "absolute",
-  bottom: 160,
-  right: 5,
-  width: 60,
-  height: 35,
-  padding: "2px 10px",
-  backgroundColor: "orangered",
-  color: "white",
-  borderRadius: 4,
-  fontSize: 12,
-  textAlign: "center",
-  lineHeight: "1rem",
-
-  transition: "opacity 500ms fade-in-out",
-});
-
 const fadeInOut = keyframes(`0% {
   opacity: 0;
   transform: translateY(2px);
@@ -119,8 +99,7 @@ function ProductCard({ product }: { product: CardProps }) {
   const wishlist = useSelector((state: RootState) => state.wishlist);
   const userData = useSelector((state: RootState) => state.user);
 
-  const [openCartNotification, setOpenCartNotification] =
-    useState<boolean>(false);
+  const [showCheckmarkPopup, setShowCheckmarkPopup] = useState<boolean>(false);
   const { price, onSale, new: isNew, title, category, image } = product.data;
   const saleAmount = +(price * 0.3).toFixed(2);
   const onSalePrice = onSale ? (price - saleAmount).toFixed(2) : price;
@@ -139,9 +118,9 @@ function ProductCard({ product }: { product: CardProps }) {
       ? dispatch(addToCart(product, userData.id))
       : dispatch(addToCart(product, "loggedOutUser"));
 
-    setOpenCartNotification(true);
+    setShowCheckmarkPopup(true);
     setTimeout(() => {
-      setOpenCartNotification(false);
+      setShowCheckmarkPopup(false);
     }, 1000);
   };
   const isInWishlist = () => {
@@ -174,7 +153,7 @@ function ProductCard({ product }: { product: CardProps }) {
         sx={{ color: isInWishlist() ? "red" : "lightgrey" }}
       />
 
-      {openCartNotification ? (
+      {showCheckmarkPopup ? (
         <AddCartPopup>
           <CheckCircleIcon />
         </AddCartPopup>
@@ -231,7 +210,7 @@ function ProductCard({ product }: { product: CardProps }) {
 
 export default ProductCard;
 
-/* {openCartNotification ? (
+/* {showCheckmarkPopup ? (
         <AddCartPopup>
           Added to cart <CheckCircleIcon sx={{ ml: 0.4, mb: 0.3 }} />
         </AddCartPopup>

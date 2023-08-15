@@ -10,15 +10,12 @@ import { Product } from "../../util/type-definitions";
 import {
   Box,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
-  IconButton,
   Stack,
   styled,
   Typography,
 } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";

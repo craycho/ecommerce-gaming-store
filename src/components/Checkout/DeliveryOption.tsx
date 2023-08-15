@@ -33,6 +33,7 @@ function DeliveryOption({ name }: { name: string }) {
     <Stack direction="row" spacing={1} alignItems="center">
       <img
         src={chosenOption?.image}
+        alt="delivery-options"
         width="40"
         height="40"
         style={{ borderRadius: "50%", marginLeft: 2 }}

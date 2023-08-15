@@ -21,7 +21,6 @@ import {
   Typography,
 } from "@mui/material";
 import NextgenLogo from "../../assets/nextgen-logo-white.png";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import WishlistIcon from "@mui/icons-material/Favorite";
 import LoginIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -146,7 +145,7 @@ function Navbar() {
     } else {
       appDispatch(fetchCart("loggedOutUser"));
     }
-  }, [userData.loggedIn]);
+  }, [userData.loggedIn, appDispatch, userData.id]);
 
   return (
     <AppBar position="sticky">
