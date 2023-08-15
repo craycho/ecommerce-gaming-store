@@ -1,23 +1,6 @@
 import { AppDispatch } from "../store/index";
 import { cartActions } from "./cart-slice";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
+import { Product } from "../util/type-definitions";
 
 export const addToCart = function (productData: Product, userId: string) {
   return async (dispatch: AppDispatch) => {

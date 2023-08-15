@@ -1,49 +1,10 @@
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
+import { Product, User } from "./type-definitions";
 
 export const getLocalStorage = (selector: string): Product[] => {
   const localData = localStorage.getItem(selector);
   if (localData) return JSON.parse(localData);
   else return [];
 };
-
-interface Order {
-  selectedCountry: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  postcode: string;
-  email: string;
-  allowExtraEmails: boolean;
-  cart: string[];
-}
-
-interface User {
-  id: string;
-  loggedIn: boolean;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  allowExtraEmails: boolean;
-  profilePicture: string;
-  orders: Order[];
-}
 
 const defaultUserData = {
   loggedIn: false,

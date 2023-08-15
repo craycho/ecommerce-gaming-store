@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { json, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import validateInput from "../../util/validate-input";
+
+import { Order } from "../../util/type-definitions";
+import { CountryType } from "./CountryDropdown";
 
 import {
   Box,
@@ -13,25 +17,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useSelector } from "react-redux";
-
-interface Order {
-  selectedCountry: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  postcode: string;
-  email: string;
-  allowExtraEmails: boolean;
-  cart: string[];
-}
-
-interface CountryType {
-  code: string;
-  label: string;
-  phone: string;
-  suggested?: boolean;
-}
 
 interface FormProps {
   selectedCountry: CountryType | null;

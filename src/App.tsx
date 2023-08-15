@@ -13,14 +13,14 @@ import FaqPage from "./pages/Faq";
 import TermsConditionsPage from "./pages/TermsConditions";
 import CustomerServicePage from "./pages/CustomerService";
 
-/**@todo Implement mailto feature on email click */
-/**@todo Login ne radi nakon logouta */
-/**@todo Login on successful sign up */
-/**@todo Hide navbar and show when scrolling up */
-/**@todo errorElement not rendered when an error is thrown. */
-/**@todo Auto scroll to top on page refresh. */
-/**@todo openOnFocus doesn't work. */
+/**@todo Search multiple words connected with "-" */
 /**@todo Implement search sa query params. */
+/**@todo Login ne radi nakon logouta */
+
+/**@todo errorElement not rendered when an error is thrown. */
+/**@todo Hide navbar and show when scrolling up */
+/**@todo Implement mailto feature on email click */
+/**@todo openOnFocus doesn't work. */
 
 const router = createBrowserRouter([
   {

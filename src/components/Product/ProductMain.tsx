@@ -2,25 +2,9 @@ import { useState } from "react";
 import MainImage from "./MainImage";
 import ImageGrid from "./ImageGrid";
 import Info from "./Info";
+import { Product } from "../../util/type-definitions";
 
-import { Box, Fade, Grid, Stack } from "@mui/material";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-}
+import { Box, Fade, Grid } from "@mui/material";
 
 function ProductMain({ product }: { product: Product }) {
   const [selectedImage, setSelectedImage] = useState<number>(0);

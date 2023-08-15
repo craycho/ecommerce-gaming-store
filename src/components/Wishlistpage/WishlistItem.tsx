@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch } from "../../store/index";
 import { wishlistActions } from "../../store/wishlist-slice";
+import { Product } from "../../util/type-definitions";
 
 import {
   Box,
@@ -15,28 +16,6 @@ import {
 } from "@mui/material";
 import AddCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-}
-
-interface ProductProps {
-  key: string | undefined;
-  product: Product | undefined;
-}
 
 const BuyButton = styled(Button)({
   backgroundColor: "orangered",

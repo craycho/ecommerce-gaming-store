@@ -1,23 +1,6 @@
 import { Params, useLoaderData, useParams } from "react-router-dom";
 import ResultsMain from "../components/Resultpage/ResultsMain";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
+import { Product } from "../util/type-definitions";
 
 function ResultsPage() {
   const products = useLoaderData() as Product[];

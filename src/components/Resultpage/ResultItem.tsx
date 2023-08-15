@@ -1,21 +1,5 @@
 import { Box } from "@mui/material";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-}
+import { Product } from "../../util/type-definitions";
 
 function ResultItem({ productData }: { productData: Product }) {
   return <Box>{productData.data.title}</Box>;

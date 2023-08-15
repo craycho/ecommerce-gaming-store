@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { userActions } from "../../store/user-slice";
 import { logoutUserLocal, patchProfilePicture } from "../../store/user-actions";
+import { Order } from "../../util/type-definitions";
 
 import ChangeUserData from "./ChangeUserData";
 import UserOrderItem from "./UserOrderItem";
@@ -77,18 +78,6 @@ const LogoutButton = styled(IconButton)({
 const OrdersTab = styled(Tab)({
   fontSize: 13,
 });
-
-interface Order {
-  selectedCountry: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  postcode: string;
-  email: string;
-  allowExtraEmails: boolean;
-  cart: string[];
-  id: string;
-}
 
 interface ModalData {
   userModalOpen: boolean;
@@ -262,8 +251,8 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
                     <UserOrderItem
                       userOrder={order.cart}
                       index={i}
-                      key={order.id + i}
-                      keyId={order.id + i}
+                      key={order.id || "" + i}
+                      keyId={order.id || "" + i}
                     />
                   ))
                 : "No orders have been placed yet."}

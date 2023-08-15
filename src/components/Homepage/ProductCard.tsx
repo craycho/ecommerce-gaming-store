@@ -4,6 +4,7 @@ import { RootState, useAppDispatch } from "../../store/index";
 import { wishlistActions } from "../../store/wishlist-slice";
 import { addToCart } from "../../store/cart-actions";
 import { Link } from "react-router-dom";
+import { ProductData } from "../../util/type-definitions";
 
 import {
   Box,
@@ -107,21 +108,9 @@ const AddCartPopup = styled("div")({
   animation: `${fadeInOut} 1s forwards`,
 });
 
-interface Product {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
 interface CardProps {
   id: string;
-  data: Product;
+  data: ProductData;
   quantity?: number;
 }
 

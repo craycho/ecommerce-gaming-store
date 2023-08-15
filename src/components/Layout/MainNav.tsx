@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { fetchCart } from "../../store/cart-actions";
+import { Order } from "../../util/type-definitions";
 
 import AutocompleteSearch from "./Autocomplete";
 import CartModal from "../Cart/CartModal";
@@ -84,21 +85,8 @@ const UserIcon = styled(LoginIcon)({
   },
 });
 
-interface Order {
-  selectedCountry: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  postcode: string;
-  email: string;
-  allowExtraEmails: boolean;
-  cart: string[];
-  id: string;
-}
-
 function MainNavigation() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const appDispatch = useAppDispatch();
   const cart = useSelector((state: RootState) => state.cart.cart);
   const { wishlist, user: userData } = useSelector((state: RootState) => state);
