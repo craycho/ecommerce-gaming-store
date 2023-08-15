@@ -4,33 +4,16 @@ import { RootState } from "../../store/index";
 
 import ProductCard from "./ProductCard";
 import getRandomProducts from "../../util/random-products";
+import { Product } from "../../util/type-definitions";
 
 import { Box, Fade, Stack } from "@mui/material";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
 
 interface StackProps {
   type: string;
 }
 
 function ProductStack({ type }: StackProps) {
-  const products = useSelector((state: RootState) => state.cart.products);
+  const products = useSelector((state: RootState) => state.products);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
   useEffect(() => {

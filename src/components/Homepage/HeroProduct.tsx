@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
+import { Product } from "../../util/type-definitions";
 
 import CorsairHero from "../../assets/corsair-k95-hero.jpg";
 import SteelseriesHero from "../../assets/steelseries-hero.jpg";
 import NoblechairsHero from "../../assets/noble-chair-hero.jpg";
 
-import { Box, Button, Fade, styled, Typography } from "@mui/material";
+import { Box, Button, Fade, Typography } from "@mui/material";
 
 const imageBoxStyle = {
   width: "100%",
@@ -18,23 +19,6 @@ const imageBoxStyle = {
     cursor: "pointer",
   },
 };
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-}
 
 interface ProductProps {
   key: string | undefined;

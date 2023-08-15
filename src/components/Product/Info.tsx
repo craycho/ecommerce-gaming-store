@@ -1,25 +1,9 @@
 import { useSelector } from "react-redux";
 import { addToCart } from "../../store/cart-actions";
 import { useAppDispatch, RootState } from "../../store";
+import { Product } from "../../util/type-definitions";
 
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-}
 
 function Info({ product }: { product: Product }) {
   const dispatch = useAppDispatch();

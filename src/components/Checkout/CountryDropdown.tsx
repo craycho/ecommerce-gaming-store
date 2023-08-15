@@ -1,7 +1,7 @@
+import { SyntheticEvent } from "react";
 import { Autocomplete, Box, TextField } from "@mui/material";
-import { SyntheticEvent, useState } from "react";
 
-interface CountryType {
+export interface CountryType {
   code: string;
   label: string;
   phone: string;

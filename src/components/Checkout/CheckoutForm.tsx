@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { json, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import validateInput from "../../util/validate-input";
+import { Product } from "../../util/type-definitions";
+
+import { Order } from "../../util/type-definitions";
+import { generateDate } from "../../util/generate-date";
+import { CountryType } from "./CountryDropdown";
 
 import {
   Box,
@@ -13,41 +19,28 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useSelector } from "react-redux";
-
-interface Order {
-  selectedCountry: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  postcode: string;
-  email: string;
-  allowExtraEmails: boolean;
-  cart: string[];
-}
-
-interface CountryType {
-  code: string;
-  label: string;
-  phone: string;
-  suggested?: boolean;
-}
 
 interface FormProps {
   selectedCountry: CountryType | null;
   setCountryError: React.Dispatch<React.SetStateAction<boolean | null>>;
+  deliveryMethod: number;
 }
 
-function CheckoutForm({ selectedCountry, setCountryError }: FormProps) {
+function CheckoutForm({
+  selectedCountry,
+  setCountryError,
+  deliveryMethod,
+}: FormProps) {
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.user);
-  const cart = useSelector((state: RootState) => state.cart.cart);
+  const cart = useSelector((state: RootState) => state.cart);
 
   const [firstNameValid, setFirstNameValid] = useState<boolean | null>(null);
   const [lastNameValid, setLastNameValid] = useState<boolean | null>(null);
   const [addressValid, setAddressValid] = useState<boolean | null>(null);
   const [postCodeValid, setPostCodeValid] = useState<boolean | null>(null);
   const [emailValid, setEmailValid] = useState<boolean | null>(null);
+
   const [allowExtraEmails, setAllowExtraEmails] = useState<boolean>(false);
   const [showDemoMessage, setShowDemoMessage] = useState<boolean>(false);
 
@@ -90,7 +83,8 @@ function CheckoutForm({ selectedCountry, setCountryError }: FormProps) {
       validPostcodeInput &&
       validEmailInput
     ) {
-      const cartProducts = cart.map((item) => item.data.title);
+      const cartProducts: Product[] = cart.map((item) => item);
+      const date = generateDate(null);
 
       const orderData: Order = {
         selectedCountry: selectedCountry.label,
@@ -101,6 +95,8 @@ function CheckoutForm({ selectedCountry, setCountryError }: FormProps) {
         email,
         allowExtraEmails,
         cart: cartProducts,
+        date,
+        deliveryMethod,
       };
 
       // 1. Fetches existing user data to find current user

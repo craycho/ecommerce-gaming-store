@@ -1,17 +1,11 @@
-import { useState } from "react";
-
+import DeliveryOption from "./DeliveryOption";
 import {
-  Box,
   Divider,
   FormControl,
   FormControlLabel,
-  FormLabel,
-  Grid,
   Radio,
   RadioGroup,
-  Typography,
 } from "@mui/material";
-import DeliveryOption from "./DeliveryOption";
 
 interface DeliveryProps {
   deliveryMethod: number;

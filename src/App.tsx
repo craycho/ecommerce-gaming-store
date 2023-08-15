@@ -13,14 +13,10 @@ import FaqPage from "./pages/Faq";
 import TermsConditionsPage from "./pages/TermsConditions";
 import CustomerServicePage from "./pages/CustomerService";
 
-/**@todo Implement mailto feature on email click */
-/**@todo Login ne radi nakon logouta */
-/**@todo Login on successful sign up */
-/**@todo Hide navbar and show when scrolling up */
-/**@todo errorElement not rendered when an error is thrown. */
-/**@todo Auto scroll to top on page refresh. */
 /**@todo openOnFocus doesn't work. */
-/**@todo Implement search sa query params. */
+/**@todo errorElement not rendered when an error is thrown. */
+/**@todo Hide navbar and show when scrolling up */
+/**@todo Implement mailto feature on email click */
 
 const router = createBrowserRouter([
   {
@@ -37,9 +33,13 @@ const router = createBrowserRouter([
         element: <Product />,
         loader: productLoader,
       },
-      { path: "/:category", element: <CategoryPage />, loader: categoryLoader },
       {
-        path: "/search/:currentInput",
+        path: "/category/:categoryName",
+        element: <CategoryPage />,
+        loader: categoryLoader,
+      },
+      {
+        path: "/search",
         element: <ResultsPage />,
         loader: resultsLoader,
       },
@@ -59,8 +59,10 @@ function App() {
 
 export default App;
 
-// U form handlerima je tip "(event: React.FormEvent)"
-// U click handlerima moze biti React.MouseEvent (ako se koristi event object)
 // Ako se za form submit koristi useRef tip je "const refName = useRef<HTMLInputElement>();"
 // const [state, setState] = useState<type>();
 // Funkcije su tipa imeFunkc: (argument: type) => returnValueType (void ako ga nema)
+
+// const navigation = useNavigation();
+// navigation.state moze biti "idle", "loading" i "submitting"
+// idle = nije pokrenut route navigation, loading = ceka da se zavrsi route navigation

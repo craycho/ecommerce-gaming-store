@@ -3,6 +3,7 @@ import { json, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userActions } from "../store/user-slice";
 import validateInput from "../util/validate-input";
+import { Order } from "../util/type-definitions";
 
 import { nanoid } from "nanoid";
 
@@ -27,28 +28,6 @@ const BoxWrapper = styled(Box)({
   flexDirection: "column",
   alignItems: "center",
 });
-
-interface Order {
-  selectedCountry: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  postcode: string;
-  email: string;
-  allowExtraEmails: boolean;
-  cart: string[];
-}
-interface UserData {
-  id: string;
-  loggedIn: boolean;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  allowExtraEmails: boolean;
-  profilePicture: string;
-  orders: Order[];
-}
 
 function Signup() {
   const dispatch = useDispatch();

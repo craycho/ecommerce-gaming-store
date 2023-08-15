@@ -1,48 +1,22 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { getUserData } from "../util/get-local-storage";
-
-interface Order {
-  selectedCountry: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  postcode: string;
-  email: string;
-  allowExtraEmails: boolean;
-  cart: string[];
-}
-interface UserData {
-  id: string;
-  loggedIn: boolean;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  allowExtraEmails: boolean;
-  profilePicture: string;
-  orders: Order[];
-}
-
-// interface LoginProps {
-//   userData: UserData;
-//   rememberMe: boolean;
-// }
+import { User } from "../util/type-definitions";
 
 interface ChangeUserData {
   dataType: string;
   currentInput: string;
 }
 
-const initialState: UserData = getUserData();
+const initialState: User = getUserData();
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loginUser(state: UserData, action: PayloadAction<UserData>): UserData {
+    loginUser(state: User, action: PayloadAction<User>): User {
       return { ...action.payload, loggedIn: true };
     },
-    logoutUser(state: UserData): UserData {
+    logoutUser(state: User): User {
       const emptyUserData = {
         loggedIn: false,
         allowExtraEmails: true,
@@ -57,10 +31,10 @@ const userSlice = createSlice({
 
       return emptyUserData;
     },
-    changeProfilePicture(state: UserData, action: PayloadAction<string>) {
+    changeProfilePicture(state: User, action: PayloadAction<string>) {
       state.profilePicture = action.payload;
     },
-    changeUserData(state: UserData, action: PayloadAction<ChangeUserData>) {
+    changeUserData(state: User, action: PayloadAction<ChangeUserData>) {
       const inputValue = action.payload.currentInput;
 
       switch (action.payload.dataType) {
@@ -81,7 +55,7 @@ const userSlice = createSlice({
           break;
       }
     },
-    subscribeToNewsLetter(state: UserData) {
+    subscribeToNewsLetter(state: User) {
       state.allowExtraEmails = true;
     },
   },

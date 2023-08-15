@@ -1,45 +1,12 @@
 import { useState, useEffect } from "react";
-import { Params, useLoaderData } from "react-router-dom";
-import ProductMain from "../components/Product/ProductMain";
+import { CountryType } from "../components/Checkout/CountryDropdown";
 
-import {
-  Autocomplete,
-  Box,
-  Container,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
 import CountryDropdown from "../components/Checkout/CountryDropdown";
 import DeliveryPicker from "../components/Checkout/DeliveryPicker";
 import CheckoutForm from "../components/Checkout/CheckoutForm";
 import CheckoutCart from "../components/Checkout/CheckoutCart";
 
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
-
-interface CountryType {
-  code: string;
-  label: string;
-  phone: string;
-  suggested?: boolean;
-}
+import { Box, Container, Paper, Stack, Typography } from "@mui/material";
 
 function CheckoutPage() {
   // Type assertion. "Overwriteamo" tip jer znamo bolje koji ce biti od automatskog inferanja. Slicno :ProductData ali poredi subtypes a ne exact types.
@@ -104,6 +71,7 @@ function CheckoutPage() {
             <CheckoutForm
               selectedCountry={selectedCountry}
               setCountryError={setCountryError}
+              deliveryMethod={deliveryMethod}
             />
           </Paper>
         </Container>

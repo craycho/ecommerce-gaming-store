@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user-slice";
+import { User } from "../../util/type-definitions";
 
 import {
   Box,
@@ -14,28 +15,6 @@ import {
   Typography,
 } from "@mui/material";
 import NextgenLogo from "../../assets/nextgen-logo-black.png";
-
-interface Order {
-  selectedCountry: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  postcode: string;
-  email: string;
-  allowExtraEmails: boolean;
-  cart: string[];
-}
-interface User {
-  id: string;
-  loggedIn: boolean;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  allowExtraEmails: boolean;
-  profilePicture: string;
-  orders: Order[];
-}
 
 interface FetchData {
   [key: string]: User; // "Index signature", allows dynamic keys of the same, defined type
@@ -204,9 +183,3 @@ function LoginForm({ handleClose }: PropsType) {
 }
 
 export default LoginForm;
-
-/* <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid> */

@@ -5,6 +5,7 @@ import {
   removeFromCart,
   removeAllFromCart,
 } from "../../store/cart-actions";
+import { Product } from "../../util/type-definitions";
 
 import {
   Box,
@@ -54,24 +55,6 @@ const PriceBox = styled(Box)({
   flexDirection: "column",
   justifyContent: "space-between",
 });
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
 
 function CartItem({ product }: { product: Product }) {
   const userId = useSelector((state: RootState) => state.user.id);

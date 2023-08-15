@@ -5,7 +5,7 @@ import HeroProduct from "./HeroProduct";
 import { Box, Stack } from "@mui/material";
 
 const HeroStack = function () {
-  const products = useSelector((state: RootState) => state.cart.products);
+  const products = useSelector((state: RootState) => state.products);
 
   const steelseriesArctis = products.find((product) =>
     product.data.title.includes("Steelseries Arctis")

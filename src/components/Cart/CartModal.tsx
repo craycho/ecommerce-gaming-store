@@ -39,8 +39,9 @@ interface ModalProps {
 
 function CartModal({ cartOpen, handleClose }: ModalProps) {
   const navigate = useNavigate();
+  const { loggedIn } = useSelector((state: RootState) => state.user);
   const cart = useSelector((state: RootState) => state.cart);
-  const totalPrice = calcTotalPrice(cart.cart);
+  const totalPrice = calcTotalPrice(cart);
 
   return (
     <Paper component="div" elevation={5}>
@@ -60,7 +61,7 @@ function CartModal({ cartOpen, handleClose }: ModalProps) {
           >
             Your Cart
           </Typography>
-          {cart.cart.length < 1 ? (
+          {cart.length < 1 ? (
             <>
               <Typography variant="body1" fontSize={16} mb={3}>
                 Your cart is currently empty.
@@ -81,7 +82,7 @@ function CartModal({ cartOpen, handleClose }: ModalProps) {
             <>
               <CartWrapper>
                 <Stack direction="column" spacing={2}>
-                  {cart.cart.map((product) => (
+                  {cart.map((product) => (
                     <CartItem key={product.id} product={product} />
                   ))}
                 </Stack>
@@ -102,19 +103,21 @@ function CartModal({ cartOpen, handleClose }: ModalProps) {
               <Typography variant="subtitle2" color="GrayText" p={1} pt={0}>
                 Including VAT
               </Typography>
-              <Button
-                variant="contained"
-                size="large"
-                fullWidth
-                color="secondary"
-                onClick={() => {
-                  handleClose();
-                  navigate("/checkout");
-                }}
-                sx={{ mt: 2, height: 55 }}
-              >
-                Checkout
-              </Button>
+              {loggedIn && (
+                <Button
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  color="secondary"
+                  onClick={() => {
+                    handleClose();
+                    navigate("/checkout");
+                  }}
+                  sx={{ mt: 2, height: 55 }}
+                >
+                  Checkout
+                </Button>
+              )}
             </>
           )}
         </Box>

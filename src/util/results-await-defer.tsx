@@ -7,26 +7,9 @@ import {
   Await,
 } from "react-router-dom";
 import ResultsMain from "../components/Resultpage/ResultsMain";
+import { Product } from "./type-definitions";
 
 import { CircularProgress } from "@mui/material";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
 
 // RADI, ALI NE DAJE ZELJENI REZULTAT
 function ResultsPage() {

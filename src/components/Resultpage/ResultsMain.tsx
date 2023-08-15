@@ -1,24 +1,8 @@
 import { useEffect, useState } from "react";
+import { Product } from "../../util/type-definitions";
 import ProductCard from "../Homepage/ProductCard";
 
 import { Box, Fade, Grid, Pagination, Typography } from "@mui/material";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
 
 function ResultsMain({
   results,
@@ -97,7 +81,7 @@ function ResultsMain({
             Unfortunately, no products were found matching your search criteria.
           </Typography>
           <Typography variant="body1" width={500} mt={2}>
-            Try changing your search terms and search again.
+            Consider changing your search terms and try again.
           </Typography>
         </Box>
       )}

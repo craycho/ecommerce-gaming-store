@@ -1,27 +1,13 @@
-import { Params, useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useSearchParams } from "react-router-dom";
 import ResultsMain from "../components/Resultpage/ResultsMain";
-
-interface ProductData {
-  category: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  new: boolean;
-  onSale: boolean;
-  price: number;
-  thumbnail: string;
-  title: string;
-}
-
-interface Product {
-  id: string;
-  data: ProductData;
-  quantity?: number;
-}
+import { Product } from "../util/type-definitions";
 
 function ResultsPage() {
+  const [searchParams] = useSearchParams();
+  const currentInput = searchParams.get("q");
+  const searchTerm = currentInput?.replaceAll("-", " ").toLowerCase() || "";
+
   const products = useLoaderData() as Product[];
-  const { currentInput: searchTerm } = useParams();
   const results = products.filter((product) => {
     const productTitle = product.data.title.toLowerCase();
     return searchTerm ? productTitle.includes(searchTerm) : [];
@@ -32,12 +18,7 @@ function ResultsPage() {
 
 export default ResultsPage;
 
-interface LoaderData {
-  request: Request;
-  params: Params;
-}
-
-export async function resultsLoader({ request, params }: LoaderData) {
+export async function resultsLoader() {
   try {
     const res = await fetch(
       "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/products.json"

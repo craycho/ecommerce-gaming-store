@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { userActions } from "../../store/user-slice";
 import { logoutUserLocal, patchProfilePicture } from "../../store/user-actions";
+import { Order } from "../../util/type-definitions";
 
 import ChangeUserData from "./ChangeUserData";
 import UserOrderItem from "./UserOrderItem";
@@ -78,18 +79,6 @@ const OrdersTab = styled(Tab)({
   fontSize: 13,
 });
 
-interface Order {
-  selectedCountry: string;
-  firstName: string;
-  lastName: string;
-  address: string;
-  postcode: string;
-  email: string;
-  allowExtraEmails: boolean;
-  cart: string[];
-  id: string;
-}
-
 interface ModalData {
   userModalOpen: boolean;
   handleClose: () => void;
@@ -157,10 +146,6 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
       // Reads file content and converts it to a dataURL (base64 string). Fires load event when read successfully.
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
-    setCurrentTab(newValue);
   };
 
   const handleLogout = () => {
@@ -241,7 +226,7 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
         <Box p={1.5} pt={0} pb={0.5}>
           <Tabs
             value={currentTab}
-            onChange={handleChangeTab}
+            onChange={(_, newValue: number) => setCurrentTab(newValue)}
             aria-label="Order tabs"
             sx={{ marginBottom: 0.5 }}
           >
@@ -261,9 +246,11 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
                 ? currentOrders.map((order, i) => (
                     <UserOrderItem
                       userOrder={order.cart}
+                      orderDate={order.date || "01/01/2023"}
+                      deliveryMethod={order.deliveryMethod || 0}
                       index={i}
-                      key={order.id + i}
-                      keyId={order.id + i}
+                      key={order.id || "" + i}
+                      keyId={order.id || "" + i}
                     />
                   ))
                 : "No orders have been placed yet."}
