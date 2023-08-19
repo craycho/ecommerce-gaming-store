@@ -23,6 +23,24 @@ import FiberNewIcon from "@mui/icons-material/FiberNew";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCartOutlined";
 
+const StyledCard = styled(Card)(({ theme }) => ({
+  position: "relative",
+  minWidth: 260,
+  maxWidth: 300,
+  paddingBottom: 6,
+
+  [theme.breakpoints.down("sm")]: {
+    minWidth: 220,
+    maxWidth: 240,
+    ".MuiCardContent-root": {
+      padding: "10px",
+    },
+    // ".MuiCardContent-root:last-child": {
+    //   paddingBottom: 0,
+    // },
+  },
+}));
+
 const NewIcon = styled(FiberNewIcon)({
   position: "absolute",
   top: 5,
@@ -88,6 +106,13 @@ const AddCartPopup = styled("div")({
   animation: `${fadeInOut} 1s forwards`,
 });
 
+const PriceBox = styled(Box)({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  mt: { xs: "0.4rem", sm: "0.5rem" },
+});
+
 interface CardProps {
   id: string;
   data: ProductData;
@@ -130,24 +155,16 @@ function ProductCard({ product }: { product: CardProps }) {
   };
 
   return (
-    // <Fade in={true} timeout={500}>
-    <Card
-      sx={{
-        position: "relative",
-        maxWidth: 300,
-        minWidth: 260,
-        paddingBottom: 1.7,
-      }}
-    >
+    <StyledCard>
       <Link to={urlString} style={{ textDecoration: "none" }}>
         <CardMedia
           component="img"
-          /* loading="lazy" */
           image={image}
           title={title}
-          sx={{ height: 180, objectFit: "contain" }}
+          sx={{ height: { xs: 130, sm: 180 }, objectFit: "contain" }}
         />
       </Link>
+
       <WishlistIcon
         onClick={wishlistHandler}
         sx={{ color: isInWishlist() ? "red" : "lightgrey" }}
@@ -164,8 +181,9 @@ function ProductCard({ product }: { product: CardProps }) {
           </Fade>
         </Tooltip>
       )}
+
       {isNew && <NewIcon />}
-      <CardContent sx={{ height: 130 }}>
+      <CardContent sx={{ height: { xs: 120, sm: 130 } }}>
         <Typography variant="caption" fontWeight={700}>
           {category}
         </Typography>
@@ -173,22 +191,29 @@ function ProductCard({ product }: { product: CardProps }) {
           to={urlString}
           style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
         >
-          <Typography variant="subtitle1" component="div" minHeight={55}>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontSize: { xs: "0.9rem", sm: "1rem" }, mb: 0.35 }}
+          >
             {title}
           </Typography>
         </Link>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          mt={1}
-        >
+
+        <PriceBox>
           <Box display="flex" alignItems="center" gap={1}>
-            <Typography variant="h6" color={onSale ? "orangered" : "primary"}>
+            <Typography
+              variant="h6"
+              color={onSale ? "orangered" : "primary"}
+              sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}
+            >
               {onSale ? onSalePrice : price} €
             </Typography>
             {onSale && (
-              <Typography variant="body2" color="GrayText">
+              <Typography
+                variant="body2"
+                color="GrayText"
+                sx={{ fontSize: { xs: "0.75rem", sm: "0.9rem" } }}
+              >
                 <s>({price})</s> €
               </Typography>
             )}
@@ -201,21 +226,10 @@ function ProductCard({ product }: { product: CardProps }) {
               In stock
             </Typography>
           </Box>
-        </Box>
+        </PriceBox>
       </CardContent>
-    </Card>
-    // </Fade>
+    </StyledCard>
   );
 }
 
 export default ProductCard;
-
-/* {showCheckmarkPopup ? (
-        <AddCartPopup>
-          Added to cart <CheckCircleIcon sx={{ ml: 0.4, mb: 0.3 }} />
-        </AddCartPopup>
-      ) : (
-        <Tooltip title="Add to cart" placement="top" arrow>
-          <AddCartIcon onClick={addToCartHandler} />
-        </Tooltip>
-      )} */

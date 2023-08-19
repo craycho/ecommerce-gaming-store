@@ -10,9 +10,10 @@ import { Box, Fade, Stack } from "@mui/material";
 
 interface StackProps {
   type: string;
+  isSmallScreen: boolean;
 }
 
-function ProductStack({ type }: StackProps) {
+function ProductStack({ type, isSmallScreen }: StackProps) {
   const products = useSelector((state: RootState) => state.products);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
@@ -20,7 +21,7 @@ function ProductStack({ type }: StackProps) {
     if (products.length > 0 && type === "random") {
       const randomProducts: Product[] = getRandomProducts(
         products,
-        5,
+        isSmallScreen ? 1 : 5,
         false,
         false
       );
@@ -28,7 +29,7 @@ function ProductStack({ type }: StackProps) {
     } else if (products.length > 0 && type === "onSale") {
       const onSaleProducts: Product[] = getRandomProducts(
         products,
-        5,
+        isSmallScreen ? 1 : 5,
         false,
         true
       );
@@ -36,7 +37,7 @@ function ProductStack({ type }: StackProps) {
     } else if (products.length > 0 && type === "new") {
       const newProducts: Product[] = getRandomProducts(
         products,
-        5,
+        isSmallScreen ? 1 : 5,
         true,
         false
       );
@@ -48,7 +49,13 @@ function ProductStack({ type }: StackProps) {
     <>
       {products && (
         <Fade in={true} timeout={750}>
-          <Box sx={{ width: "85%", margin: "0 auto 40px auto" }}>
+          <Box
+            sx={{
+              width: "85%",
+              margin: "0 auto 40px auto",
+              overflowX: { xs: "hidden", sm: "visible" },
+            }}
+          >
             <Stack direction="row" spacing={1} justifyContent="space-evenly">
               {displayedProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
