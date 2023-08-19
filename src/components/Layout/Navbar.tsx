@@ -111,6 +111,9 @@ function Navbar() {
     0
   );
 
+  const [showSearchbarMobile, setShowSearchbarMobile] =
+    useState<boolean>(false);
+
   const fetchUserOrders = async () => {
     const response = await fetch(
       "https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users.json"
@@ -148,82 +151,106 @@ function Navbar() {
   }, [userData.loggedIn, appDispatch, userData.id]);
 
   return (
-    <AppBar position="sticky">
-      <StyledToolbar>
-        <Stack direction="row" spacing={2} alignItems="center" sx={logoStyle}>
-          <Box
-            component="img"
-            alt="Nextgen logo"
-            src={NextgenLogo}
-            sx={{ height: 45, width: 40, mt: 0.5, color: "#F4F4F6" }}
-            onClick={() => handleGotoHomepage(false)}
-          />
-          <Link
-            to="/"
-            style={{ textDecoration: "none" }}
-            onClick={() => handleGotoHomepage(true)}
-          >
-            <Typography fontSize={22} fontWeight={700} sx={logoTextStyle}>
-              Nextgen
-              <br />
-              Gaming
-            </Typography>
-          </Link>
-        </Stack>
-        <AutocompleteSearch
-          currentInput={currentInput}
-          setCurrentInput={setCurrentInput}
-        />
-        <IconsBox>
-          <Box sx={{ display: { xs: "block", sm: "none" } }}>
-            <SearchIcon fontSize="large" />
-          </Box>
-          <IconWithBadge
-            badgeContent={wishlist.length}
-            color="secondary"
-            sx={wishlistIconStyle}
-          >
-            <WishlistIcon onClick={() => navigate("/wishlist")} />
-          </IconWithBadge>
-
-          {userData.loggedIn ? (
-            <AvatarBox
-              display="flex"
-              alignItems="center"
-              gap={1.2}
-              onClick={() => {
-                setUserModalOpen(true);
-                fetchUserOrders();
-              }}
+    <>
+      <AppBar position="sticky">
+        <StyledToolbar>
+          <Stack direction="row" spacing={2} alignItems="center" sx={logoStyle}>
+            <Box
+              component="img"
+              alt="Nextgen logo"
+              src={NextgenLogo}
+              sx={{ height: 45, width: 40, mt: 0.5, color: "#F4F4F6" }}
+              onClick={() => handleGotoHomepage(false)}
+            />
+            <Link
+              to="/"
+              style={{ textDecoration: "none" }}
+              onClick={() => handleGotoHomepage(true)}
             >
-              <Avatar src={userData.profilePicture} />
-              {userData.firstName}
-            </AvatarBox>
-          ) : (
-            <UserIcon onClick={() => setLoginModalOpen(true)} />
-          )}
+              <Typography fontSize={22} fontWeight={700} sx={logoTextStyle}>
+                Nextgen
+                <br />
+                Gaming
+              </Typography>
+            </Link>
+          </Stack>
+          <Box sx={{ display: { xs: "none", sm: "contents" } }}>
+            <AutocompleteSearch
+              currentInput={currentInput}
+              setCurrentInput={setCurrentInput}
+            />
+          </Box>
+          <IconsBox>
+            <Box
+              onClick={() => setShowSearchbarMobile((prev) => !prev)}
+              sx={{ display: { xs: "block", sm: "none" } }}
+            >
+              <SearchIcon
+                sx={{
+                  fontSize: 34,
+                  mt: 1,
+                  "&:hover": {
+                    cursor: "pointer",
+                    color: "orangered",
+                  },
+                }}
+              />
+            </Box>
+            <IconWithBadge
+              badgeContent={wishlist.length}
+              color="secondary"
+              sx={wishlistIconStyle}
+            >
+              <WishlistIcon onClick={() => navigate("/wishlist")} />
+            </IconWithBadge>
 
-          <IconWithBadge
-            badgeContent={cartTotalAmount}
-            color="secondary"
-            sx={cartIconStyle}
-            onClick={() => setCartOpen(true)}
-          >
-            <ShoppingCartIcon />
-          </IconWithBadge>
-        </IconsBox>
-      </StyledToolbar>
-      <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />
-      <LoginModal
-        loginOpen={loginModalOpen}
-        handleClose={() => setLoginModalOpen(false)}
-      />
-      <UserModal
-        userModalOpen={userModalOpen}
-        handleClose={() => setUserModalOpen(false)}
-        currentOrders={currentOrders}
-      />
-    </AppBar>
+            {userData.loggedIn ? (
+              <AvatarBox
+                display="flex"
+                alignItems="center"
+                gap={1.2}
+                onClick={() => {
+                  setUserModalOpen(true);
+                  fetchUserOrders();
+                }}
+              >
+                <Avatar src={userData.profilePicture} />
+                {userData.firstName}
+              </AvatarBox>
+            ) : (
+              <UserIcon onClick={() => setLoginModalOpen(true)} />
+            )}
+
+            <IconWithBadge
+              badgeContent={cartTotalAmount}
+              color="secondary"
+              sx={cartIconStyle}
+              onClick={() => setCartOpen(true)}
+            >
+              <ShoppingCartIcon />
+            </IconWithBadge>
+          </IconsBox>
+        </StyledToolbar>
+        <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />
+        <LoginModal
+          loginOpen={loginModalOpen}
+          handleClose={() => setLoginModalOpen(false)}
+        />
+        <UserModal
+          userModalOpen={userModalOpen}
+          handleClose={() => setUserModalOpen(false)}
+          currentOrders={currentOrders}
+        />
+      </AppBar>
+      {showSearchbarMobile && (
+        <Box sx={{ display: { xs: "block", sm: "none" } }}>
+          <AutocompleteSearch
+            currentInput={currentInput}
+            setCurrentInput={setCurrentInput}
+          />
+        </Box>
+      )}
+    </>
   );
 }
 
