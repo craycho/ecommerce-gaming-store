@@ -20,11 +20,10 @@ const Search = styled(Box)(({ theme }) => ({
 
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    margin: "5px 10px",
   },
 }));
 
-const SearchButton = styled("button")({
+const SearchButton = styled("button")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -38,7 +37,12 @@ const SearchButton = styled("button")({
     cursor: "pointer",
     backgroundColor: "#df3c00",
   },
-});
+
+  [theme.breakpoints.down("sm")]: {
+    width: 50,
+    borderRadius: "17px 0 0 17px",
+  },
+}));
 
 const autocompleteStyle = {
   height: 45,

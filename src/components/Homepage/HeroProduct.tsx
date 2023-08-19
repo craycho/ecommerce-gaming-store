@@ -5,20 +5,75 @@ import CorsairHero from "../../assets/corsair-k95-hero.jpg";
 import SteelseriesHero from "../../assets/steelseries-hero.jpg";
 import NoblechairsHero from "../../assets/noble-chair-hero.jpg";
 
-import { Box, Button, Fade, Typography } from "@mui/material";
+import { Box, Button, Fade, Typography, styled } from "@mui/material";
 
 const imageBoxStyle = {
   width: "100%",
   height: 530,
   backgroundSize: "cover",
-  backgroundPosition: "center center",
+  backgroundPosition: { sm: "center center", xs: "center 20%" },
   backgroundRepeat: "no-repeat",
-  borderRadius: 1,
+  borderRadius: { xs: 0, sm: 1 },
 
   "&:hover": {
     cursor: "pointer",
   },
 };
+
+const ContentBox = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  bottom: 30,
+  marginLeft: 25,
+  marginRight: 25,
+  width: "90%",
+
+  [theme.breakpoints.down("sm")]: {
+    bottom: 25,
+    marginLeft: 15,
+    marginRight: 15,
+  },
+}));
+
+const ProductPromo = styled(Typography)(({ theme }) => ({
+  marginBottom: "0.5rem",
+  fontSize: "2.1rem",
+  fontWeight: 700,
+  color: "#F4F4F6",
+
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.5rem",
+  },
+}));
+
+const ProductTitle = styled(Typography)(({ theme }) => ({
+  marginBottom: "1.2rem",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  color: "#F4F4F6",
+  fontWeight: 700,
+
+  [theme.breakpoints.down("sm")]: {
+    marginBottom: "1.2rem",
+    whiteSpace: "wrap",
+    fontSize: 14,
+  },
+}));
+
+const BuyButton = styled(Button)(({ theme }) => ({
+  backgroundColor: "orangered",
+  padding: "8px 18px",
+  "&:hover": {
+    backgroundColor: "#d03c06",
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    width: 80,
+    height: 35,
+    fontSize: 12,
+    textWrap: "nowrap",
+  },
+}));
 
 interface ProductProps {
   key: string | undefined;
@@ -52,50 +107,16 @@ function HeroProduct({ product, promo }: ProductProps) {
         }}
         onClick={() => navigate(productUrl)}
       >
-        <Box
-          style={{
-            position: "absolute",
-            bottom: 30,
-            marginLeft: 25,
-            marginRight: 25,
-            width: "90%",
-          }}
-        >
-          {promo && (
-            <Typography variant="h4" fontWeight={700} color="white" mb={1}>
-              {promo}
-            </Typography>
-          )}
-          <Typography
-            gutterBottom
-            variant="subtitle1"
-            fontWeight={700}
-            color="white"
-            sx={{
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-            }}
-          >
-            {product?.data.title}
-          </Typography>
+        <ContentBox>
+          {promo && <ProductPromo>{promo}</ProductPromo>}
+          <ProductTitle>{product?.data.title}</ProductTitle>
+
           <Link to={productUrl}>
-            <Button
-              variant="contained"
-              size="large"
-              sx={{
-                backgroundColor: "orangered",
-                marginTop: 1,
-                padding: "8px 18px",
-                "&:hover": {
-                  backgroundColor: "#d03c06",
-                },
-              }}
-            >
+            <BuyButton variant="contained" size="large">
               Buy now
-            </Button>
+            </BuyButton>
           </Link>
-        </Box>
+        </ContentBox>
       </Box>
     </Fade>
   );

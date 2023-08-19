@@ -13,7 +13,7 @@ import {
 
 const CategoryBox = styled(Box)({
   width: "100%",
-  height: 40,
+  height: 35,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -30,7 +30,7 @@ const selectStyles = {
   color: "#F4F4F6",
 
   ".MuiSelect-select": {
-    fontSize: 17,
+    fontSize: 16,
   },
   "& .MuiSvgIcon-root": {
     color: "#F4F4F6",
