@@ -42,7 +42,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   gap: "3%",
-  height: "70px",
+  height: "60px",
 
   [theme.breakpoints.down("sm")]: {
     justifyContent: "space-between",

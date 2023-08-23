@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
   Box,
+  Grid,
   ImageList,
   ImageListItem,
   Stack,
@@ -32,10 +34,14 @@ const logoStyle = {
 const linkStyle = {
   cursor: "pointer",
   letterSpacing: 0.5,
+  typography: { lg: "body1", xs: "body2" },
   "&:hover": {
-    // fontWeight: 700,
     color: "orangered",
   },
+};
+
+const bodyStyle = {
+  typography: { lg: "body1", xs: "body2" },
 };
 
 const paymentData = [
@@ -59,137 +65,280 @@ const paymentData = [
 
 function Footer() {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 900);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <Box sx={backgroundStyle}>
-      <Stack direction="row" justifyContent="space-evenly">
-        <Stack direction="column">
-          <Typography
-            variant="h4"
-            fontWeight={700}
-            sx={{ position: "relative" }}
-          >
-            <Box
-              component="img"
-              alt="Next Gen logo"
-              src={NextgenLogo}
-              sx={logoStyle}
-            />
-            NEXTGEN
-          </Typography>
-          <Typography variant="body1">Nextgen Gaming</Typography>
-          <Typography variant="body1">Skenderija 1</Typography>
-          <Typography variant="body1">71000 Sarajevo</Typography>
-          <Typography variant="body1">Bosnia and Herzegovina</Typography>
-          <Typography variant="body1">Phone: (+387) 62 316-666</Typography>
-          <Typography variant="body1">info@nextgengaming.com</Typography>
-        </Stack>
-        <Stack direction="column">
-          <Typography
-            variant="body1"
-            fontWeight={700}
-            letterSpacing={0.6}
-            mb={1}
-          >
-            Popular categories
-          </Typography>
-          <Typography
-            variant="body1"
-            component="span"
-            sx={linkStyle}
-            onClick={() => navigate("/keyboards")}
-          >
-            Keyboards
-          </Typography>
-          <Typography
-            variant="body1"
-            component="span"
-            sx={linkStyle}
-            onClick={() => navigate("/mice")}
-          >
-            Mice
-          </Typography>
-          <Typography
-            variant="body1"
-            component="span"
-            sx={linkStyle}
-            onClick={() => navigate("/mousepads")}
-          >
-            Mousepads
-          </Typography>
-          <Typography
-            variant="body1"
-            component="span"
-            sx={linkStyle}
-            onClick={() => navigate("/monitors")}
-          >
-            Monitors
-          </Typography>
-          <Typography
-            variant="body1"
-            component="span"
-            sx={linkStyle}
-            onClick={() => navigate("/chairs")}
-          >
-            Gaming Chairs
-          </Typography>
-        </Stack>
-        <Stack direction="column">
-          <Typography
-            variant="body1"
-            fontWeight={700}
-            letterSpacing={0.6}
-            mb={1}
-          >
-            Customer service
-          </Typography>
-          <Typography
-            variant="body1"
-            component="span"
-            sx={linkStyle}
-            onClick={() => navigate("/faq")}
-          >
-            Frequently asked questions (FAQ)
-          </Typography>
-          <Typography
-            variant="body1"
-            component="span"
-            sx={linkStyle}
-            onClick={() => navigate("/terms-conditions")}
-          >
-            Terms & Conditions
-          </Typography>
-          <Typography
-            variant="body1"
-            component="span"
-            sx={linkStyle}
-            onClick={() => navigate("/customer-service")}
-          >
-            Customer service
-          </Typography>
-        </Stack>
-        <ImageList
-          sx={{ width: 170, height: 130 }}
-          cols={2}
-          rowHeight={55}
-          gap={15}
-        >
-          {paymentData.map((item) => (
-            <ImageListItem
-              key={item.img}
-              sx={{ display: "flex", alignItems: "center" }}
+      {/* Desktop and tablet layout */}
+      {!isMobile && (
+        <Stack direction="row" justifyContent="space-evenly">
+          <Stack direction="column">
+            <Typography
+              variant="h4"
+              fontWeight={700}
+              sx={{ position: "relative" }}
             >
-              <img
-                src={`${item.img}`}
-                srcSet={`${item.img}`}
-                alt={item.title}
-                loading="lazy"
-                style={{ width: 75, height: 50 }}
+              <Box
+                component="img"
+                alt="Next Gen logo"
+                src={NextgenLogo}
+                sx={logoStyle}
               />
-            </ImageListItem>
-          ))}
-        </ImageList>
-      </Stack>
+              NEXTGEN
+            </Typography>
+            <Typography sx={bodyStyle}>Nextgen Gaming</Typography>
+            <Typography sx={bodyStyle}>Skenderija 1</Typography>
+            <Typography sx={bodyStyle}>71000 Sarajevo</Typography>
+            <Typography sx={bodyStyle}>Bosnia and Herzegovina</Typography>
+            <Typography sx={bodyStyle}>Phone: (+387) 62 316-666</Typography>
+            <Typography sx={bodyStyle}>info@nextgengaming.com</Typography>
+          </Stack>
+          <Stack direction="column">
+            <Typography fontWeight={700} letterSpacing={0.6} mb={1}>
+              Popular categories
+            </Typography>
+            <Typography
+              component="span"
+              sx={linkStyle}
+              onClick={() => navigate("/keyboards")}
+            >
+              Keyboards
+            </Typography>
+            <Typography
+              component="span"
+              sx={linkStyle}
+              onClick={() => navigate("/mice")}
+            >
+              Mice
+            </Typography>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={linkStyle}
+              onClick={() => navigate("/mousepads")}
+            >
+              Mousepads
+            </Typography>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={linkStyle}
+              onClick={() => navigate("/monitors")}
+            >
+              Monitors
+            </Typography>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={linkStyle}
+              onClick={() => navigate("/chairs")}
+            >
+              Gaming Chairs
+            </Typography>
+          </Stack>
+          <Stack direction="column">
+            <Typography
+              variant="body1"
+              fontWeight={700}
+              letterSpacing={0.6}
+              mb={1}
+            >
+              Customer service
+            </Typography>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={linkStyle}
+              onClick={() => navigate("/faq")}
+            >
+              Frequently asked questions (FAQ)
+            </Typography>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={linkStyle}
+              onClick={() => navigate("/terms-conditions")}
+            >
+              Terms & Conditions
+            </Typography>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={linkStyle}
+              onClick={() => navigate("/customer-service")}
+            >
+              Customer service
+            </Typography>
+          </Stack>
+          <ImageList
+            sx={{ width: 170, height: 130 }}
+            cols={2}
+            rowHeight={55}
+            gap={15}
+          >
+            {paymentData.map((item) => (
+              <ImageListItem
+                key={item.img}
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <img
+                  src={`${item.img}`}
+                  srcSet={`${item.img}`}
+                  alt={item.title}
+                  loading="lazy"
+                  style={{ width: 75, height: 50 }}
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </Stack>
+      )}
+
+      {/* Mobile layout */}
+      {isMobile && (
+        <Box sx={{ width: "85%", margin: "0 auto" }}>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Stack direction="column">
+                <Typography
+                  variant="h6"
+                  fontWeight={700}
+                  sx={{ position: "relative" }}
+                >
+                  NEXTGEN
+                  <Box
+                    component="img"
+                    alt="Next Gen logo"
+                    src={NextgenLogo}
+                    sx={{ height: 30, width: 25, mb: -1, ml: 1 }}
+                  />
+                </Typography>
+                <Typography sx={bodyStyle}>Nextgen Gaming</Typography>
+                <Typography sx={bodyStyle}>Skenderija 1</Typography>
+                <Typography sx={bodyStyle}>71000 Sarajevo</Typography>
+                <Typography sx={bodyStyle}>Bosnia and Herzegovina</Typography>
+                <Typography sx={bodyStyle}>Phone: (+387) 62 316-666</Typography>
+                <Typography sx={bodyStyle}>info@nextgengaming.com</Typography>
+              </Stack>
+            </Grid>
+            <Grid item xs={6}>
+              <ImageList
+                sx={{ width: 170, height: 130 }}
+                cols={2}
+                rowHeight={55}
+                gap={10}
+              >
+                {paymentData.map((item) => (
+                  <ImageListItem
+                    key={item.img}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
+                    <img
+                      src={`${item.img}`}
+                      srcSet={`${item.img}`}
+                      alt={item.title}
+                      loading="lazy"
+                      style={{ width: 72, height: 50 }}
+                    />
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Grid>
+            <Grid item xs={6}>
+              <Stack direction="column">
+                <Typography fontWeight={700} letterSpacing={0.6} mb={1}>
+                  Popular categories
+                </Typography>
+                <Typography
+                  component="span"
+                  sx={linkStyle}
+                  onClick={() => navigate("/keyboards")}
+                >
+                  Keyboards
+                </Typography>
+                <Typography
+                  component="span"
+                  sx={linkStyle}
+                  onClick={() => navigate("/mice")}
+                >
+                  Mice
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  sx={linkStyle}
+                  onClick={() => navigate("/mousepads")}
+                >
+                  Mousepads
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  sx={linkStyle}
+                  onClick={() => navigate("/monitors")}
+                >
+                  Monitors
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  sx={linkStyle}
+                  onClick={() => navigate("/chairs")}
+                >
+                  Gaming Chairs
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid item xs={6}>
+              <Stack direction="column">
+                <Typography
+                  variant="body1"
+                  fontWeight={700}
+                  letterSpacing={0.6}
+                  mb={1}
+                >
+                  Customer service
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  sx={linkStyle}
+                  onClick={() => navigate("/faq")}
+                >
+                  Frequently asked questions (FAQ)
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  sx={linkStyle}
+                  onClick={() => navigate("/terms-conditions")}
+                >
+                  Terms & Conditions
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="span"
+                  sx={linkStyle}
+                  onClick={() => navigate("/customer-service")}
+                >
+                  Customer service
+                </Typography>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Box>
+      )}
     </Box>
   );
 }

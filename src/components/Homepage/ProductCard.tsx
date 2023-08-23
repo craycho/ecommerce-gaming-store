@@ -30,8 +30,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
   paddingBottom: 6,
 
   [theme.breakpoints.down("sm")]: {
-    minWidth: 220,
-    maxWidth: 240,
+    minWidth: 160,
+    maxWidth: 180,
     ".MuiCardContent-root": {
       padding: "10px",
     },
@@ -112,14 +112,36 @@ const PriceBox = styled(Box)({
   alignItems: "center",
   mt: { xs: "0.4rem", sm: "0.5rem" },
 });
+const priceStyles = {
+  fontSize: { xs: "1rem", sm: "1.25rem" },
+  fontWeight: {
+    xs: 700,
+    sm: 300,
+  },
+};
 
-interface CardProps {
+const InStockLabel = () => {
+  return (
+    <Box display="flex" alignItems="center" mt={0.5}>
+      <CheckCircleOutlineIcon style={{ fontSize: 20, color: "GrayText" }} />
+      <Typography variant="caption" ml={0.4} color="GrayText">
+        In stock
+      </Typography>
+    </Box>
+  );
+};
+
+interface ProductProps {
   id: string;
   data: ProductData;
   quantity?: number;
 }
+interface CardProps {
+  product: ProductProps;
+  screenSize?: number;
+}
 
-function ProductCard({ product }: { product: CardProps }) {
+function ProductCard({ product, screenSize }: CardProps) {
   const dispatch = useAppDispatch();
   const wishlist = useSelector((state: RootState) => state.wishlist);
   const userData = useSelector((state: RootState) => state.user);
@@ -183,7 +205,7 @@ function ProductCard({ product }: { product: CardProps }) {
       )}
 
       {isNew && <NewIcon />}
-      <CardContent sx={{ height: { xs: 120, sm: 130 } }}>
+      <CardContent sx={{ minHeight: "fit-content", maxHeight: 135 }}>
         <Typography variant="caption" fontWeight={700}>
           {category}
         </Typography>
@@ -193,18 +215,19 @@ function ProductCard({ product }: { product: CardProps }) {
         >
           <Typography
             variant="subtitle1"
-            sx={{ fontSize: { xs: "0.9rem", sm: "1rem" }, mb: 0.35 }}
+            mb={0.5}
+            sx={{ fontSize: { xs: "0.8rem", sm: "1rem" } }}
           >
             {title}
           </Typography>
         </Link>
 
         <PriceBox>
-          <Box display="flex" alignItems="center" gap={1}>
+          <Box display="flex" alignItems="center" gap={1.2}>
             <Typography
               variant="h6"
               color={onSale ? "orangered" : "primary"}
-              sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}
+              sx={priceStyles}
             >
               {onSale ? onSalePrice : price} €
             </Typography>
@@ -212,21 +235,15 @@ function ProductCard({ product }: { product: CardProps }) {
               <Typography
                 variant="body2"
                 color="GrayText"
-                sx={{ fontSize: { xs: "0.75rem", sm: "0.9rem" } }}
+                sx={{ fontSize: { xs: "0.8rem", sm: "0.9rem" } }}
               >
                 <s>({price})</s> €
               </Typography>
             )}
           </Box>
-          <Box display="flex" alignItems="center" justifyContent="flex-end">
-            <CheckCircleOutlineIcon
-              style={{ fontSize: 20, color: "GrayText" }}
-            />
-            <Typography variant="caption" ml={0.4} color="GrayText">
-              In stock
-            </Typography>
-          </Box>
+          {screenSize && screenSize > 600 && <InStockLabel />}
         </PriceBox>
+        {screenSize && screenSize <= 600 && <InStockLabel />}
       </CardContent>
     </StyledCard>
   );

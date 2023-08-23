@@ -27,19 +27,23 @@ const formStyle = {
   height: 50,
 };
 
-const SubscribeButton = styled(Button)({
+const SubscribeButton = styled(Button)(({ theme }) => ({
   backgroundColor: "orangered",
   "&:hover": {
     backgroundColor: "#d03c06",
   },
-});
+
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12,
+    minWidth: 120,
+  },
+}));
 
 function Newsletter() {
   const dispatch = useAppDispatch();
   const userData = useSelector((state: RootState) => state.user);
   const [currentInput, setCurrentInput] = useState<string>("");
   const [emailValid, setEmailValid] = useState<boolean | null>(null);
-  const [emailError, setEmailError] = useState<string>("");
 
   const handleSubscribe = (
     event: React.FormEvent<HTMLFormElement | HTMLButtonElement>

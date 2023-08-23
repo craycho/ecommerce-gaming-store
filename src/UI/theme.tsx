@@ -21,6 +21,6 @@ theme.typography.h3 = {
     fontSize: "1.5rem",
   },
   [theme.breakpoints.up("md")]: {
-    fontSize: "2.4rem",
+    fontSize: "2.0rem",
   },
 };

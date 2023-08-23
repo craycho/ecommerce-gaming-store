@@ -6,7 +6,6 @@ import corsairScimitarBanner from "../../assets/corsair-scimitar-banner-flipped.
 import nextgenLogoWhite from "../../assets/nextgen-logo-white.png";
 
 const bannerImageStyle = {
-  width: "85%",
   height: 275,
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
@@ -20,24 +19,32 @@ const bannerImageStyle = {
   },
 };
 
-const textBoxStyle = {
-  position: "absolute",
-  top: 20,
-  left: 25,
-  width: "25%",
-};
-
 const textStyle = {
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
   overflow: "hidden",
 };
 
+const BuyButton = styled(Button)(({ theme }) => ({
+  position: "absolute",
+  bottom: 25,
+  backgroundColor: "orangered",
+  "&:hover": {
+    backgroundColor: "#d03c06",
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    width: 110,
+    height: 40,
+    fontSize: 13,
+  },
+}));
+
 function BannerStack() {
   const navigate = useNavigate();
 
   return (
-    <Stack direction="column" spacing={2} alignItems="center" mb={6} mt={5}>
+    <Stack direction="column" spacing={1.5} alignItems="center" mb={6} mt={5}>
       <Box
         position="relative"
         onClick={() =>
@@ -47,15 +54,20 @@ function BannerStack() {
           ...bannerImageStyle,
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55)), url('${razerHuntsmanBanner}')`,
           backgroundPosition: "center center",
+          width: {
+            xs: "100%",
+            sm: "85%",
+          },
         }}
       >
-        {/* <Box
-          component="img"
-          alt="Next Gen logo"
-          src={nextgenLogoWhite}
-          sx={{ position: "absolute", bottom: 25, left: 33, height: 60 }}
-        /> */}
-        <Box sx={textBoxStyle}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: 20,
+            left: 25,
+            width: { xs: "70%", sm: "25%" },
+          }}
+        >
           <Typography
             variant="h4"
             fontWeight={700}
@@ -70,22 +82,9 @@ function BannerStack() {
           </Typography>
         </Box>
         <Link to={"/keyboards/razer-huntsman-elite-mechanical-gaming-keyboard"}>
-          <Button
-            variant="contained"
-            size="large"
-            sx={{
-              position: "absolute",
-              right: 30,
-              bottom: 25,
-              backgroundColor: "orangered",
-              width: 140,
-              "&:hover": {
-                backgroundColor: "#d03c06",
-              },
-            }}
-          >
+          <BuyButton variant="contained" size="large" sx={{ right: 30 }}>
             Buy now
-          </Button>
+          </BuyButton>
         </Link>
       </Box>
 
@@ -99,6 +98,10 @@ function BannerStack() {
           height: 335,
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.55)), url('${corsairScimitarBanner}')`,
           backgroundPosition: "center 38%",
+          width: {
+            xs: "100%",
+            sm: "85%",
+          },
         }}
       >
         <Box
@@ -107,7 +110,14 @@ function BannerStack() {
           src={nextgenLogoWhite}
           sx={{ position: "absolute", top: 25, right: 33, height: 90 }}
         />
-        <Box sx={{ position: "absolute", bottom: 25, right: 35, width: "35%" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 25,
+            right: 35,
+            width: { xs: "50%", sm: "25%" },
+          }}
+        >
           <Typography
             variant="subtitle1"
             color="white"
@@ -128,22 +138,9 @@ function BannerStack() {
           </Typography>
         </Box>
         <Link to={"/mice/corsair-scimitar-rgb-elite-gaming-mouse"}>
-          <Button
-            variant="contained"
-            size="large"
-            sx={{
-              position: "absolute",
-              left: 35,
-              bottom: 25,
-              backgroundColor: "orangered",
-              width: 140,
-              "&:hover": {
-                backgroundColor: "#d03c06",
-              },
-            }}
-          >
+          <BuyButton variant="contained" size="large" sx={{ left: 35 }}>
             Buy now
-          </Button>
+          </BuyButton>
         </Link>
       </Box>
     </Stack>

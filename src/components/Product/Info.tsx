@@ -13,8 +13,6 @@ function Info({ product }: { product: Product }) {
   const [showCartNotification, setShowCartNotification] =
     useState<boolean>(false);
 
-  console.log(showCartNotification);
-
   const saleAmount = +(price * 0.3).toFixed(2);
   const onSalePrice = (price - saleAmount).toFixed(2);
 

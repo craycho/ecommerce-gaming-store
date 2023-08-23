@@ -13,7 +13,7 @@ import {
 
 const CategoryBox = styled(Box)({
   width: "100%",
-  height: 35,
+  height: 30,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -56,7 +56,11 @@ function CategoryBar() {
 
   return (
     <CategoryBox>
-      <Stack direction="row" spacing={8} sx={categoryStackStyles}>
+      <Stack
+        direction="row"
+        spacing={window.innerWidth < 900 ? 4 : 8}
+        sx={categoryStackStyles}
+      >
         {categories.map((category) => {
           const categoryUrl =
             category.split(" ").length > 1
@@ -75,7 +79,8 @@ function CategoryBar() {
               <Typography
                 variant="subtitle1"
                 fontWeight={700}
-                letterSpacing={0.5}
+                fontSize={15}
+                letterSpacing={0.7}
                 sx={{ "&:hover": { color: "#d03c06" } }}
               >
                 {category}

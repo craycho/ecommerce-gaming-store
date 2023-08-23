@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
 import ProductStack from "./ProductStack";
-
 import Carousel from "react-material-ui-carousel";
+import { getCarouselPages } from "../../util/get-carousel-pages";
 
 function ProductCarousel({ type }: { type: string }) {
-  const carouselPageCount = [1, 2, 3];
-  const mobileCarouselPageCount = [1, 2, 3, 4, 5, 6, 7, 8];
-  const [isSmallScreen, setIsSmallScreen] = useState<boolean>(
-    window.innerWidth <= 600
-  );
+  const [screenSize, setScreenSize] = useState<number>(window.innerWidth);
+  const carouselPages = getCarouselPages(screenSize);
 
   const handleResize = () => {
-    setIsSmallScreen(window.innerWidth <= 600);
+    setScreenSize(window.innerWidth);
   };
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -27,20 +24,22 @@ function ProductCarousel({ type }: { type: string }) {
       duration={900}
       interval={15000}
       swipe={true}
-      sx={{ mb: 3 }}
+      sx={{ mb: 3, minHeight: 320 }}
+      navButtonsProps={{
+        style: {
+          width: screenSize <= 600 ? 30 : 40,
+          height: screenSize <= 600 ? 30 : 40,
+        },
+      }}
       navButtonsWrapperProps={{
         style: {
           height: "81%",
-          margin: "0 1.3%",
+          margin: screenSize <= 600 ? "170px 23%" : "0 1.3%",
         },
       }}
     >
-      {(isSmallScreen ? mobileCarouselPageCount : carouselPageCount).map(() => (
-        <ProductStack
-          key={Math.random()}
-          type={type}
-          isSmallScreen={isSmallScreen}
-        />
+      {carouselPages.map(() => (
+        <ProductStack key={Math.random()} type={type} screenSize={screenSize} />
       ))}
     </Carousel>
   );

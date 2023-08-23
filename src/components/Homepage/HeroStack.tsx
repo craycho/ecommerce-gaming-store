@@ -5,9 +5,12 @@ import HeroProduct from "./HeroProduct";
 import { Box, Stack, styled } from "@mui/material";
 
 const StyledBox = styled(Box)(({ theme }) => ({
-  width: "85%",
+  width: "85%", // Ne radi shorthand {lg, md, sm}
   margin: "30px auto 40px auto",
 
+  [theme.breakpoints.down("md")]: {
+    width: "95%",
+  },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
     margin: "0 auto 20px auto",
