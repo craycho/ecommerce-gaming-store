@@ -65,7 +65,7 @@ const paymentData = [
 
 function Footer() {
   const navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 900);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth <= 900);
@@ -111,14 +111,14 @@ function Footer() {
             <Typography
               component="span"
               sx={linkStyle}
-              onClick={() => navigate("/keyboards")}
+              onClick={() => navigate("/category/keyboards")}
             >
               Keyboards
             </Typography>
             <Typography
               component="span"
               sx={linkStyle}
-              onClick={() => navigate("/mice")}
+              onClick={() => navigate("/category/mice")}
             >
               Mice
             </Typography>
@@ -126,7 +126,7 @@ function Footer() {
               variant="body1"
               component="span"
               sx={linkStyle}
-              onClick={() => navigate("/mousepads")}
+              onClick={() => navigate("/category/mousepads")}
             >
               Mousepads
             </Typography>
@@ -134,7 +134,7 @@ function Footer() {
               variant="body1"
               component="span"
               sx={linkStyle}
-              onClick={() => navigate("/monitors")}
+              onClick={() => navigate("/category/monitors")}
             >
               Monitors
             </Typography>
@@ -142,7 +142,7 @@ function Footer() {
               variant="body1"
               component="span"
               sx={linkStyle}
-              onClick={() => navigate("/chairs")}
+              onClick={() => navigate("/category/chairs")}
             >
               Gaming Chairs
             </Typography>
@@ -263,14 +263,14 @@ function Footer() {
                 <Typography
                   component="span"
                   sx={linkStyle}
-                  onClick={() => navigate("/keyboards")}
+                  onClick={() => navigate("/category/keyboards")}
                 >
                   Keyboards
                 </Typography>
                 <Typography
                   component="span"
                   sx={linkStyle}
-                  onClick={() => navigate("/mice")}
+                  onClick={() => navigate("/category/mice")}
                 >
                   Mice
                 </Typography>
@@ -278,7 +278,7 @@ function Footer() {
                   variant="body1"
                   component="span"
                   sx={linkStyle}
-                  onClick={() => navigate("/mousepads")}
+                  onClick={() => navigate("/category/mousepads")}
                 >
                   Mousepads
                 </Typography>
@@ -286,7 +286,7 @@ function Footer() {
                   variant="body1"
                   component="span"
                   sx={linkStyle}
-                  onClick={() => navigate("/monitors")}
+                  onClick={() => navigate("/category/monitors")}
                 >
                   Monitors
                 </Typography>
@@ -294,7 +294,7 @@ function Footer() {
                   variant="body1"
                   component="span"
                   sx={linkStyle}
-                  onClick={() => navigate("/chairs")}
+                  onClick={() => navigate("/category/chairs")}
                 >
                   Gaming Chairs
                 </Typography>

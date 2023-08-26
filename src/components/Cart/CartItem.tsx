@@ -20,38 +20,52 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+const TitleBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  width: "70%",
+});
 const ProductTitle = styled(Typography)({
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
   overflow: "hidden",
 });
 
-const ProductQuantity = styled("div")({
+const ProductQuantity = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   position: "absolute",
-  top: 10,
-  left: 70,
+  top: 5,
+  left: 65,
   height: 25,
   width: 32,
   backgroundColor: "#3c3c3c75",
   color: "white",
   borderRadius: 3,
   fontWeight: 700,
-});
 
-const TitleBox = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  width: "70%",
-});
+  [theme.breakpoints.down("sm")]: {
+    left: 40,
+  },
+}));
 
 const PriceBox = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
 });
+
+const imageStyle = {
+  width: "20%",
+  height: 90,
+  backgroundSize: "contain", // objectFit ne radi ffs
+};
+const contentStyle = {
+  width: "80%",
+  display: "flex",
+  justifyContent: "space-between",
+};
 
 function CartItem({ product }: { product: Product }) {
   const userId = useSelector((state: RootState) => state.user.id);
@@ -83,35 +97,14 @@ function CartItem({ product }: { product: Product }) {
 
   return (
     <>
-      <Card
-        sx={{
-          position: "relative",
-          height: 110,
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
+      <Card sx={{ position: "relative", height: 110 }}>
+        <Box display="flex" alignItems="center">
           <CardMedia
-            sx={{
-              width: "20%",
-              height: 90,
-              backgroundSize: "contain", // objectFit ne radi ffs
-            }}
+            sx={imageStyle}
             image={product.data.image}
             title={product.data.title}
           />
-          <CardContent
-            sx={{
-              width: "80%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <CardContent sx={contentStyle}>
             <ProductQuantity>{product.quantity}</ProductQuantity>
             <TitleBox>
               <ProductTitle variant="subtitle1">
@@ -137,8 +130,11 @@ function CartItem({ product }: { product: Product }) {
             </TitleBox>
             <PriceBox>
               <Typography
-                variant="h6"
                 color={product.data.onSale ? "orangered" : "primary"}
+                sx={{
+                  fontSize: { sm: "1.25rem", xs: "1rem" },
+                  whiteSpace: "nowrap",
+                }}
               >
                 {totalPrice} €
               </Typography>

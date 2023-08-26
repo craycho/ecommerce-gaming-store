@@ -35,9 +35,6 @@ const StyledCard = styled(Card)(({ theme }) => ({
     ".MuiCardContent-root": {
       padding: "10px",
     },
-    // ".MuiCardContent-root:last-child": {
-    //   paddingBottom: 0,
-    // },
   },
 }));
 
@@ -105,6 +102,16 @@ const AddCartPopup = styled("div")({
   color: "#F4F4F6",
   animation: `${fadeInOut} 1s forwards`,
 });
+
+const productTitleStyle = {
+  // Starts ellipsis "..." after 2 rows
+  display: "-webkit-box",
+  "WebkitLineClamp": 2,
+  "WebkitBoxOrient": "vertical",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  fontSize: { xs: "0.8rem", sm: "1rem" },
+};
 
 const PriceBox = styled(Box)({
   display: "flex",
@@ -213,11 +220,7 @@ function ProductCard({ product, screenSize }: CardProps) {
           to={urlString}
           style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
         >
-          <Typography
-            variant="subtitle1"
-            mb={0.5}
-            sx={{ fontSize: { xs: "0.8rem", sm: "1rem" } }}
-          >
+          <Typography variant="subtitle1" mb={0.5} sx={productTitleStyle}>
             {title}
           </Typography>
         </Link>

@@ -20,7 +20,10 @@ const CategoryBox = styled(Box)({
   backgroundColor: "#343434",
   color: "whitesmoke",
 });
-const categoryStackStyles = { display: { xs: "none", sm: "flex" } };
+const categoryStackStyles = {
+  display: { xs: "none", sm: "flex" },
+  alignItems: "center",
+};
 
 const CategoryDropdown = styled(FormControl)({
   minWidth: 80,

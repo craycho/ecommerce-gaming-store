@@ -51,6 +51,10 @@ const PriceBox = styled(Box)({
   justifyContent: "space-between",
 });
 
+const ProductPrice = styled(Typography)(({ theme }) => ({
+  // [theme.breakpoints.down("sm")]: {},
+}));
+
 function WishlistItem({ product }: { product: Product }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -128,11 +132,12 @@ function WishlistItem({ product }: { product: Product }) {
               <Typography
                 variant="h6"
                 color={product.data.onSale ? "orangered" : "primary"}
+                sx={{ fontSize: { sm: "1.25rem", xs: "1.1rem" } }}
               >
                 {individualPrice} €
               </Typography>
               {product.data.onSale && (
-                <Typography variant="body2" color="primary.light">
+                <Typography variant="body2" color="GrayText">
                   <s>({product.data.price})</s> €
                 </Typography>
               )}

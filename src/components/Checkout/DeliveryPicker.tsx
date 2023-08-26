@@ -1,5 +1,6 @@
 import DeliveryOption from "./DeliveryOption";
 import {
+  Box,
   Divider,
   FormControl,
   FormControlLabel,
@@ -26,9 +27,7 @@ function DeliveryPicker({ deliveryMethod, setDeliveryMethod }: DeliveryProps) {
         name="delivery-radio-buttons"
         value={deliveryMethod}
         onChange={deliveryMethodHandler}
-        sx={{
-          rowGap: 2,
-        }}
+        sx={{ rowGap: 2 }}
       >
         <FormControlLabel
           value={0}

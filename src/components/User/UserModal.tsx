@@ -25,23 +25,28 @@ import {
 import DefaultProfilePicture from "../../assets/default-user-profile-picture.png";
 import CameraIcon from "@mui/icons-material/CameraAlt";
 import LogoutIcon from "@mui/icons-material/Logout";
+import CloseIcon from "@mui/icons-material/Cancel";
 
 const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: { xs: 350, sm: 500 },
   bgcolor: "background.paper",
   boxShadow: 24,
 };
 
-const ProfilePicture = styled("img")({
+const ProfilePicture = styled("img")(({ theme }) => ({
   position: "relative",
   height: 200,
   width: 500,
   objectFit: "cover",
-});
+
+  [theme.breakpoints.down("sm")]: {
+    width: 350,
+  },
+}));
 
 const ProfilePictureButton = styled(Avatar)({
   position: "absolute",
@@ -50,6 +55,17 @@ const ProfilePictureButton = styled(Avatar)({
   cursor: "pointer",
   backgroundColor: "lightgrey",
   boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.75)",
+});
+
+const CloseModalButton = styled(IconButton)({
+  position: "absolute",
+  top: -23,
+  right: -23,
+  color: "#f4f4f494",
+
+  "&:hover": {
+    transform: "scale(1.1)",
+  },
 });
 
 const UserInfo = styled(Typography)({
@@ -184,7 +200,16 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
             style={{ display: "none" }}
           />
         </Box>
-        <Grid container rowSpacing={3.7} columnSpacing={3} m={0} mb={6}>
+        <Grid
+          container
+          rowSpacing={3.7}
+          columnSpacing={window.innerWidth < 900 ? 2 : 3}
+          m={0}
+          mb={6}
+        >
+          <CloseModalButton onClick={handleClose}>
+            <CloseIcon sx={{ fontSize: 30 }} />
+          </CloseModalButton>
           <Grid item xs={6} position="relative">
             <UserInfo variant="body1">
               <strong style={{ marginRight: 5 }}>First name:</strong>

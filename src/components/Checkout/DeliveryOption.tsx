@@ -42,15 +42,36 @@ function DeliveryOption({ name }: { name: string }) {
         <Typography variant="subtitle1" fontWeight={700} ml={1.5}>
           {chosenOption?.name}
         </Typography>
-        <Typography variant="subtitle2" ml={1.5} width={320}>
+        <Typography
+          variant="subtitle2"
+          ml={1.5}
+          sx={{ width: { sm: 320, xs: "100%" } }}
+        >
           {chosenOption?.description}
+        </Typography>
+        <Typography
+          variant="h6"
+          fontWeight={700}
+          whiteSpace="nowrap"
+          sx={{
+            width: "fit-content",
+            display: { sm: "none", xs: "flex" },
+            mt: 1,
+            ml: 1,
+          }}
+        >
+          {chosenOption?.price} €
         </Typography>
       </Stack>
       <Typography
         variant="h6"
         fontWeight={700}
         whiteSpace="nowrap"
-        sx={{ width: 80, display: "flex", justifyContent: "end" }}
+        sx={{
+          width: 80,
+          display: { sm: "flex", xs: "none" },
+          justifyContent: "end",
+        }}
       >
         {chosenOption?.price} €
       </Typography>
@@ -59,23 +80,3 @@ function DeliveryOption({ name }: { name: string }) {
 }
 
 export default DeliveryOption;
-
-/* <Grid container columnSpacing={7}>
-      <Grid item xs={12}>
-        <Typography variant="subtitle1" fontWeight={700} ml={7}>
-          {chosenOption?.name}
-        </Typography>
-      </Grid>
-      <Grid item xs={1}>
-        <img
-          src={chosenOption?.image}
-          width="40"
-          style={{ borderRadius: "50%" }}
-        />
-      </Grid>
-      <Grid item xs={10}>
-        <Typography variant="subtitle2" color="GrayText">
-          {chosenOption?.description}
-        </Typography>
-      </Grid>
-    </Grid> */

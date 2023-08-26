@@ -1,6 +1,6 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import { Product } from "../util/type-definitions";
-import ResultsMain from "../components/Resultpage/ResultsMain";
+import ResultsMain from "../components/Resultspage/ResultsMain";
 
 function CategoryPage() {
   const { categoryName } = useParams();
