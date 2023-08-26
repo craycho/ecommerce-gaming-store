@@ -28,22 +28,17 @@ const ContentBox = styled(Box)(({ theme }) => ({
   width: "90%",
 
   [theme.breakpoints.down("sm")]: {
-    bottom: 25,
-    marginLeft: 15,
-    marginRight: 15,
+    bottom: 50,
+    left: 5,
   },
 }));
 
-const ProductPromo = styled(Typography)(({ theme }) => ({
+const ProductPromo = styled(Typography)({
   marginBottom: "0.5rem",
   fontSize: "2.1rem",
   fontWeight: 700,
   color: "#F4F4F6",
-
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "1.5rem",
-  },
-}));
+});
 
 const ProductTitle = styled(Typography)(({ theme }) => ({
   marginBottom: "1.2rem",
@@ -54,26 +49,18 @@ const ProductTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
 
   [theme.breakpoints.down("sm")]: {
-    marginBottom: "1.2rem",
+    marginBottom: "2rem",
     whiteSpace: "wrap",
-    fontSize: 14,
   },
 }));
 
-const BuyButton = styled(Button)(({ theme }) => ({
+const BuyButton = styled(Button)({
   backgroundColor: "orangered",
   padding: "8px 18px",
   "&:hover": {
     backgroundColor: "#d03c06",
   },
-
-  [theme.breakpoints.down("sm")]: {
-    width: 80,
-    height: 35,
-    fontSize: 12,
-    textWrap: "nowrap",
-  },
-}));
+});
 
 interface ProductProps {
   key: string | undefined;
@@ -110,7 +97,6 @@ function HeroProduct({ product, promo }: ProductProps) {
         <ContentBox>
           {promo && <ProductPromo>{promo}</ProductPromo>}
           <ProductTitle>{product?.data.title}</ProductTitle>
-
           <Link to={productUrl}>
             <BuyButton variant="contained" size="large">
               Buy now

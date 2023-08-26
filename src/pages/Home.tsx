@@ -44,7 +44,7 @@ function Home() {
   return (
     <>
       {isLoading ? (
-        <CircularProgress sx={{ margin: "2% 48%" }} />
+        <CircularProgress />
       ) : (
         <>
           <HeroStack />

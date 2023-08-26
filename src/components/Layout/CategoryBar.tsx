@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
 import {
   Box,
   FormControl,
@@ -52,10 +53,14 @@ function CategoryBar() {
 
   const [category, setCategory] = useState<string>("..");
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    navigate(`/category/${category}`);
-  }, [category, navigate]);
+    // Resetuje dropdown ako trenutni URL nije neki od categorya
+    if (!location.pathname.includes("category")) {
+      setCategory("..");
+    }
+  }, [location]);
 
   return (
     <CategoryBox>
@@ -84,7 +89,9 @@ function CategoryBar() {
                 fontWeight={700}
                 fontSize={15}
                 letterSpacing={0.7}
-                sx={{ "&:hover": { color: "#d03c06" } }}
+                sx={{
+                  "&:hover": { color: "#cecece" },
+                }}
               >
                 {category}
               </Typography>
@@ -106,13 +113,42 @@ function CategoryBar() {
           disableUnderline
           sx={selectStyles}
         >
-          <MenuItem value="..">Select category</MenuItem>
-          <MenuItem value={"keyboards"}>Keyboards</MenuItem>
-          <MenuItem value={"mice"}>Mice</MenuItem>
-          <MenuItem value={"headsets"}>Headsets</MenuItem>
-          <MenuItem value={"mousepads"}>Mousepads</MenuItem>
-          <MenuItem value={"monitors"}>Monitors</MenuItem>
-          <MenuItem value={"chairs"}>Gaming chairs</MenuItem>
+          <MenuItem value=".." onClick={() => navigate("/")}>
+            Select category
+          </MenuItem>
+          <MenuItem
+            value={"keyboards"}
+            onClick={() => navigate("/category/keyboards")}
+          >
+            Keyboards
+          </MenuItem>
+          <MenuItem value={"mice"} onClick={() => navigate("/category/mice")}>
+            Mice
+          </MenuItem>
+          <MenuItem
+            value={"headsets"}
+            onClick={() => navigate("/category/headsets")}
+          >
+            Headsets
+          </MenuItem>
+          <MenuItem
+            value={"mousepads"}
+            onClick={() => navigate("/category/mousepads")}
+          >
+            Mousepads
+          </MenuItem>
+          <MenuItem
+            value={"monitors"}
+            onClick={() => navigate("/category/monitors")}
+          >
+            Monitors
+          </MenuItem>
+          <MenuItem
+            value={"chairs"}
+            onClick={() => navigate("/category/chairs")}
+          >
+            Gaming chairs
+          </MenuItem>
         </Select>
       </CategoryDropdown>
     </CategoryBox>

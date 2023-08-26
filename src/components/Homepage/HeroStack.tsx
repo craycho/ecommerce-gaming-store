@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import HeroProduct from "./HeroProduct";
+import { Product } from "../../util/type-definitions";
 
-import { Box, Stack, styled } from "@mui/material";
+import { Box, CircularProgress, Stack, styled } from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   width: "85%", // Ne radi shorthand {lg, md, sm}
@@ -13,7 +16,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    margin: "0 auto 20px auto",
+    margin: "0 auto 30px auto",
   },
 }));
 
@@ -26,39 +29,104 @@ const StyledStack = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const findProduct = (products: Product[], productName: string) => {
+  return products.find((product) => product.data.title.includes(productName));
+};
+
 const HeroStack = function () {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const products = useSelector((state: RootState) => state.products);
 
-  const steelseriesArctis = products.find((product) =>
-    product.data.title.includes("Steelseries Arctis")
-  );
-  const noblechairsHero = products.find((product) =>
-    product.data.title.includes("Noblechairs Hero")
-  );
-  const corsairK95 = products.find((product) =>
-    product.data.title.includes("Corsair K95")
-  );
+  const steelseriesArctis = findProduct(products, "Steelseries Arctis");
+  const noblechairsHero = findProduct(products, "Noblechairs Hero");
+  const corsairK95 = findProduct(products, "Corsair K95");
+  const heroProducts = [
+    {
+      key: steelseriesArctis?.id,
+      product: steelseriesArctis,
+      promo: "On sale!",
+    },
+    {
+      key: noblechairsHero?.id,
+      product: noblechairsHero,
+      promo: "New in stock!",
+    },
+    {
+      key: corsairK95?.id,
+      product: corsairK95,
+      promo: "A legendary classic!",
+    },
+  ];
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
-    <StyledBox>
-      <StyledStack direction="row" gap={0} justifyContent="center">
-        <HeroProduct
-          key={steelseriesArctis?.id}
-          product={steelseriesArctis}
-          promo="On sale!"
-        />
-        <HeroProduct
-          key={noblechairsHero?.id}
-          product={noblechairsHero}
-          promo="New in stock!"
-        />
-        <HeroProduct
-          key={corsairK95?.id}
-          product={corsairK95}
-          promo="A legendary classic!"
-        />
-      </StyledStack>
-    </StyledBox>
+    <>
+      {/* Large screen layout */}
+      {isLoading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height={100}
+        >
+          <CircularProgress size={50} />
+        </Box>
+      ) : (
+        <StyledBox sx={{ display: { sm: "block", xs: "none" } }}>
+          <StyledStack direction="row" gap={0} justifyContent="center">
+            <HeroProduct
+              key={steelseriesArctis?.id}
+              product={steelseriesArctis}
+              promo="On sale!"
+            />
+            <HeroProduct
+              key={noblechairsHero?.id}
+              product={noblechairsHero}
+              promo="New in stock!"
+            />
+            <HeroProduct
+              key={corsairK95?.id}
+              product={corsairK95}
+              promo="A legendary classic!"
+            />
+          </StyledStack>
+        </StyledBox>
+      )}
+
+      {/* Mobile layout */}
+      <StyledBox sx={{ display: { sm: "none", xs: "block" } }}>
+        <Carousel
+          navButtonsAlwaysVisible
+          animation="slide"
+          duration={900}
+          interval={15000}
+          swipe={true}
+          indicators={false}
+          sx={{ mb: 3, minHeight: 320 }}
+          navButtonsProps={{
+            style: { width: 50, height: 50, opacity: 0.6 },
+          }}
+          navButtonsWrapperProps={{
+            style: {
+              height: "100%",
+              paddingBottom: "75px",
+              margin: "0 -3px 0 -3px",
+            },
+          }}
+        >
+          {heroProducts.map((product) => (
+            <HeroProduct
+              key={product.key + "1"}
+              product={product.product}
+              promo={product.promo}
+            />
+          ))}
+        </Carousel>
+      </StyledBox>
+    </>
   );
 };
 

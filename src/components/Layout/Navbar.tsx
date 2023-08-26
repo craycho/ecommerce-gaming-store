@@ -182,7 +182,10 @@ function Navbar() {
           </Box>
           <IconsBox>
             <Box
-              onClick={() => setShowSearchbarMobile((prev) => !prev)}
+              onClick={() => {
+                window.scrollTo(0, 0);
+                setShowSearchbarMobile((prev) => !prev);
+              }}
               sx={{ display: { xs: "block", sm: "none" } }}
             >
               <SearchIcon
