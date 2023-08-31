@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import CartItem from "./CartItem";
-
 import calcTotalPrice from "../../util/calc-total-price";
 
 import {
@@ -129,7 +128,7 @@ function CartModal({ cartOpen, handleClose }: ModalProps) {
                 <Typography variant="subtitle2" color="GrayText" p={1} pt={0}>
                   Including VAT
                 </Typography>
-                {loggedIn && (
+                {loggedIn ? (
                   <Button
                     variant="contained"
                     size="large"
@@ -143,6 +142,15 @@ function CartModal({ cartOpen, handleClose }: ModalProps) {
                   >
                     Checkout
                   </Button>
+                ) : (
+                  <Typography
+                    mt={1}
+                    p={1}
+                    sx={{ fontSize: { xs: 15, sm: 17 } }}
+                  >
+                    Please sign in or create a new account to proceed to the
+                    checkout page.
+                  </Typography>
                 )}
               </>
             )}

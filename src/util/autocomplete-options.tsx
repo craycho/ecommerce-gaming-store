@@ -1,6 +1,6 @@
+// npm install -D @types/autosuggest-highlight
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
-// npm install -D @types/autosuggest-highlight
 
 export const filterSearchOptions = (
   options: string[],

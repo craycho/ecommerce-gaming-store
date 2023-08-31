@@ -9,14 +9,14 @@ import {
 import { Autocomplete, Box, TextField, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const Search = styled(Box)(({ theme }) => ({
-  backgroundColor: "#F4F4F6",
-  borderRadius: "30px",
-  width: "35%",
-  height: 40,
-  justifyContent: "space-evenly",
+const SearchBar = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
+  justifyContent: "space-evenly",
+  width: "35%",
+  height: 40,
+  backgroundColor: "#F4F4F6",
+  borderRadius: "30px",
 
   [theme.breakpoints.down("sm")]: {
     width: "100%",
@@ -27,10 +27,10 @@ const SearchButton = styled("button")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: "orangered",
-  color: "#F4F4F6",
   width: 60,
   height: 40,
+  backgroundColor: "orangered",
+  color: "#F4F4F6",
   border: "none",
   borderRadius: "0 30px 30px 0",
   "&:hover": {
@@ -45,12 +45,13 @@ const SearchButton = styled("button")(({ theme }) => ({
 }));
 
 const autocompleteStyle = {
+  display: "flex",
+  alignItems: "center",
+  flex: 1,
   height: 45,
   paddingRight: 0.7,
   paddingLeft: 2,
-  flex: 1,
-  display: "flex",
-  alignItems: "center",
+
   // Vertical text align was bad because default <input>'s height is different than parent
   "	.MuiAutocomplete-input": {
     height: "100%",
@@ -94,7 +95,7 @@ function AutocompleteSearch({
 
         navigate(productUrl);
       } else {
-        // Route parameters umjesto query parameters
+        // Route parameters umjesto query parameters:
         // const searchUrl = `/search/${newValue?.toString().replaceAll(" ", "-")}`;
         // navigate("/search");
 
@@ -109,51 +110,47 @@ function AutocompleteSearch({
   };
 
   return (
-    <>
-      <Search component="form">
-        <Autocomplete
-          id="products-search"
-          freeSolo
-          // openOnFocus={true} // ne radi zajedno sa onInputChange, cak ni kada je component controlled
-          value={currentInput}
-          options={inputOptions}
-          sx={autocompleteStyle}
-          onChange={inputChangeHandler}
-          onInputChange={(event, value) => {
-            // Sluzi za input clear na klik logo-a i rad search dugmeta
-            setCurrentInput(value);
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              placeholder="Search for products..."
-              InputProps={{
-                ...params.InputProps,
-                disableUnderline: true,
-                // Potrebno manually handleati, onInputChange disablea Enter
-                onKeyDown: (e) => {
-                  e.key === "Enter" && inputChangeHandler(e, currentInput);
-                },
-              }}
-            />
-          )}
-          filterOptions={(options, state) =>
-            filterSearchOptions(options, state)
-          }
-          renderOption={(props, option, state) =>
-            renderSearchOptions(props, option, state)
-          }
-        />
-        <SearchButton
-          onClick={(event) => {
-            inputChangeHandler(event, currentInput);
-          }}
-        >
-          <SearchIcon fontSize="large" />
-        </SearchButton>
-      </Search>
-    </>
+    <SearchBar component="form">
+      <Autocomplete
+        id="products-Bar"
+        freeSolo
+        // openOnFocus={true} // ne radi zajedno sa onInputChange, cak ni kada je component controlled
+        value={currentInput}
+        options={inputOptions}
+        sx={autocompleteStyle}
+        onChange={inputChangeHandler}
+        onInputChange={(event, value) => {
+          // Sluzi za input clear na klik logo-a i rad search dugmeta
+          setCurrentInput(value);
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="standard"
+            placeholder="Search for products..."
+            InputProps={{
+              ...params.InputProps,
+              disableUnderline: true,
+              // Potrebno manually handleati, onInputChange disablea Enter
+              onKeyDown: (e) => {
+                e.key === "Enter" && inputChangeHandler(e, currentInput);
+              },
+            }}
+          />
+        )}
+        filterOptions={(options, state) => filterSearchOptions(options, state)}
+        renderOption={(props, option, state) =>
+          renderSearchOptions(props, option, state)
+        }
+      />
+      <SearchButton
+        onClick={(event) => {
+          inputChangeHandler(event, currentInput);
+        }}
+      >
+        <SearchIcon fontSize="large" />
+      </SearchButton>
+    </SearchBar>
   );
 }
 

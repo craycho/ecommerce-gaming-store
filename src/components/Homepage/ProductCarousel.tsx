@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import ProductStack from "./ProductStack";
+import { getCarouselPages } from "../../util/get-carousel";
+
 import Carousel from "react-material-ui-carousel";
-import { getCarouselPages } from "../../util/get-carousel-pages";
 import { Box, CircularProgress } from "@mui/material";
 
 function ProductCarousel({ type }: { type: string }) {

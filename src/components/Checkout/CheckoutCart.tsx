@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-
 import CartItem from "../Cart/CartItem";
 import calcTotalPrice from "../../util/calc-total-price";
 
@@ -10,7 +9,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 const boxStyle = {
   height: "fit-content",
   maxHeight: 1100,
-  width: { sm: 1000, xs: "90%" },
+  width: { xl: 1000, lg: "90%" },
 
   margin: "0 auto",
   p: { sm: 3, xs: 1 },

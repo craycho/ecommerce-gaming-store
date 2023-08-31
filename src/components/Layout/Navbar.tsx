@@ -31,10 +31,10 @@ const logoStyle = {
   transition: "all 0.1s ease",
 };
 const logoTextStyle = {
-  lineHeight: 1.15,
-  mt: 0.2,
   display: { xs: "none", sm: "block" },
+  mt: 0.2,
   color: "#F4F4F6",
+  lineHeight: 1.15,
 };
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -58,26 +58,25 @@ const IconsBox = styled(Box)({
 
 const IconWithBadge = styled(Badge)({
   "& .MuiBadge-badge": {
-    padding: "0 0",
     display: "flex",
-    backgroundColor: "orangered",
-
     height: 18,
     minWidth: 18,
+    padding: "0 0",
+    backgroundColor: "orangered",
   },
 });
 
 const wishlistIconStyle = {
-  color: "#F4F4F6",
   cursor: "pointer",
+  color: "#F4F4F6",
   "&:hover": {
     color: "red",
   },
 };
 
 const AvatarBox = styled(Box)({
-  color: "#F4F4F6",
   cursor: "pointer",
+  color: "#F4F4F6",
   letterSpacing: 0.3,
 });
 const UserIcon = styled(LoginIcon)({
@@ -88,16 +87,25 @@ const UserIcon = styled(LoginIcon)({
 });
 
 const cartIconStyle = {
-  color: "#F4F4F6",
   cursor: "pointer",
+  color: "#F4F4F6",
   "&:hover": {
+    color: "orangered",
+  },
+};
+
+const searchIconStyle = {
+  mt: 1,
+  fontSize: 34,
+  "&:hover": {
+    cursor: "pointer",
     color: "orangered",
   },
 };
 
 function Navbar() {
   const navigate = useNavigate();
-  const appDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const cart = useSelector((state: RootState) => state.cart);
   const { wishlist, user: userData } = useSelector((state: RootState) => state);
 
@@ -142,13 +150,14 @@ function Navbar() {
     setCurrentInput("");
   };
 
+  // Fetches appropriate cart on log in/out or user change
   useEffect(() => {
     if (userData.loggedIn) {
-      appDispatch(fetchCart(userData.id));
+      dispatch(fetchCart(userData.id));
     } else {
-      appDispatch(fetchCart("loggedOutUser"));
+      dispatch(fetchCart("loggedOutUser"));
     }
-  }, [userData.loggedIn, appDispatch, userData.id]);
+  }, [userData.loggedIn, dispatch, userData.id]);
 
   return (
     <>
@@ -182,26 +191,17 @@ function Navbar() {
           </Box>
           <IconsBox>
             <Box
+              sx={{ display: { xs: "block", sm: "none" } }}
               onClick={() => {
                 window.scrollTo(0, 0);
                 setShowSearchbarMobile((prev) => !prev);
               }}
-              sx={{ display: { xs: "block", sm: "none" } }}
             >
-              <SearchIcon
-                sx={{
-                  fontSize: 34,
-                  mt: 1,
-                  "&:hover": {
-                    cursor: "pointer",
-                    color: "orangered",
-                  },
-                }}
-              />
+              <SearchIcon sx={searchIconStyle} />
             </Box>
             <IconWithBadge
-              badgeContent={wishlist.length}
               color="secondary"
+              badgeContent={wishlist.length}
               sx={wishlistIconStyle}
             >
               <WishlistIcon onClick={() => navigate("/wishlist")} />
@@ -225,8 +225,8 @@ function Navbar() {
             )}
 
             <IconWithBadge
-              badgeContent={cartTotalAmount}
               color="secondary"
+              badgeContent={cartTotalAmount}
               sx={cartIconStyle}
               onClick={() => setCartOpen(true)}
             >
@@ -258,37 +258,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-/* WORKING SEARCH CATEGORY DROPDOWN
-
-{ category }: { category: string }
-  const [category, setCategory] = useState<string>("all");
-
-<FormControl
-            variant="standard"
-            sx={{ minWidth: 80, marginRight: 0.5 }}
-          >
-            <Select
-              id="select-category"
-              value={category}
-              onChange={(event: SelectChangeEvent) => {
-                setCategory(event.target.value);
-              }}
-              autoWidth
-              disableUnderline
-              sx={{
-                ".MuiSelect-select": {
-                  fontSize: 15,
-                },
-              }}
-            >
-              <MenuItem value="all">All categories</MenuItem>
-              <MenuItem value={"keyboards"}>Keyboards</MenuItem>
-              <MenuItem value={"mice"}>Mice</MenuItem>
-              <MenuItem value={"headsets"}>Headsets</MenuItem>
-              <MenuItem value={"mousepads"}>Mousepads</MenuItem>
-              <MenuItem value={"monitors"}>Monitors</MenuItem>
-              <MenuItem value={"chairs"}>Gaming chairs</MenuItem>
-            </Select>
-          </FormControl>
-*/

@@ -53,11 +53,11 @@ function DeliveryOption({ name }: { name: string }) {
           variant="h6"
           fontWeight={700}
           whiteSpace="nowrap"
+          mt={1}
+          ml={1}
           sx={{
             width: "fit-content",
             display: { sm: "none", xs: "flex" },
-            mt: 1,
-            ml: 1,
           }}
         >
           {chosenOption?.price} €

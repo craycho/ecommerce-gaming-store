@@ -1,5 +1,7 @@
 import { useRouteError, isRouteErrorResponse } from "react-router-dom";
 
+import { Container, Typography } from "@mui/material";
+
 function ErrorPage() {
   const error = useRouteError();
   if (isRouteErrorResponse(error)) {
@@ -12,7 +14,14 @@ function ErrorPage() {
       </>
     );
   } else {
-    return <div>An unknown error occured.</div>;
+    return (
+      <Container>
+        <Typography variant="h6" mt={3}>
+          An unknown error occured. Try refreshing the page or entering a
+          different URL.
+        </Typography>
+      </Container>
+    );
   }
 }
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { CountryType } from "../components/Checkout/CountryDropdown";
 
+import { CountryType } from "../components/Checkout/CountryDropdown";
 import CountryDropdown from "../components/Checkout/CountryDropdown";
 import DeliveryPicker from "../components/Checkout/DeliveryPicker";
 import CheckoutForm from "../components/Checkout/CheckoutForm";
@@ -18,7 +18,7 @@ import {
 const MobileCartPreview = styled(Box)(({ theme }) => ({
   display: "none",
 
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("lg")]: {
     display: "block",
     width: "100%",
   },
@@ -26,8 +26,8 @@ const MobileCartPreview = styled(Box)(({ theme }) => ({
 
 const PaperWrapper = styled(Paper)(({ theme }) => ({
   width: 550,
-  padding: "1.2rem 1.5rem",
   margin: "1.5rem 0",
+  padding: "1.2rem 1.5rem",
 
   [theme.breakpoints.down("sm")]: {
     width: "100%",
@@ -93,7 +93,7 @@ function CheckoutPage() {
             />
           </PaperWrapper>
         </Container>
-        <Box sx={{ display: { sm: "contents", xs: "none" }, width: "100%" }}>
+        <Box sx={{ display: { lg: "contents", xs: "none" }, width: "100%" }}>
           <CheckoutCart deliveryMethod={deliveryMethod} />
         </Box>
       </Stack>

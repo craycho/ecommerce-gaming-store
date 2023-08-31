@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { wishlistActions } from "../../store/wishlist-slice";
 import { addToCart } from "../../store/cart-actions";
-import { Link } from "react-router-dom";
 import { ProductData } from "../../util/type-definitions";
 
 import {
@@ -42,9 +42,9 @@ const NewIcon = styled(FiberNewIcon)({
   position: "absolute",
   top: 5,
   right: 5,
+  transform: "rotate(15deg)",
   fontSize: 35,
   color: "orangered",
-  transform: "rotate(15deg)",
 });
 
 const WishlistIcon = styled(FavoriteIcon)({
@@ -62,8 +62,8 @@ const AddCartIcon = styled(AddShoppingCartIcon)({
   position: "absolute",
   bottom: 122,
   right: 8,
-  borderRadius: "50%",
   padding: 5,
+  borderRadius: "50%",
   fontSize: 33,
   backgroundColor: "#b3b3b3",
   color: "white",
@@ -121,17 +121,14 @@ const PriceBox = styled(Box)({
 });
 const priceStyles = {
   fontSize: { xs: "1rem", sm: "1.25rem" },
-  fontWeight: {
-    xs: 700,
-    sm: 300,
-  },
+  fontWeight: { xs: 700, sm: 300 },
 };
 
 const InStockLabel = () => {
   return (
     <Box display="flex" alignItems="center" mt={0.5}>
       <CheckCircleOutlineIcon style={{ fontSize: 20, color: "GrayText" }} />
-      <Typography variant="caption" ml={0.4} color="GrayText">
+      <Typography variant="caption" color="GrayText" ml={0.4}>
         In stock
       </Typography>
     </Box>
@@ -161,6 +158,12 @@ function ProductCard({ product, screenSize }: CardProps) {
     .toLowerCase()
     .replaceAll(" ", "-")}`;
 
+  const isInWishlist = () => {
+    return wishlist.find((wishlistProduct) => wishlistProduct.id === product.id)
+      ? true
+      : false;
+  };
+
   const wishlistHandler = () => {
     dispatch(
       wishlistActions.toggleWishlist({ id: product.id, data: product.data })
@@ -177,11 +180,6 @@ function ProductCard({ product, screenSize }: CardProps) {
       setShowCheckmarkPopup(false);
     }, 1000);
   };
-  const isInWishlist = () => {
-    return wishlist.find((wishlistProduct) => wishlistProduct.id === product.id)
-      ? true
-      : false;
-  };
 
   return (
     <StyledCard>
@@ -193,11 +191,11 @@ function ProductCard({ product, screenSize }: CardProps) {
           sx={{ height: { xs: 130, sm: 180 }, objectFit: "contain" }}
         />
       </Link>
-
       <WishlistIcon
         onClick={wishlistHandler}
         sx={{ color: isInWishlist() ? "red" : "lightgrey" }}
       />
+      {isNew && <NewIcon />}
 
       {showCheckmarkPopup ? (
         <AddCartPopup>
@@ -211,8 +209,9 @@ function ProductCard({ product, screenSize }: CardProps) {
         </Tooltip>
       )}
 
-      {isNew && <NewIcon />}
-      <CardContent sx={{ minHeight: "fit-content", maxHeight: 135 }}>
+      <CardContent
+        sx={{ minHeight: "fit-content", maxHeight: { xs: 110, sm: 135 } }}
+      >
         <Typography variant="caption" fontWeight={700}>
           {category}
         </Typography>
@@ -224,9 +223,8 @@ function ProductCard({ product, screenSize }: CardProps) {
             {title}
           </Typography>
         </Link>
-
         <PriceBox>
-          <Box display="flex" alignItems="center" gap={1.2}>
+          <Box display="flex" gap={1.2} alignItems="center">
             <Typography
               variant="h6"
               color={onSale ? "orangered" : "primary"}

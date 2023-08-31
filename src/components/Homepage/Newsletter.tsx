@@ -20,11 +20,11 @@ import {
 import EmailIcon from "@mui/icons-material/Email";
 
 const formStyle = {
-  p: "2px 4px",
   display: "flex",
   alignItems: "center",
   width: 400,
   height: 50,
+  p: "2px 4px",
 };
 
 const SubscribeButton = styled(Button)(({ theme }) => ({
@@ -51,6 +51,7 @@ function Newsletter() {
     event.preventDefault();
 
     const validInput = validateInput("email", currentInput);
+
     if (validInput) {
       setCurrentInput("");
       setEmailValid(true);
@@ -70,19 +71,14 @@ function Newsletter() {
   };
 
   return (
-    <Container
-      sx={{
-        mb: 8,
-        height: 160,
-      }}
-    >
+    <Container sx={{ mb: 8, height: 160 }}>
       <Typography variant="h5" fontWeight={700} textAlign="center" mb={1}>
         Sign up for our newsletter
       </Typography>
       <Typography
         variant="subtitle1"
-        textAlign="center"
         color="GrayText"
+        textAlign="center"
         mb={3}
       >
         Get exclusive news, receive great offers and much more!
@@ -96,10 +92,10 @@ function Newsletter() {
       >
         <Paper elevation={3} sx={formStyle}>
           <InputBase
-            sx={{ ml: 1, flex: 1 }}
             placeholder="Your e-mail address"
             inputProps={{ "aria-label": "your e-mail address", maxLength: 50 }}
             value={currentInput}
+            sx={{ ml: 1, flex: 1 }}
             onChange={(e) => {
               setEmailValid(null);
               setCurrentInput(e.target.value);

@@ -128,8 +128,8 @@ function BannerStack() {
             variant="subtitle1"
             color="#f4f4f4"
             textAlign="right"
-            sx={textStyle}
             mb={1}
+            sx={textStyle}
           >
             Only a few left in stock!
           </Typography>

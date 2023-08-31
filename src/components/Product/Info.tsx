@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { addToCart } from "../../store/cart-actions";
 import { useAppDispatch, RootState } from "../../store";
+import { addToCart } from "../../store/cart-actions";
 import { Product } from "../../util/type-definitions";
 
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
@@ -9,10 +9,10 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 function Info({ product }: { product: Product }) {
   const dispatch = useAppDispatch();
   const userId = useSelector((state: RootState) => state.user.id);
-  const { category, title, description, price, onSale } = product.data;
   const [showCartNotification, setShowCartNotification] =
     useState<boolean>(false);
 
+  const { category, title, description, price, onSale } = product.data;
   const saleAmount = +(price * 0.3).toFixed(2);
   const onSalePrice = (price - saleAmount).toFixed(2);
 
@@ -31,7 +31,7 @@ function Info({ product }: { product: Product }) {
       <Divider />
       <Box mt={1}>
         <Typography variant="h3">{title}</Typography>
-        <Typography variant="subtitle1" mt={2} textAlign="justify">
+        <Typography variant="subtitle1" textAlign="justify" mt={2}>
           {description}
         </Typography>
         <Box display="flex" gap={1.75} mt={1.5}>

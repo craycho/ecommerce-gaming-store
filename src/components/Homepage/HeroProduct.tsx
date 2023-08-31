@@ -23,9 +23,9 @@ const imageBoxStyle = {
 const ContentBox = styled(Box)(({ theme }) => ({
   position: "absolute",
   bottom: 30,
+  width: "90%",
   marginLeft: 25,
   marginRight: 25,
-  width: "90%",
 
   [theme.breakpoints.down("sm")]: {
     bottom: 50,
@@ -55,8 +55,8 @@ const ProductTitle = styled(Typography)(({ theme }) => ({
 }));
 
 const BuyButton = styled(Button)({
-  backgroundColor: "orangered",
   padding: "8px 18px",
+  backgroundColor: "orangered",
   "&:hover": {
     backgroundColor: "#d03c06",
   },
@@ -74,6 +74,7 @@ function HeroProduct({ product, promo }: ProductProps) {
   const productUrl = `/${product?.data.category.toLowerCase()}/${product?.data.title
     .toLowerCase()
     .replaceAll(" ", "-")}`;
+
   const heroImage = productTitle?.includes("Steelseries Arctis") ? (
     SteelseriesHero
   ) : productTitle?.includes("Noblechairs Hero") ? (

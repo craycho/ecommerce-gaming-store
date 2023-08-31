@@ -1,6 +1,5 @@
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { RootState, useAppDispatch } from "../../store/index";
+import { useAppDispatch } from "../../store/index";
 import { wishlistActions } from "../../store/wishlist-slice";
 import { Product } from "../../util/type-definitions";
 
@@ -34,9 +33,9 @@ const RemoveIcon = styled(DeleteIcon)({
 });
 
 const ProductTitle = styled(Typography)({
+  overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
-  overflow: "hidden",
 });
 
 const TitleBox = styled(Box)({
@@ -50,10 +49,6 @@ const PriceBox = styled(Box)({
   flexDirection: "column",
   justifyContent: "space-between",
 });
-
-const ProductPrice = styled(Typography)(({ theme }) => ({
-  // [theme.breakpoints.down("sm")]: {},
-}));
 
 function WishlistItem({ product }: { product: Product }) {
   const dispatch = useAppDispatch();
@@ -73,80 +68,67 @@ function WishlistItem({ product }: { product: Product }) {
   };
 
   return (
-    <>
-      <Card
-        sx={{
-          position: "relative",
-          marginBottom: 2,
-        }}
-      >
-        <Box
+    <Card sx={{ position: "relative", mb: 2 }}>
+      <Box display="flex" alignItems="center">
+        <CardMedia
+          image={product.data.image}
+          title={product.data.title}
           sx={{
+            width: "20%",
+            height: 110,
+            backgroundSize: "contain",
+          }}
+        />
+        <CardContent
+          sx={{
+            width: "80%",
             display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
+            justifyContent: "space-between",
+            "&:last-child": {
+              paddingBottom: 2,
+            },
           }}
         >
-          <CardMedia
-            sx={{
-              width: "20%",
-              height: 110,
-              backgroundSize: "contain",
-            }}
-            image={product.data.image}
-            title={product.data.title}
-          />
-          <CardContent
-            sx={{
-              width: "80%",
-              display: "flex",
-              justifyContent: "space-between",
-              "&:last-child": {
-                paddingBottom: 2,
-              },
-            }}
-          >
-            <TitleBox>
-              <ProductTitle variant="subtitle1">
-                {product.data.title}
-              </ProductTitle>
-              <Typography variant="caption" mb={1.2}>
-                {product.data.category}
-              </Typography>
-              <Stack direction="row" spacing={1.5} alignItems="center">
-                <BuyButton
-                  variant="contained"
-                  startIcon={<AddCartIcon />}
-                  onClick={buyHandler}
-                >
-                  Buy
-                </BuyButton>
-                <RemoveIcon
-                  onClick={() =>
-                    dispatch(wishlistActions.toggleWishlist(product))
-                  }
-                />
-              </Stack>
-            </TitleBox>
-            <PriceBox>
-              <Typography
-                variant="h6"
-                color={product.data.onSale ? "orangered" : "primary"}
-                sx={{ fontSize: { sm: "1.25rem", xs: "1.1rem" } }}
+          <TitleBox>
+            <ProductTitle variant="subtitle1">
+              {product.data.title}
+            </ProductTitle>
+            <Typography variant="caption" mb={1.2}>
+              {product.data.category}
+            </Typography>
+            <Stack direction="row" spacing={1.5} alignItems="center">
+              <BuyButton
+                variant="contained"
+                startIcon={<AddCartIcon />}
+                onClick={buyHandler}
               >
-                {individualPrice} €
+                Buy
+              </BuyButton>
+              <RemoveIcon
+                onClick={() =>
+                  dispatch(wishlistActions.toggleWishlist(product))
+                }
+              />
+            </Stack>
+          </TitleBox>
+          <PriceBox>
+            <Typography
+              variant="h6"
+              color={product.data.onSale ? "orangered" : "primary"}
+              sx={{ fontSize: { sm: "1.25rem", xs: "1.1rem" } }}
+            >
+              {individualPrice} €
+            </Typography>
+            {product.data.onSale && (
+              <Typography variant="body2" color="GrayText">
+                <s>({product.data.price})</s> €
               </Typography>
-              {product.data.onSale && (
-                <Typography variant="body2" color="GrayText">
-                  <s>({product.data.price})</s> €
-                </Typography>
-              )}
-              <Typography variant="body2">In stock</Typography>
-            </PriceBox>
-          </CardContent>
-        </Box>
-      </Card>
-    </>
+            )}
+            <Typography variant="body2">In stock</Typography>
+          </PriceBox>
+        </CardContent>
+      </Box>
+    </Card>
   );
 }
 

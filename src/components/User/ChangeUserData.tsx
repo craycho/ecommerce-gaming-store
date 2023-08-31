@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { userActions } from "../../store/user-slice";
 import { patchUserData } from "../../store/user-actions";
-
 import validateInput from "../../util/validate-input";
 
 import { Box, IconButton, styled, TextField, Typography } from "@mui/material";
@@ -13,8 +12,8 @@ const ChangeSpan = styled(Typography)({
   position: "absolute",
   left: 25,
   top: 50,
-  textOverflow: "visible",
   zIndex: 1,
+  textOverflow: "visible",
   color: "grey",
 
   "&:hover": {
@@ -22,6 +21,16 @@ const ChangeSpan = styled(Typography)({
     color: "#ca3737",
   },
 });
+
+const changeSpanStyle = {
+  width: 130,
+  ".MuiFormHelperText-root": {
+    position: "absolute",
+    left: -2,
+    whiteSpace: "nowrap",
+    fontSize: 11,
+  },
+};
 
 function ChangeUserData({ dataType }: { dataType: string }) {
   const dispatch = useDispatch();
@@ -33,6 +42,7 @@ function ChangeUserData({ dataType }: { dataType: string }) {
 
   const handleChangeUserData = (event: React.SyntheticEvent) => {
     event.preventDefault();
+
     const validInput = validateInput(dataType, currentInput);
 
     if (validInput) {
@@ -62,24 +72,21 @@ function ChangeUserData({ dataType }: { dataType: string }) {
   return (
     <>
       {changeDataVisible ? (
-        <Box sx={{ marginTop: 0.2, position: "absolute", zIndex: 1 }}>
-          <form noValidate autoComplete="off" onSubmit={handleChangeUserData}>
+        <Box position="absolute" zIndex={1} mt={0.2}>
+          <Box
+            component="form"
+            noValidate
+            autoComplete="off"
+            onSubmit={handleChangeUserData}
+          >
             <TextField
               autoFocus
-              value={currentInput}
-              onChange={(e) => setCurrentInput(e.target.value)}
               size="small"
+              value={currentInput}
               error={inputError}
+              onChange={(e) => setCurrentInput(e.target.value)}
               helperText={inputError && "Invalid value."}
-              sx={{
-                width: 130,
-                ".MuiFormHelperText-root": {
-                  position: "absolute",
-                  left: -2,
-                  whiteSpace: "nowrap",
-                  fontSize: 11,
-                },
-              }}
+              sx={changeSpanStyle}
               InputProps={{
                 endAdornment: (
                   <IconButton
@@ -99,7 +106,7 @@ function ChangeUserData({ dataType }: { dataType: string }) {
                 },
               }}
             />
-          </form>
+          </Box>
         </Box>
       ) : (
         <ChangeSpan

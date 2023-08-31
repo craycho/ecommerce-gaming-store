@@ -7,22 +7,23 @@ import {
   Select,
   Stack,
   Typography,
-  styled,
-  SelectChangeEvent,
   MenuItem,
+  SelectChangeEvent,
+  styled,
 } from "@mui/material";
 
 const CategoryBox = styled(Box)({
-  width: "100%",
-  height: 30,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  width: "100%",
+  height: 30,
   backgroundColor: "#343434",
   color: "whitesmoke",
 });
 const categoryStackStyles = {
   display: { xs: "none", sm: "flex" },
+  gap: { sm: 2.5, md: 5, lg: 8 },
   alignItems: "center",
 };
 
@@ -51,9 +52,9 @@ function CategoryBar() {
     "Gaming Chairs",
   ];
 
-  const [category, setCategory] = useState<string>("..");
   const navigate = useNavigate();
   const location = useLocation();
+  const [category, setCategory] = useState<string>("..");
 
   useEffect(() => {
     // Resetuje dropdown ako trenutni URL nije neki od categorya
@@ -64,11 +65,7 @@ function CategoryBar() {
 
   return (
     <CategoryBox>
-      <Stack
-        direction="row"
-        spacing={window.innerWidth < 900 ? 4 : 8}
-        sx={categoryStackStyles}
-      >
+      <Stack direction="row" sx={categoryStackStyles}>
         {categories.map((category) => {
           const categoryUrl =
             category.split(" ").length > 1
@@ -79,19 +76,14 @@ function CategoryBar() {
             <Link
               key={category}
               to={`/category/${categoryUrl}`}
-              style={{
-                textDecoration: "none",
-                color: "#F4F4F6",
-              }}
+              style={{ textDecoration: "none", color: "#F4F4F6" }}
             >
               <Typography
                 variant="subtitle1"
                 fontWeight={700}
                 fontSize={15}
                 letterSpacing={0.7}
-                sx={{
-                  "&:hover": { color: "#cecece" },
-                }}
+                sx={{ "&:hover": { color: "#cecece" } }}
               >
                 {category}
               </Typography>
@@ -99,19 +91,21 @@ function CategoryBar() {
           );
         })}
       </Stack>
+
+      {/* Mobile layout */}
       <CategoryDropdown
         variant="standard"
         sx={{ display: { xs: "block", sm: "none" } }}
       >
         <Select
           id="select-category"
+          autoWidth
+          disableUnderline
           value={category}
+          sx={selectStyles}
           onChange={(event: SelectChangeEvent) => {
             setCategory(event.target.value);
           }}
-          autoWidth
-          disableUnderline
-          sx={selectStyles}
         >
           <MenuItem value=".." onClick={() => navigate("/")}>
             Select category

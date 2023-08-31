@@ -12,8 +12,8 @@ function ImageGrid({ images, selectedImage, onSelect }: GridProps) {
       {images.map((image, index) => (
         <img
           key={image}
+          alt="Product "
           src={image}
-          alt="Product image"
           height={100}
           width={100}
           style={{

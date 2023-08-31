@@ -35,6 +35,17 @@ function ProductMain({ product }: { product: Product }) {
             </Grid>
             <Grid item xs={4.5}>
               <Info product={product} />
+              <Box mt={3}>
+                <InventoryIcon sx={{ verticalAlign: "-13.5%" }} />
+                <Typography
+                  variant="body1"
+                  fontWeight={700}
+                  ml={1}
+                  display="inline"
+                >
+                  Availability: {Math.floor(Math.random() * 20)} left in stock
+                </Typography>
+              </Box>
             </Grid>
           </Grid>
         </Box>
@@ -76,28 +87,3 @@ function ProductMain({ product }: { product: Product }) {
 }
 
 export default ProductMain;
-
-/* Category breadcrumb 
-
-const CategoryBreadcrumb = styled(Typography)({
-  position: "absolute",
-  left: 28,
-  top: -45,
-
-  "&:hover": {
-    "&:last-child": {
-      color: "orangered",
-    },
-  },
-});
-
-<Box>
-          <CategoryBreadcrumb variant="subtitle2" color="primary">
-            Category
-            <RightArrowIcon
-              fontSize="small"
-              sx={{ color: "grey", verticalAlign: "-16%" }}
-            />
-            Mice
-          </CategoryBreadcrumb>
-        </Box> */

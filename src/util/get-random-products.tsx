@@ -2,19 +2,23 @@ import { Product } from "./type-definitions";
 
 const getRandomProducts = (
   products: Product[],
-  amount: number = 1,
+  requiredAmount: number = 1,
   isNew: boolean,
   onSale: boolean
 ): Product[] => {
-  const randomProducts: Product[] = [];
+  const randomProductsArray: Product[] = [];
 
-  while (randomProducts.length < amount) {
+  while (randomProductsArray.length < requiredAmount) {
     const randomIndex = Math.floor(Math.random() * products.length);
     const randomProduct = products[randomIndex];
 
-    if (randomProducts.includes(randomProduct)) {
+    if (
+      randomProductsArray.some(
+        (product) => product.data.title === randomProduct.data.title
+      )
+    )
       continue;
-    }
+
     if (onSale && !randomProduct.data.onSale) {
       continue;
     }
@@ -22,10 +26,9 @@ const getRandomProducts = (
       continue;
     }
 
-    randomProducts.push(randomProduct);
+    randomProductsArray.push(randomProduct);
   }
-
-  return randomProducts;
+  return randomProductsArray;
 };
 
 export default getRandomProducts;

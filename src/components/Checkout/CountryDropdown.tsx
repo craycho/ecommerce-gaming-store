@@ -30,17 +30,17 @@ function CountryDropdown({
   return (
     <Autocomplete
       id="country-select"
-      sx={{ width: "86%", marginBottom: 3 }}
+      autoHighlight
       options={countries}
       value={selectedCountry}
       onChange={countrySelectHandler}
-      autoHighlight
+      sx={{ width: "86%", marginBottom: 3 }}
       getOptionLabel={(option) => option.label}
       renderOption={(props, option) => (
         <Box
+          {...props}
           component="li"
           sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-          {...props}
         >
           <img
             loading="lazy"

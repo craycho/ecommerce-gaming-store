@@ -1,11 +1,11 @@
 import { Box, Container, Typography } from "@mui/material";
 
 const boxStyle = {
-  backgroundColor: "#f4f5f7",
-  padding: "40px 0",
-  border: "1px lightgrey solid",
   marginBottom: 6,
   marginTop: 6,
+  padding: "40px 0",
+  backgroundColor: "#f4f5f7",
+  border: "1px lightgrey solid",
 };
 
 function NextGenDescription() {

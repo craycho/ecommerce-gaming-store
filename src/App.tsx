@@ -13,12 +13,6 @@ import FaqPage from "./pages/Faq";
 import TermsConditionsPage from "./pages/TermsConditions";
 import CustomerServicePage from "./pages/CustomerService";
 
-/**@todo Otvaranje bilo cega osim homepage prvo autoredirect na homepage. */
-/**@todo openOnFocus doesn't work. */
-/**@todo errorElement not rendered when an error is thrown. */
-/**@todo Hide navbar and show when scrolling up */
-/**@todo Implement mailto feature on email click */
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -59,11 +53,3 @@ function App() {
 }
 
 export default App;
-
-// Ako se za form submit koristi useRef tip je "const refName = useRef<HTMLInputElement>();"
-// const [state, setState] = useState<type>();
-// Funkcije su tipa imeFunkc: (argument: type) => returnValueType (void ako ga nema)
-
-// const navigation = useNavigation();
-// navigation.state moze biti "idle", "loading" i "submitting"
-// idle = nije pokrenut route navigation, loading = ceka da se zavrsi route navigation

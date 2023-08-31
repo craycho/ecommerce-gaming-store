@@ -4,10 +4,11 @@ import { Product } from "../util/type-definitions";
 
 export const addToCart = function (productData: Product, userId: string) {
   return async (dispatch: AppDispatch) => {
-    let existingProduct: Product | null = null;
-
+    // If a cart exists, it's already in local storage
     const localCart = localStorage.getItem("cart");
     if (!localCart) return [];
+
+    let existingProduct: Product | null = null;
 
     const cartData: Product[] = JSON.parse(localCart);
     for (const cartItem of cartData) {
@@ -18,7 +19,7 @@ export const addToCart = function (productData: Product, userId: string) {
 
     // Checks if the product already exists in cart. If it does, only updates quantity.
     if (existingProduct && existingProduct.quantity) {
-      dispatch(cartActions.addToCartState(productData));
+      dispatch(cartActions.addToCartState(productData)); // Redux cart update (w/o sideeffects)
 
       const patchResponse = await fetch(
         `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/cart/${productData.id}.json`,
@@ -34,7 +35,7 @@ export const addToCart = function (productData: Product, userId: string) {
         throw new Error("Could not add product to cart.");
       }
     } else {
-      dispatch(cartActions.addToCartState(productData)); // Redux cart update (w/o sideeffects)
+      dispatch(cartActions.addToCartState(productData));
 
       const patchResponse = await fetch(
         `https://test-ecommerce-2be3f-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}/cart/${productData.id}.json`,
@@ -55,12 +56,12 @@ export const addToCart = function (productData: Product, userId: string) {
 
 export const removeFromCart = function (productData: Product, userId: string) {
   return async (dispatch: AppDispatch) => {
-    let existingProduct: Product | null = null;
-
     const localCart = localStorage.getItem("cart");
     if (!localCart) return [];
-    const cartData: Product[] = JSON.parse(localCart);
 
+    let existingProduct: Product | null = null;
+
+    const cartData: Product[] = JSON.parse(localCart);
     for (const cartItem of cartData) {
       if (cartItem.id === productData.id) {
         existingProduct = cartItem;

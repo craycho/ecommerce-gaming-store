@@ -4,8 +4,8 @@ import { RootState } from "../../store";
 import HeroProduct from "./HeroProduct";
 import { Product } from "../../util/type-definitions";
 
-import { Box, CircularProgress, Stack, styled } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
+import { Box, CircularProgress, Stack, styled } from "@mui/material";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   width: "85%", // Ne radi shorthand {lg, md, sm}

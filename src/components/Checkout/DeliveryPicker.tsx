@@ -1,6 +1,5 @@
 import DeliveryOption from "./DeliveryOption";
 import {
-  Box,
   Divider,
   FormControl,
   FormControlLabel,
@@ -14,24 +13,18 @@ interface DeliveryProps {
 }
 
 function DeliveryPicker({ deliveryMethod, setDeliveryMethod }: DeliveryProps) {
-  const deliveryMethodHandler = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDeliveryMethod(+event.target.value);
-  };
-
   return (
     <FormControl>
       <RadioGroup
-        aria-labelledby="delivery-radio-buttons"
         name="delivery-radio-buttons"
+        aria-labelledby="delivery-radio-buttons"
         value={deliveryMethod}
-        onChange={deliveryMethodHandler}
+        onChange={(event) => setDeliveryMethod(+event?.target.value)}
         sx={{ rowGap: 2 }}
       >
         <FormControlLabel
-          value={0}
           defaultChecked
+          value={0}
           control={<Radio />}
           label={<DeliveryOption name="DHL Home" />}
         />

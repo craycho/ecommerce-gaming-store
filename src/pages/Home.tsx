@@ -8,21 +8,18 @@ import NextGenDescription from "../components/Homepage/Description";
 import Newsletter from "../components/Homepage/Newsletter";
 import BannerStack from "../components/Homepage/BannerStack";
 
-import { CircularProgress, styled, Typography } from "@mui/material";
+import { Box, CircularProgress, styled, Typography } from "@mui/material";
 
-/* Memoized selector, radi kao obicni al ne runa svaki put
-const productsSelector = (state: RootState) => state.cart;
-const memoizedProducts = createSelector(
-  productsSelector,
-  (products) => products
-); */
-
-const CategoryTitle = styled(Typography)({
+const CategoryTitle = styled(Typography)(({ theme }) => ({
   textAlign: "center",
-  fontWeight: 700,
   fontSize: 26,
+  fontWeight: 700,
   letterSpacing: 0.8,
-});
+
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 22,
+  },
+}));
 
 function Home() {
   const dispatch = useAppDispatch();
@@ -44,7 +41,14 @@ function Home() {
   return (
     <>
       {isLoading ? (
-        <CircularProgress />
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height={100}
+        >
+          <CircularProgress size={50} />
+        </Box>
       ) : (
         <>
           <HeroStack />

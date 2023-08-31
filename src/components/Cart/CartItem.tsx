@@ -32,12 +32,12 @@ const ProductTitle = styled(Typography)({
 });
 
 const ProductQuantity = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
   position: "absolute",
   top: 5,
   left: 65,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   height: 25,
   width: 32,
   backgroundColor: "#3c3c3c75",
@@ -68,17 +68,17 @@ const contentStyle = {
 };
 
 function CartItem({ product }: { product: Product }) {
-  const userId = useSelector((state: RootState) => state.user.id);
   const dispatch = useAppDispatch();
+  const userId = useSelector((state: RootState) => state.user.id);
 
   const saleAmount = +(product.data.price * 0.3).toFixed(2);
-  const individualPrice = product.data.onSale
+  const individualItemPrice = product.data.onSale
     ? +(product.data.price - saleAmount).toFixed(2)
     : product.data.price;
 
   const totalPrice = product.quantity
-    ? (individualPrice * product.quantity).toFixed(2)
-    : individualPrice.toFixed(2);
+    ? (individualItemPrice * product.quantity).toFixed(2)
+    : individualItemPrice.toFixed(2);
   const totalPriceWithoutDiscount = product.quantity
     ? product.data.price * product.quantity
     : product.data.price;
@@ -96,59 +96,57 @@ function CartItem({ product }: { product: Product }) {
   };
 
   return (
-    <>
-      <Card sx={{ position: "relative", height: 110 }}>
-        <Box display="flex" alignItems="center">
-          <CardMedia
-            sx={imageStyle}
-            image={product.data.image}
-            title={product.data.title}
-          />
-          <CardContent sx={contentStyle}>
-            <ProductQuantity>{product.quantity}</ProductQuantity>
-            <TitleBox>
-              <ProductTitle variant="subtitle1">
-                {product.data.title}
-              </ProductTitle>
-              <Typography variant="caption" mb={1.2}>
-                {product.data.category}
+    <Card sx={{ position: "relative", height: 110 }}>
+      <Box display="flex" alignItems="center">
+        <CardMedia
+          title={product.data.title}
+          image={product.data.image}
+          sx={imageStyle}
+        />
+        <CardContent sx={contentStyle}>
+          <ProductQuantity>{product.quantity}</ProductQuantity>
+          <TitleBox>
+            <ProductTitle variant="subtitle1">
+              {product.data.title}
+            </ProductTitle>
+            <Typography variant="caption" mb={1.2}>
+              {product.data.category}
+            </Typography>
+            <Stack direction="row" spacing={0.3}>
+              <RemoveCircleOutlineIcon
+                sx={{ cursor: "pointer", fontSize: 27 }}
+                onClick={decreaseQuantity}
+              />
+              <AddCircleOutlineIcon
+                sx={{ cursor: "pointer", fontSize: 27 }}
+                onClick={increaseQuantity}
+              />
+              <DeleteIcon
+                sx={{ cursor: "pointer", fontSize: 27 }}
+                onClick={deleteFromCart}
+              />
+            </Stack>
+          </TitleBox>
+          <PriceBox>
+            <Typography
+              color={product.data.onSale ? "orangered" : "primary"}
+              sx={{
+                fontSize: { sm: "1.25rem", xs: "1rem" },
+                whiteSpace: "nowrap",
+              }}
+            >
+              {totalPrice} €
+            </Typography>
+            {product.data.onSale && (
+              <Typography variant="body2" color="GrayText">
+                <s>({totalPriceWithoutDiscount.toFixed(2)})</s> €
               </Typography>
-              <Stack direction="row" spacing={0.3}>
-                <RemoveCircleOutlineIcon
-                  sx={{ cursor: "pointer", fontSize: 27 }}
-                  onClick={decreaseQuantity}
-                />
-                <AddCircleOutlineIcon
-                  sx={{ cursor: "pointer", fontSize: 27 }}
-                  onClick={increaseQuantity}
-                />
-                <DeleteIcon
-                  sx={{ cursor: "pointer", fontSize: 27 }}
-                  onClick={deleteFromCart}
-                />
-              </Stack>
-            </TitleBox>
-            <PriceBox>
-              <Typography
-                color={product.data.onSale ? "orangered" : "primary"}
-                sx={{
-                  fontSize: { sm: "1.25rem", xs: "1rem" },
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {totalPrice} €
-              </Typography>
-              {product.data.onSale && (
-                <Typography variant="body2" color="GrayText">
-                  <s>({totalPriceWithoutDiscount.toFixed(2)})</s> €
-                </Typography>
-              )}
-              <Typography variant="body2">In stock</Typography>
-            </PriceBox>
-          </CardContent>
-        </Box>
-      </Card>
-    </>
+            )}
+            <Typography variant="body2">In stock</Typography>
+          </PriceBox>
+        </CardContent>
+      </Box>
+    </Card>
   );
 }
 

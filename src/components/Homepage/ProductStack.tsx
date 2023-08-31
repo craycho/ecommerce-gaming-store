@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/index";
 
 import ProductCard from "./ProductCard";
-import getRandomProducts from "../../util/random-products";
+import getRandomProducts from "../../util/get-random-products";
 import { Product } from "../../util/type-definitions";
-import { getCarouselItemCount } from "../../util/get-carousel-product-count";
+import { getCarouselItemCount } from "../../util/get-carousel";
 
 import { Box, Fade, Stack } from "@mui/material";
 

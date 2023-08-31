@@ -17,10 +17,10 @@ import StripeLogo from "../../assets/stripe-logo-transparent.png";
 import NextgenLogo from "../../assets/nextgen-logo-black.png";
 
 const backgroundStyle = {
-  backgroundColor: "#f4f5f7",
-  padding: "40px 0",
-  border: "1px lightgrey solid",
   flexGrow: 1,
+  padding: "40px 0",
+  backgroundColor: "#f4f5f7",
+  border: "1px lightgrey solid",
 };
 
 const logoStyle = {
@@ -182,10 +182,10 @@ function Footer() {
             </Typography>
           </Stack>
           <ImageList
-            sx={{ width: 170, height: 130 }}
             cols={2}
             rowHeight={55}
             gap={15}
+            sx={{ width: 170, height: 130 }}
           >
             {paymentData.map((item) => (
               <ImageListItem
@@ -193,10 +193,10 @@ function Footer() {
                 sx={{ display: "flex", alignItems: "center" }}
               >
                 <img
+                  loading="lazy"
+                  alt={item.title}
                   src={`${item.img}`}
                   srcSet={`${item.img}`}
-                  alt={item.title}
-                  loading="lazy"
                   style={{ width: 75, height: 50 }}
                 />
               </ImageListItem>
@@ -234,10 +234,10 @@ function Footer() {
             </Grid>
             <Grid item xs={6}>
               <ImageList
-                sx={{ width: 170, height: 130 }}
                 cols={2}
                 rowHeight={55}
                 gap={10}
+                sx={{ width: 170, height: 130 }}
               >
                 {paymentData.map((item) => (
                   <ImageListItem
@@ -245,10 +245,10 @@ function Footer() {
                     sx={{ display: "flex", alignItems: "center" }}
                   >
                     <img
+                      loading="lazy"
+                      alt={item.title}
                       src={`${item.img}`}
                       srcSet={`${item.img}`}
-                      alt={item.title}
-                      loading="lazy"
                       style={{ width: 72, height: 50 }}
                     />
                   </ImageListItem>

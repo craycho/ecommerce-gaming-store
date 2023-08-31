@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Product } from "../../util/type-definitions";
 import ProductCard from "../Homepage/ProductCard";
+import { Product } from "../../util/type-definitions";
 import { getGridItemWidth } from "../../util/grid-item-width";
 
 import { Box, Fade, Grid, Pagination, Typography } from "@mui/material";
@@ -22,10 +22,8 @@ function ResultsMain({ results, searchTerm }: ResultsProps) {
   );
 
   const handleResize = () => {
-    const gridItemWidth = getGridItemWidth(window.innerWidth);
-    setGridSize(gridItemWidth);
+    setGridSize(getGridItemWidth(window.innerWidth));
   };
-
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => {
@@ -56,17 +54,17 @@ function ResultsMain({ results, searchTerm }: ResultsProps) {
             mb={1}
           >{`Search results: "${searchTerm}"`}</Typography>
           {results.length > 16 ? (
-            <Typography variant="body1" mb={3} textAlign="end">
+            <Typography variant="body1" textAlign="end" mb={3}>
               Showing {resultsStart}-{resultsEnd} of {results.length} results:
             </Typography>
           ) : (
-            <Typography variant="body1" mb={3} textAlign="end">
+            <Typography variant="body1" textAlign="end" mb={3}>
               Showing all {results.length} results:
             </Typography>
           )}
           <Fade in={true} timeout={700}>
             {currentProducts && (
-              <Grid container spacing={1} mb={4.5}>
+              <Grid container spacing={1} mb={4.5} rowGap={3}>
                 {currentProducts.map((product) => (
                   <Grid item xs={gridSize} key={product.id}>
                     <ProductCard product={product} />
@@ -76,7 +74,9 @@ function ResultsMain({ results, searchTerm }: ResultsProps) {
             )}
           </Fade>
           <Box
-            sx={{ width: "85%", display: "flex", justifyContent: "center" }}
+            display="flex"
+            justifyContent="center"
+            width="85%"
             margin="30px auto"
           >
             <Pagination
@@ -88,7 +88,7 @@ function ResultsMain({ results, searchTerm }: ResultsProps) {
           </Box>
         </>
       ) : (
-        <Box sx={{ width: "95%", height: "60vh" }}>
+        <Box width="95%" height="60vh">
           <Typography variant="h6" mb={4}>
             No results found for: "{searchTerm}"
           </Typography>

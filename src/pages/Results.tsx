@@ -13,7 +13,7 @@ function ResultsPage() {
     return searchTerm ? productTitle.includes(searchTerm) : [];
   });
 
-  return <ResultsMain results={results} searchTerm={searchTerm} />;
+  return <ResultsMain searchTerm={searchTerm} results={results} />;
 }
 
 export default ResultsPage;
