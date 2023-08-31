@@ -1,21 +1,25 @@
 import { Box, Container, Typography } from "@mui/material";
 
 const boxStyle = {
-  backgroundColor: "#f4f5f7",
-  padding: "40px 0",
-  border: "1px lightgrey solid",
   marginBottom: 6,
   marginTop: 6,
+  padding: "40px 0",
+  backgroundColor: "#f4f5f7",
+  border: "1px lightgrey solid",
 };
 
 function NextGenDescription() {
   return (
     <Box sx={boxStyle}>
       <Container maxWidth="md" sx={{ mb: 3 }}>
-        <Typography variant="h4" fontWeight={700} textAlign="center" mb={2}>
+        <Typography variant="h3" fontWeight={700} textAlign="center" mb={2}>
           Who are we?
         </Typography>
-        <Typography variant="body1" textAlign="center" mb={4}>
+        <Typography
+          textAlign="center"
+          mb={4}
+          sx={{ fontSize: { xs: "0.9rem", sm: "1rem" } }}
+        >
           Welcome to <strong>NextGen Gaming</strong>, the ultimate destination
           for gamers seeking an unparalleled experience. We offer an extensive
           collection of cutting-edge gaming products and accessories for both
@@ -26,7 +30,10 @@ function NextGenDescription() {
         <Typography variant="h5" fontWeight={700} textAlign="center" mb={2}>
           Looking for tips or need some help?
         </Typography>
-        <Typography variant="body1" textAlign="center">
+        <Typography
+          textAlign="center"
+          sx={{ fontSize: { xs: "0.9rem", sm: "1rem" } }}
+        >
           Our dedicated team of gaming enthusiasts provide exceptional customer
           service, offer expert advice and keep you up to date with the latest
           industry trends. NextGen Gaming is where your gaming journey begins,

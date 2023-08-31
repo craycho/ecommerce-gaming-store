@@ -3,8 +3,6 @@ import { json, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userActions } from "../store/user-slice";
 import validateInput from "../util/validate-input";
-import { Order } from "../util/type-definitions";
-
 import { nanoid } from "nanoid";
 
 import {
@@ -23,11 +21,21 @@ import {
 import NextgenLogo from "../assets/nextgen-logo-black.png";
 
 const BoxWrapper = styled(Box)({
-  marginTop: "3rem",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  marginTop: "3rem",
 });
+
+const signupButtonStyle = {
+  height: 45,
+  marginTop: 3,
+  marginBottom: 2,
+  backgroundColor: "orangered",
+  "&:hover": {
+    backgroundColor: "#d03c06",
+  },
+};
 
 function Signup() {
   const dispatch = useDispatch();
@@ -61,6 +69,7 @@ function Signup() {
 
     let validEmailInput: boolean = validateInput("email", email);
     setEmailValid(validEmailInput);
+    // Checks to see if user with the same e-mail already exists
     if (validEmailInput) {
       try {
         const existingUsersResponse = await fetch(
@@ -153,7 +162,7 @@ function Signup() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <BoxWrapper>
         <Box
           component="img"
@@ -161,10 +170,8 @@ function Signup() {
           src={NextgenLogo}
           sx={{ height: 55 }}
         />
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Typography variant="h5">Sign up</Typography>
+        <Box component="form" noValidate sx={{ mt: 3 }} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -181,6 +188,7 @@ function Signup() {
                   firstNameValid === false &&
                   "First name must be between 1-30 characters and can't contain symbols."
                 }
+                onChange={() => setFirstNameValid(null)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -197,6 +205,7 @@ function Signup() {
                   lastNameValid === false &&
                   "Last name must be between 1-30 characters and can't contain symbols."
                 }
+                onChange={() => setLastNameValid(null)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -210,6 +219,7 @@ function Signup() {
                 inputProps={{ maxLength: 50 }}
                 error={emailValid === false}
                 helperText={emailValid === false && emailError}
+                onChange={() => setEmailValid(null)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -227,20 +237,21 @@ function Signup() {
                   passwordValid === false &&
                   "Password must be at least 8 characters long."
                 }
+                onChange={() => setPasswordValid(null)}
               />
             </Grid>
             <Grid item xs={12} mt={1}>
               <FormControlLabel
+                label="I want the latest information on offers, news and recommendations."
                 control={
                   <Checkbox
-                    value={allowExtraEmails}
                     color="primary"
+                    value={allowExtraEmails}
                     onChange={() =>
                       setAllowExtraEmails((prevValue) => !prevValue)
                     }
                   />
                 }
-                label="I want the latest information on offers, news and recommendations."
               />
             </Grid>
           </Grid>
@@ -257,15 +268,7 @@ function Signup() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{
-              mt: 3,
-              mb: 2,
-              height: 45,
-              backgroundColor: "orangered",
-              "&:hover": {
-                backgroundColor: "#d03c06",
-              },
-            }}
+            sx={signupButtonStyle}
           >
             Sign Up
           </Button>

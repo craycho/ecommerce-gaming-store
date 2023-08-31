@@ -20,11 +20,11 @@ interface FetchData {
   [key: string]: User; // "Index signature", allows dynamic keys of the same, defined type
 }
 
-interface PropsType {
+interface LoginProps {
   handleClose: () => void;
 }
 
-function LoginForm({ handleClose }: PropsType) {
+function LoginForm({ handleClose }: LoginProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -47,8 +47,8 @@ function LoginForm({ handleClose }: PropsType) {
       const existingUsersData: FetchData = await existingUsersResponse.json();
 
       for (const user in existingUsersData) {
-        const existingUserEmail: string = existingUsersData[user].email;
-        const existingUserPassword: string = existingUsersData[user].password;
+        const existingUserEmail = existingUsersData[user].email;
+        const existingUserPassword = existingUsersData[user].password;
         const userData: User = existingUsersData[user];
 
         if (existingUserEmail === email && existingUserPassword === password) {
@@ -74,7 +74,6 @@ function LoginForm({ handleClose }: PropsType) {
         ) {
           setShowEmailError(false);
           setShowPasswordError(true);
-          break;
         }
       }
     } catch (err) {
@@ -85,24 +84,18 @@ function LoginForm({ handleClose }: PropsType) {
   };
 
   return (
-    <Container component="div" maxWidth="xs">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+    <Container maxWidth="xs">
+      <Box display="flex" flexDirection="column" alignItems="center">
         <Box
           component="img"
           alt="Next Gen logo"
           src={NextgenLogo}
           sx={{ height: 55 }}
         />
-        <Typography component="h1" variant="h5" mt={2}>
+        <Typography variant="h5" mt={2}>
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" noValidate onSubmit={handleSubmit} mt={1}>
           <TextField
             margin="normal"
             required
@@ -115,8 +108,9 @@ function LoginForm({ handleClose }: PropsType) {
             error={showEmailError === true}
             helperText={
               showEmailError === true &&
-              "Sorry, we can't find an account with this email address. Try creating a new account."
+              "We can't find an account with this email address. Try creating a new account."
             }
+            onChange={() => setShowEmailError(false)}
           />
           <TextField
             margin="normal"
@@ -129,16 +123,17 @@ function LoginForm({ handleClose }: PropsType) {
             autoComplete="current-password"
             error={showPasswordError === true}
             helperText={showPasswordError === true && "Invalid password."}
+            onChange={() => setShowPasswordError(false)}
           />
           <FormControlLabel
+            label="Remember me"
             control={
               <Checkbox
-                value={rememberMe}
                 color="primary"
+                value={rememberMe}
                 onChange={() => setRememberMe((prev) => !prev)}
               />
             }
-            label="Remember me"
           />
           <Button
             type="submit"
@@ -158,8 +153,8 @@ function LoginForm({ handleClose }: PropsType) {
             sx={{
               mt: 1.5,
               mb: 2,
-              backgroundColor: "orangered",
               height: 45,
+              backgroundColor: "orangered",
               "&:hover": {
                 backgroundColor: "#d03c06",
               },
@@ -172,7 +167,7 @@ function LoginForm({ handleClose }: PropsType) {
             Register
           </Button>
           <Box display="flex" justifyContent="center" mt={1}>
-            <Link href="#" variant="body2">
+            <Link href="/" variant="body2">
               Forgot password?
             </Link>
           </Box>

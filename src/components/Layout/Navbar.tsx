@@ -21,7 +21,6 @@ import {
   Typography,
 } from "@mui/material";
 import NextgenLogo from "../../assets/nextgen-logo-white.png";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import WishlistIcon from "@mui/icons-material/Favorite";
 import LoginIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -32,10 +31,10 @@ const logoStyle = {
   transition: "all 0.1s ease",
 };
 const logoTextStyle = {
-  lineHeight: 1.15,
-  mt: 0.2,
   display: { xs: "none", sm: "block" },
+  mt: 0.2,
   color: "#F4F4F6",
+  lineHeight: 1.15,
 };
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -43,7 +42,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   gap: "3%",
-  height: "70px",
+  height: "60px",
 
   [theme.breakpoints.down("sm")]: {
     justifyContent: "space-between",
@@ -59,26 +58,25 @@ const IconsBox = styled(Box)({
 
 const IconWithBadge = styled(Badge)({
   "& .MuiBadge-badge": {
-    padding: "0 0",
     display: "flex",
-    backgroundColor: "orangered",
-
     height: 18,
     minWidth: 18,
+    padding: "0 0",
+    backgroundColor: "orangered",
   },
 });
 
 const wishlistIconStyle = {
-  color: "#F4F4F6",
   cursor: "pointer",
+  color: "#F4F4F6",
   "&:hover": {
     color: "red",
   },
 };
 
 const AvatarBox = styled(Box)({
-  color: "#F4F4F6",
   cursor: "pointer",
+  color: "#F4F4F6",
   letterSpacing: 0.3,
 });
 const UserIcon = styled(LoginIcon)({
@@ -89,16 +87,25 @@ const UserIcon = styled(LoginIcon)({
 });
 
 const cartIconStyle = {
-  color: "#F4F4F6",
   cursor: "pointer",
+  color: "#F4F4F6",
   "&:hover": {
+    color: "orangered",
+  },
+};
+
+const searchIconStyle = {
+  mt: 1,
+  fontSize: 34,
+  "&:hover": {
+    cursor: "pointer",
     color: "orangered",
   },
 };
 
 function Navbar() {
   const navigate = useNavigate();
-  const appDispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const cart = useSelector((state: RootState) => state.cart);
   const { wishlist, user: userData } = useSelector((state: RootState) => state);
 
@@ -111,6 +118,9 @@ function Navbar() {
     (accumulator, product) => accumulator + (product.quantity ?? 0),
     0
   );
+
+  const [showSearchbarMobile, setShowSearchbarMobile] =
+    useState<boolean>(false);
 
   const fetchUserOrders = async () => {
     const response = await fetch(
@@ -140,126 +150,111 @@ function Navbar() {
     setCurrentInput("");
   };
 
+  // Fetches appropriate cart on log in/out or user change
   useEffect(() => {
     if (userData.loggedIn) {
-      appDispatch(fetchCart(userData.id));
+      dispatch(fetchCart(userData.id));
     } else {
-      appDispatch(fetchCart("loggedOutUser"));
+      dispatch(fetchCart("loggedOutUser"));
     }
-  }, [userData.loggedIn]);
+  }, [userData.loggedIn, dispatch, userData.id]);
 
   return (
-    <AppBar position="sticky">
-      <StyledToolbar>
-        <Stack direction="row" spacing={2} alignItems="center" sx={logoStyle}>
-          <Box
-            component="img"
-            alt="Nextgen logo"
-            src={NextgenLogo}
-            sx={{ height: 45, width: 40, mt: 0.5, color: "#F4F4F6" }}
-            onClick={() => handleGotoHomepage(false)}
-          />
-          <Link
-            to="/"
-            style={{ textDecoration: "none" }}
-            onClick={() => handleGotoHomepage(true)}
-          >
-            <Typography fontSize={22} fontWeight={700} sx={logoTextStyle}>
-              Nextgen
-              <br />
-              Gaming
-            </Typography>
-          </Link>
-        </Stack>
-        <AutocompleteSearch
-          currentInput={currentInput}
-          setCurrentInput={setCurrentInput}
-        />
-        <IconsBox>
-          <Box sx={{ display: { xs: "block", sm: "none" } }}>
-            <SearchIcon fontSize="large" />
+    <>
+      <AppBar position="sticky">
+        <StyledToolbar>
+          <Stack direction="row" spacing={2} alignItems="center" sx={logoStyle}>
+            <Box
+              component="img"
+              alt="Nextgen logo"
+              src={NextgenLogo}
+              sx={{ height: 45, width: 40, mt: 0.5, color: "#F4F4F6" }}
+              onClick={() => handleGotoHomepage(false)}
+            />
+            <Link
+              to="/"
+              style={{ textDecoration: "none" }}
+              onClick={() => handleGotoHomepage(true)}
+            >
+              <Typography fontSize={22} fontWeight={700} sx={logoTextStyle}>
+                Nextgen
+                <br />
+                Gaming
+              </Typography>
+            </Link>
+          </Stack>
+          <Box sx={{ display: { xs: "none", sm: "contents" } }}>
+            <AutocompleteSearch
+              currentInput={currentInput}
+              setCurrentInput={setCurrentInput}
+            />
           </Box>
-          <IconWithBadge
-            badgeContent={wishlist.length}
-            color="secondary"
-            sx={wishlistIconStyle}
-          >
-            <WishlistIcon onClick={() => navigate("/wishlist")} />
-          </IconWithBadge>
-
-          {userData.loggedIn ? (
-            <AvatarBox
-              display="flex"
-              alignItems="center"
-              gap={1.2}
+          <IconsBox>
+            <Box
+              sx={{ display: { xs: "block", sm: "none" } }}
               onClick={() => {
-                setUserModalOpen(true);
-                fetchUserOrders();
+                window.scrollTo(0, 0);
+                setShowSearchbarMobile((prev) => !prev);
               }}
             >
-              <Avatar src={userData.profilePicture} />
-              {userData.firstName}
-            </AvatarBox>
-          ) : (
-            <UserIcon onClick={() => setLoginModalOpen(true)} />
-          )}
+              <SearchIcon sx={searchIconStyle} />
+            </Box>
+            <IconWithBadge
+              color="secondary"
+              badgeContent={wishlist.length}
+              sx={wishlistIconStyle}
+            >
+              <WishlistIcon onClick={() => navigate("/wishlist")} />
+            </IconWithBadge>
 
-          <IconWithBadge
-            badgeContent={cartTotalAmount}
-            color="secondary"
-            sx={cartIconStyle}
-            onClick={() => setCartOpen(true)}
-          >
-            <ShoppingCartIcon />
-          </IconWithBadge>
-        </IconsBox>
-      </StyledToolbar>
-      <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />
-      <LoginModal
-        loginOpen={loginModalOpen}
-        handleClose={() => setLoginModalOpen(false)}
-      />
-      <UserModal
-        userModalOpen={userModalOpen}
-        handleClose={() => setUserModalOpen(false)}
-        currentOrders={currentOrders}
-      />
-    </AppBar>
+            {userData.loggedIn ? (
+              <AvatarBox
+                display="flex"
+                alignItems="center"
+                gap={1.2}
+                onClick={() => {
+                  setUserModalOpen(true);
+                  fetchUserOrders();
+                }}
+              >
+                <Avatar src={userData.profilePicture} />
+                {userData.firstName}
+              </AvatarBox>
+            ) : (
+              <UserIcon onClick={() => setLoginModalOpen(true)} />
+            )}
+
+            <IconWithBadge
+              color="secondary"
+              badgeContent={cartTotalAmount}
+              sx={cartIconStyle}
+              onClick={() => setCartOpen(true)}
+            >
+              <ShoppingCartIcon />
+            </IconWithBadge>
+          </IconsBox>
+        </StyledToolbar>
+        <CartModal cartOpen={cartOpen} handleClose={() => setCartOpen(false)} />
+        <LoginModal
+          loginOpen={loginModalOpen}
+          handleClose={() => setLoginModalOpen(false)}
+        />
+        <UserModal
+          userModalOpen={userModalOpen}
+          handleClose={() => setUserModalOpen(false)}
+          currentOrders={currentOrders}
+        />
+      </AppBar>
+      {showSearchbarMobile && (
+        <Box sx={{ display: { xs: "block", sm: "none" } }}>
+          <AutocompleteSearch
+            currentInput={currentInput}
+            setCurrentInput={setCurrentInput}
+          />
+        </Box>
+      )}
+    </>
   );
 }
 
 export default Navbar;
-
-/* WORKING SEARCH CATEGORY DROPDOWN
-
-{ category }: { category: string }
-  const [category, setCategory] = useState<string>("all");
-
-<FormControl
-            variant="standard"
-            sx={{ minWidth: 80, marginRight: 0.5 }}
-          >
-            <Select
-              id="select-category"
-              value={category}
-              onChange={(event: SelectChangeEvent) => {
-                setCategory(event.target.value);
-              }}
-              autoWidth
-              disableUnderline
-              sx={{
-                ".MuiSelect-select": {
-                  fontSize: 15,
-                },
-              }}
-            >
-              <MenuItem value="all">All categories</MenuItem>
-              <MenuItem value={"keyboards"}>Keyboards</MenuItem>
-              <MenuItem value={"mice"}>Mice</MenuItem>
-              <MenuItem value={"headsets"}>Headsets</MenuItem>
-              <MenuItem value={"mousepads"}>Mousepads</MenuItem>
-              <MenuItem value={"monitors"}>Monitors</MenuItem>
-              <MenuItem value={"chairs"}>Gaming chairs</MenuItem>
-            </Select>
-          </FormControl>
-*/

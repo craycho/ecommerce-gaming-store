@@ -25,23 +25,28 @@ import {
 import DefaultProfilePicture from "../../assets/default-user-profile-picture.png";
 import CameraIcon from "@mui/icons-material/CameraAlt";
 import LogoutIcon from "@mui/icons-material/Logout";
+import CloseIcon from "@mui/icons-material/Cancel";
 
 const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: { xs: 350, sm: 500 },
   bgcolor: "background.paper",
   boxShadow: 24,
 };
 
-const ProfilePicture = styled("img")({
+const ProfilePicture = styled("img")(({ theme }) => ({
   position: "relative",
   height: 200,
   width: 500,
   objectFit: "cover",
-});
+
+  [theme.breakpoints.down("sm")]: {
+    width: 350,
+  },
+}));
 
 const ProfilePictureButton = styled(Avatar)({
   position: "absolute",
@@ -52,17 +57,26 @@ const ProfilePictureButton = styled(Avatar)({
   boxShadow: "3px 3px 5px 0px rgba(0,0,0,0.75)",
 });
 
+const CloseModalButton = styled(IconButton)({
+  position: "absolute",
+  top: -23,
+  right: -23,
+  color: "#f4f4f494",
+  "&:hover": {
+    transform: "scale(1.1)",
+  },
+});
+
 const UserInfo = styled(Typography)({
-  textOverflow: "ellipsis",
   whiteSpace: "nowrap",
   overflow: "hidden",
+  textOverflow: "ellipsis",
 });
 
 const LogoutButton = styled(IconButton)({
   position: "absolute",
   right: 13,
   top: 347,
-
   width: 60,
   height: 40,
   borderRadius: 8,
@@ -79,18 +93,13 @@ const OrdersTab = styled(Tab)({
   fontSize: 13,
 });
 
-interface ModalData {
-  userModalOpen: boolean;
-  handleClose: () => void;
-  currentOrders: Order[];
-}
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
 
+// Tab content
 function OrderList({ children, index, value }: TabPanelProps) {
   return (
     <div
@@ -102,6 +111,12 @@ function OrderList({ children, index, value }: TabPanelProps) {
       {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
     </div>
   );
+}
+
+interface ModalData {
+  userModalOpen: boolean;
+  handleClose: () => void;
+  currentOrders: Order[];
 }
 
 const emptyUserData = {
@@ -126,7 +141,6 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
 
     if (file) {
       const reader = new FileReader();
-
       reader.addEventListener("load", (e) => {
         const dataURL = e.target?.result as string; // dataURL = base64 img
 
@@ -157,15 +171,15 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
 
   return (
     <Modal
+      aria-labelledby="user-modal-window"
       disableAutoFocus
       open={userModalOpen}
       onClose={handleClose}
-      aria-labelledby="user-modal-window"
     >
       <Box sx={modalStyle}>
         <ProfilePicture
-          src={userData.profilePicture || DefaultProfilePicture}
           alt="profile-picture"
+          src={userData.profilePicture || DefaultProfilePicture}
           sx={{ objectPosition: userData.profilePicture ? "middle" : "top" }}
         />
         <Box component="div" id="change-picture">
@@ -184,7 +198,16 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
             style={{ display: "none" }}
           />
         </Box>
-        <Grid container rowSpacing={3.7} columnSpacing={3} m={0} mb={6}>
+        <Grid
+          container
+          rowSpacing={3.7}
+          columnSpacing={window.innerWidth < 900 ? 2 : 3}
+          m={0}
+          mb={6}
+        >
+          <CloseModalButton onClick={handleClose}>
+            <CloseIcon sx={{ fontSize: 30 }} />
+          </CloseModalButton>
           <Grid item xs={6} position="relative">
             <UserInfo variant="body1">
               <strong style={{ marginRight: 5 }}>First name:</strong>
@@ -225,10 +248,10 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
         <Divider />
         <Box p={1.5} pt={0} pb={0.5}>
           <Tabs
-            value={currentTab}
-            onChange={(_, newValue: number) => setCurrentTab(newValue)}
             aria-label="Order tabs"
+            value={currentTab}
             sx={{ marginBottom: 0.5 }}
+            onChange={(_, newValue: number) => setCurrentTab(newValue)}
           >
             <OrdersTab label="Current" />
             <OrdersTab label="Delivered" />
@@ -237,20 +260,18 @@ function UserModal({ userModalOpen, handleClose, currentOrders }: ModalData) {
             <Stack
               direction="row"
               spacing={1.5}
-              sx={{
-                overflowX: "auto",
-                pb: 2,
-              }}
+              pb={2}
+              sx={{ overflowX: "auto" }}
             >
               {currentOrders.length > 0
                 ? currentOrders.map((order, i) => (
                     <UserOrderItem
+                      key={order.id || "" + i}
+                      keyId={order.id || "" + i}
+                      index={i}
                       userOrder={order.cart}
                       orderDate={order.date || "01/01/2023"}
                       deliveryMethod={order.deliveryMethod || 0}
-                      index={i}
-                      key={order.id || "" + i}
-                      keyId={order.id || "" + i}
                     />
                   ))
                 : "No orders have been placed yet."}

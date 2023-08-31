@@ -1,17 +1,5 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../store/index";
-import { wishlistActions } from "../store/wishlist-slice";
-import WishlistItem from "../components/Wishlistpage/WishlistItem";
-
-import {
-  Button,
-  Container,
-  Divider,
-  Stack,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 function Faq() {
   useEffect(() => {
@@ -19,13 +7,7 @@ function Faq() {
   }, []);
 
   return (
-    <Container
-      sx={{
-        mt: 5,
-        mb: 7,
-        width: "60%",
-      }}
-    >
+    <Container sx={{ mt: 5, mb: 7, width: "60%" }}>
       <Typography variant="h4" fontWeight={700} mb={3}>
         Frequently asked questions (FAQ)
       </Typography>

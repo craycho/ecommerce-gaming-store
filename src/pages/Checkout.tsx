@@ -1,12 +1,38 @@
 import { useState, useEffect } from "react";
-import { CountryType } from "../components/Checkout/CountryDropdown";
 
+import { CountryType } from "../components/Checkout/CountryDropdown";
 import CountryDropdown from "../components/Checkout/CountryDropdown";
 import DeliveryPicker from "../components/Checkout/DeliveryPicker";
 import CheckoutForm from "../components/Checkout/CheckoutForm";
 import CheckoutCart from "../components/Checkout/CheckoutCart";
 
-import { Box, Container, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Paper,
+  Stack,
+  styled,
+  Typography,
+} from "@mui/material";
+
+const MobileCartPreview = styled(Box)(({ theme }) => ({
+  display: "none",
+
+  [theme.breakpoints.down("lg")]: {
+    display: "block",
+    width: "100%",
+  },
+}));
+
+const PaperWrapper = styled(Paper)(({ theme }) => ({
+  width: 550,
+  margin: "1.5rem 0",
+  padding: "1.2rem 1.5rem",
+
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
+}));
 
 function CheckoutPage() {
   // Type assertion. "Overwriteamo" tip jer znamo bolje koji ce biti od automatskog inferanja. Slicno :ProductData ali poredi subtypes a ne exact types.
@@ -21,7 +47,13 @@ function CheckoutPage() {
   }, []);
 
   return (
-    <Box sx={{ width: "83%", margin: "0 auto" }}>
+    <Box sx={{ width: { sm: "83%", xs: "95%" }, margin: "0 auto" }}>
+      <MobileCartPreview>
+        <Typography variant="h6" fontWeight={700} mt={2} mb={2} ml={2}>
+          Order preview:
+        </Typography>
+        <CheckoutCart deliveryMethod={deliveryMethod} />
+      </MobileCartPreview>
       <Stack direction="row" spacing={2} justifyContent="center" mb={5} mt={5}>
         <Container>
           <Typography variant="h6" fontWeight={700}>
@@ -41,30 +73,16 @@ function CheckoutPage() {
             setCountryError={setCountryError}
           />
 
-          <Paper
-            elevation={3}
-            sx={{
-              width: "550px",
-              padding: "1.2rem 1.5rem",
-              margin: "2.5rem 0",
-            }}
-          >
+          <PaperWrapper elevation={3}>
             <DeliveryPicker
               deliveryMethod={deliveryMethod}
               setDeliveryMethod={setDeliveryMethod}
             />
-          </Paper>
+          </PaperWrapper>
           <Typography variant="h6" fontWeight={700} mt={4}>
             2. Payment
           </Typography>
-          <Paper
-            elevation={3}
-            sx={{
-              width: "550px",
-              padding: "1.2rem 1.5rem",
-              margin: "1.5rem 0",
-            }}
-          >
+          <PaperWrapper elevation={3}>
             <Typography variant="subtitle1" fontSize={18} fontWeight={700}>
               Your information
             </Typography>
@@ -73,9 +91,11 @@ function CheckoutPage() {
               setCountryError={setCountryError}
               deliveryMethod={deliveryMethod}
             />
-          </Paper>
+          </PaperWrapper>
         </Container>
-        <CheckoutCart deliveryMethod={deliveryMethod} />
+        <Box sx={{ display: { lg: "contents", xs: "none" }, width: "100%" }}>
+          <CheckoutCart deliveryMethod={deliveryMethod} />
+        </Box>
       </Stack>
     </Box>
   );

@@ -20,26 +20,30 @@ import {
 import EmailIcon from "@mui/icons-material/Email";
 
 const formStyle = {
-  p: "2px 4px",
   display: "flex",
   alignItems: "center",
   width: 400,
   height: 50,
+  p: "2px 4px",
 };
 
-const SubscribeButton = styled(Button)({
+const SubscribeButton = styled(Button)(({ theme }) => ({
   backgroundColor: "orangered",
   "&:hover": {
     backgroundColor: "#d03c06",
   },
-});
+
+  [theme.breakpoints.down("sm")]: {
+    fontSize: 12,
+    minWidth: 120,
+  },
+}));
 
 function Newsletter() {
   const dispatch = useAppDispatch();
   const userData = useSelector((state: RootState) => state.user);
   const [currentInput, setCurrentInput] = useState<string>("");
   const [emailValid, setEmailValid] = useState<boolean | null>(null);
-  const [emailError, setEmailError] = useState<string>("");
 
   const handleSubscribe = (
     event: React.FormEvent<HTMLFormElement | HTMLButtonElement>
@@ -47,6 +51,7 @@ function Newsletter() {
     event.preventDefault();
 
     const validInput = validateInput("email", currentInput);
+
     if (validInput) {
       setCurrentInput("");
       setEmailValid(true);
@@ -66,19 +71,14 @@ function Newsletter() {
   };
 
   return (
-    <Container
-      sx={{
-        mb: 8,
-        height: 160,
-      }}
-    >
+    <Container sx={{ mb: 8, height: 160 }}>
       <Typography variant="h5" fontWeight={700} textAlign="center" mb={1}>
         Sign up for our newsletter
       </Typography>
       <Typography
         variant="subtitle1"
-        textAlign="center"
         color="GrayText"
+        textAlign="center"
         mb={3}
       >
         Get exclusive news, receive great offers and much more!
@@ -92,10 +92,10 @@ function Newsletter() {
       >
         <Paper elevation={3} sx={formStyle}>
           <InputBase
-            sx={{ ml: 1, flex: 1 }}
             placeholder="Your e-mail address"
             inputProps={{ "aria-label": "your e-mail address", maxLength: 50 }}
             value={currentInput}
+            sx={{ ml: 1, flex: 1 }}
             onChange={(e) => {
               setEmailValid(null);
               setCurrentInput(e.target.value);

@@ -2,12 +2,7 @@ import { Box } from "@mui/material";
 
 function MainImage({ mainImage }: { mainImage: string }) {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
+    <Box display="flex" alignItems="center">
       <Box
         component="img"
         src={mainImage}

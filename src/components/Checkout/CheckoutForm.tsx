@@ -2,9 +2,8 @@ import { useState } from "react";
 import { json, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import validateInput from "../../util/validate-input";
-import { Product } from "../../util/type-definitions";
 
+import validateInput from "../../util/validate-input";
 import { Order } from "../../util/type-definitions";
 import { generateDate } from "../../util/generate-date";
 import { CountryType } from "./CountryDropdown";
@@ -74,7 +73,7 @@ function CheckoutForm({
       window.scrollTo(0, 0);
     }
 
-    // Places order if country is selected and all fields are valid
+    // Places an order if country is selected and all fields are valid
     if (
       selectedCountry &&
       validNameInput &&
@@ -83,7 +82,6 @@ function CheckoutForm({
       validPostcodeInput &&
       validEmailInput
     ) {
-      const cartProducts: Product[] = cart.map((item) => item);
       const date = generateDate(null);
 
       const orderData: Order = {
@@ -94,7 +92,7 @@ function CheckoutForm({
         postcode,
         email,
         allowExtraEmails,
-        cart: cartProducts,
+        cart,
         date,
         deliveryMethod,
       };
@@ -143,15 +141,8 @@ function CheckoutForm({
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 3.5,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+    <Container maxWidth="xs">
+      <Box display="flex" flexDirection="column" alignItems="center" mt={3.5}>
         <Box component="form" noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -168,6 +159,7 @@ function CheckoutForm({
                   firstNameValid === false &&
                   "First name must be between 1-30 characters and can't contain symbols."
                 }
+                onChange={() => setFirstNameValid(null)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -184,6 +176,7 @@ function CheckoutForm({
                   lastNameValid === false &&
                   "Last name must be between 1-30 characters and can't contain symbols."
                 }
+                onChange={() => setLastNameValid(null)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -200,6 +193,7 @@ function CheckoutForm({
                   addressValid === false &&
                   "Address must contain a street number."
                 }
+                onChange={() => setAddressValid(null)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -217,6 +211,7 @@ function CheckoutForm({
                   postCodeValid === false &&
                   "Postcode must contain at least 5 numbers and can't contain characters."
                 }
+                onChange={() => setPostCodeValid(null)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -234,20 +229,21 @@ function CheckoutForm({
                   emailValid === false &&
                   "Email must contain @ and be under 50 characters long."
                 }
+                onChange={() => setEmailValid(null)}
               />
             </Grid>
             <Grid item xs={12} mt={1}>
               <FormControlLabel
+                label="I want the latest information on offers, news and recommendations."
                 control={
                   <Checkbox
-                    value={allowExtraEmails}
                     color="primary"
+                    value={allowExtraEmails}
                     onChange={() =>
                       setAllowExtraEmails((prevValue) => !prevValue)
                     }
                   />
                 }
-                label="I want the latest information on offers, news and recommendations."
               />
             </Grid>
           </Grid>
@@ -267,7 +263,6 @@ function CheckoutForm({
           >
             Continue to payment
           </Button>
-          <Box display="flex" justifyContent="center" mt={1} mb={1}></Box>
         </Box>
       </Box>
     </Container>

@@ -1,21 +1,18 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/index";
 import { wishlistActions } from "../../store/wishlist-slice";
 import { addToCart } from "../../store/cart-actions";
-import { Link } from "react-router-dom";
 import { ProductData } from "../../util/type-definitions";
 
 import {
   Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
   Fade,
   keyframes,
-  Snackbar,
   styled,
   Tooltip,
   Typography,
@@ -26,13 +23,28 @@ import FiberNewIcon from "@mui/icons-material/FiberNew";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCartOutlined";
 
+const StyledCard = styled(Card)(({ theme }) => ({
+  position: "relative",
+  minWidth: 260,
+  maxWidth: 300,
+  paddingBottom: 6,
+
+  [theme.breakpoints.down("sm")]: {
+    minWidth: 160,
+    maxWidth: 180,
+    ".MuiCardContent-root": {
+      padding: "10px",
+    },
+  },
+}));
+
 const NewIcon = styled(FiberNewIcon)({
   position: "absolute",
   top: 5,
   right: 5,
+  transform: "rotate(15deg)",
   fontSize: 35,
   color: "orangered",
-  transform: "rotate(15deg)",
 });
 
 const WishlistIcon = styled(FavoriteIcon)({
@@ -50,8 +62,8 @@ const AddCartIcon = styled(AddShoppingCartIcon)({
   position: "absolute",
   bottom: 122,
   right: 8,
-  borderRadius: "50%",
   padding: 5,
+  borderRadius: "50%",
   fontSize: 33,
   backgroundColor: "#b3b3b3",
   color: "white",
@@ -59,23 +71,6 @@ const AddCartIcon = styled(AddShoppingCartIcon)({
     cursor: "pointer",
     backgroundColor: "#ff4500",
   },
-});
-
-const AddCartNotification = styled("div")({
-  position: "absolute",
-  bottom: 160,
-  right: 5,
-  width: 60,
-  height: 35,
-  padding: "2px 10px",
-  backgroundColor: "orangered",
-  color: "white",
-  borderRadius: 4,
-  fontSize: 12,
-  textAlign: "center",
-  lineHeight: "1rem",
-
-  transition: "opacity 500ms fade-in-out",
 });
 
 const fadeInOut = keyframes(`0% {
@@ -108,25 +103,66 @@ const AddCartPopup = styled("div")({
   animation: `${fadeInOut} 1s forwards`,
 });
 
-interface CardProps {
+const productTitleStyle = {
+  // Starts ellipsis "..." after 2 rows
+  display: "-webkit-box",
+  "WebkitLineClamp": 2,
+  "WebkitBoxOrient": "vertical",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  fontSize: { xs: "0.8rem", sm: "1rem" },
+};
+
+const PriceBox = styled(Box)({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  mt: { xs: "0.4rem", sm: "0.5rem" },
+});
+const priceStyles = {
+  fontSize: { xs: "1rem", sm: "1.25rem" },
+  fontWeight: { xs: 700, sm: 300 },
+};
+
+const InStockLabel = () => {
+  return (
+    <Box display="flex" alignItems="center" mt={0.5}>
+      <CheckCircleOutlineIcon style={{ fontSize: 20, color: "GrayText" }} />
+      <Typography variant="caption" color="GrayText" ml={0.4}>
+        In stock
+      </Typography>
+    </Box>
+  );
+};
+
+interface ProductProps {
   id: string;
   data: ProductData;
   quantity?: number;
 }
+interface CardProps {
+  product: ProductProps;
+  screenSize?: number;
+}
 
-function ProductCard({ product }: { product: CardProps }) {
+function ProductCard({ product, screenSize }: CardProps) {
   const dispatch = useAppDispatch();
   const wishlist = useSelector((state: RootState) => state.wishlist);
   const userData = useSelector((state: RootState) => state.user);
 
-  const [openCartNotification, setOpenCartNotification] =
-    useState<boolean>(false);
+  const [showCheckmarkPopup, setShowCheckmarkPopup] = useState<boolean>(false);
   const { price, onSale, new: isNew, title, category, image } = product.data;
   const saleAmount = +(price * 0.3).toFixed(2);
   const onSalePrice = onSale ? (price - saleAmount).toFixed(2) : price;
   const urlString = `/${category.toLowerCase()}/${title
     .toLowerCase()
     .replaceAll(" ", "-")}`;
+
+  const isInWishlist = () => {
+    return wishlist.find((wishlistProduct) => wishlistProduct.id === product.id)
+      ? true
+      : false;
+  };
 
   const wishlistHandler = () => {
     dispatch(
@@ -139,42 +175,29 @@ function ProductCard({ product }: { product: CardProps }) {
       ? dispatch(addToCart(product, userData.id))
       : dispatch(addToCart(product, "loggedOutUser"));
 
-    setOpenCartNotification(true);
+    setShowCheckmarkPopup(true);
     setTimeout(() => {
-      setOpenCartNotification(false);
+      setShowCheckmarkPopup(false);
     }, 1000);
-  };
-  const isInWishlist = () => {
-    return wishlist.find((wishlistProduct) => wishlistProduct.id === product.id)
-      ? true
-      : false;
   };
 
   return (
-    // <Fade in={true} timeout={500}>
-    <Card
-      sx={{
-        position: "relative",
-        maxWidth: 300,
-        minWidth: 260,
-        paddingBottom: 1.7,
-      }}
-    >
+    <StyledCard>
       <Link to={urlString} style={{ textDecoration: "none" }}>
         <CardMedia
           component="img"
-          /* loading="lazy" */
           image={image}
           title={title}
-          sx={{ height: 180, objectFit: "contain" }}
+          sx={{ height: { xs: 130, sm: 180 }, objectFit: "contain" }}
         />
       </Link>
       <WishlistIcon
         onClick={wishlistHandler}
         sx={{ color: isInWishlist() ? "red" : "lightgrey" }}
       />
+      {isNew && <NewIcon />}
 
-      {openCartNotification ? (
+      {showCheckmarkPopup ? (
         <AddCartPopup>
           <CheckCircleIcon />
         </AddCartPopup>
@@ -185,8 +208,10 @@ function ProductCard({ product }: { product: CardProps }) {
           </Fade>
         </Tooltip>
       )}
-      {isNew && <NewIcon />}
-      <CardContent sx={{ height: 130 }}>
+
+      <CardContent
+        sx={{ minHeight: "fit-content", maxHeight: { xs: 110, sm: 135 } }}
+      >
         <Typography variant="caption" fontWeight={700}>
           {category}
         </Typography>
@@ -194,49 +219,35 @@ function ProductCard({ product }: { product: CardProps }) {
           to={urlString}
           style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.87)" }}
         >
-          <Typography variant="subtitle1" component="div" minHeight={55}>
+          <Typography variant="subtitle1" mb={0.5} sx={productTitleStyle}>
             {title}
           </Typography>
         </Link>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          mt={1}
-        >
-          <Box display="flex" alignItems="center" gap={1}>
-            <Typography variant="h6" color={onSale ? "orangered" : "primary"}>
+        <PriceBox>
+          <Box display="flex" gap={1.2} alignItems="center">
+            <Typography
+              variant="h6"
+              color={onSale ? "orangered" : "primary"}
+              sx={priceStyles}
+            >
               {onSale ? onSalePrice : price} €
             </Typography>
             {onSale && (
-              <Typography variant="body2" color="GrayText">
+              <Typography
+                variant="body2"
+                color="GrayText"
+                sx={{ fontSize: { xs: "0.8rem", sm: "0.9rem" } }}
+              >
                 <s>({price})</s> €
               </Typography>
             )}
           </Box>
-          <Box display="flex" alignItems="center" justifyContent="flex-end">
-            <CheckCircleOutlineIcon
-              style={{ fontSize: 20, color: "GrayText" }}
-            />
-            <Typography variant="caption" ml={0.4} color="GrayText">
-              In stock
-            </Typography>
-          </Box>
-        </Box>
+          {screenSize && screenSize > 600 && <InStockLabel />}
+        </PriceBox>
+        {screenSize && screenSize <= 600 && <InStockLabel />}
       </CardContent>
-    </Card>
-    // </Fade>
+    </StyledCard>
   );
 }
 
 export default ProductCard;
-
-/* {openCartNotification ? (
-        <AddCartPopup>
-          Added to cart <CheckCircleIcon sx={{ ml: 0.4, mb: 0.3 }} />
-        </AddCartPopup>
-      ) : (
-        <Tooltip title="Add to cart" placement="top" arrow>
-          <AddCartIcon onClick={addToCartHandler} />
-        </Tooltip>
-      )} */

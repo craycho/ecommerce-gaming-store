@@ -21,6 +21,14 @@ theme.typography.h3 = {
     fontSize: "1.5rem",
   },
   [theme.breakpoints.up("md")]: {
-    fontSize: "2.4rem",
+    fontSize: "2.0rem",
+  },
+};
+
+theme.typography.h4 = {
+  fontSize: "2rem",
+
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "1.6rem",
   },
 };

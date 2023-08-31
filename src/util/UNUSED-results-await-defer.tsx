@@ -6,7 +6,7 @@ import {
   defer,
   Await,
 } from "react-router-dom";
-import ResultsMain from "../components/Resultpage/ResultsMain";
+import ResultsMain from "../components/Resultspage/ResultsMain";
 import { Product } from "./type-definitions";
 
 import { CircularProgress } from "@mui/material";

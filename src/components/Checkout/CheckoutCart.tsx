@@ -1,26 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-
 import CartItem from "../Cart/CartItem";
 import calcTotalPrice from "../../util/calc-total-price";
 
-import { Box, Button, Stack, styled, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 
 const boxStyle = {
-  width: 1000,
   height: "fit-content",
   maxHeight: 1100,
+  width: { xl: 1000, lg: "90%" },
+
+  margin: "0 auto",
+  p: { sm: 3, xs: 1 },
+  pt: 2,
   overflowY: "auto",
   bgcolor: "background.paper",
   boxShadow: 10,
-  p: 3,
-  pt: 2,
 };
-
-const CartWrapper = styled(Box)({
-  // height: "80%",
-});
 
 function CheckoutCart({ deliveryMethod }: { deliveryMethod: number }) {
   const navigate = useNavigate();
@@ -33,27 +30,27 @@ function CheckoutCart({ deliveryMethod }: { deliveryMethod: number }) {
     <Box sx={boxStyle}>
       {cart.length > 0 ? (
         <>
-          <CartWrapper>
-            <Stack direction="column" spacing={2}>
-              {cart.map((product) => (
-                <CartItem key={product.id} product={product} />
-              ))}
-            </Stack>
-          </CartWrapper>
-          <Stack direction="row" justifyContent="space-between" p={1} pb={0}>
-            <Typography variant="subtitle1" fontWeight={700} mt={2}>
-              Subtotal:
-            </Typography>
-            <Typography variant="h6" fontWeight={700} mt={2}>
-              {totalPrice} €
-            </Typography>
+          <Stack direction="column" spacing={2}>
+            {cart.map((product) => (
+              <CartItem key={product.id} product={product} />
+            ))}
           </Stack>
-          <Typography variant="h6" fontWeight={700} mt={2}>
-            Total: {(totalPrice + deliveryPrice).toFixed(2)} €
-          </Typography>
-          <Typography variant="subtitle2" color="GrayText" fontSize={13}>
-            Including Delivery costs and VAT.
-          </Typography>
+          <Box p={1}>
+            <Stack direction="row" justifyContent="space-between">
+              <Typography variant="subtitle1" fontWeight={700} mt={2}>
+                Subtotal:
+              </Typography>
+              <Typography variant="h6" fontWeight={700} mt={2}>
+                {totalPrice} €
+              </Typography>
+            </Stack>
+            <Typography variant="h6" fontWeight={700} mt={2}>
+              Total: {(totalPrice + deliveryPrice).toFixed(2)} €
+            </Typography>
+            <Typography variant="subtitle2" color="GrayText" fontSize={13}>
+              Including Delivery costs and VAT.
+            </Typography>
+          </Box>
         </>
       ) : (
         <>

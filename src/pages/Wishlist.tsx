@@ -14,9 +14,9 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const WishlistIcon = styled(FavoriteIcon)({
-  fontSize: 23,
-  verticalAlign: "-15%",
   marginLeft: 4,
+  verticalAlign: "-15%",
+  fontSize: 23,
   color: "red",
 });
 
@@ -55,7 +55,7 @@ function Wishlist() {
           Delete all
         </DeleteAllButton>
       </Container>
-      <Divider sx={{ marginBottom: 2 }} />
+      <Divider sx={{ mb: 2 }} />
       {wishlist.length < 1 && (
         <Typography variant="body1">
           Your wishlist is currently empty.

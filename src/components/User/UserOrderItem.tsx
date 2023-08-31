@@ -20,44 +20,39 @@ const ItemBox = styled(Box)({
   height: 85,
   overflowX: "hidden",
   overflowY: "hidden",
-
   "&:hover": {
     cursor: "pointer",
   },
 });
 
 const OrderInfo = styled(Typography)({
-  fontSize: 12,
+  overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
-  overflow: "hidden",
+  fontSize: 12,
 });
 
 interface OrderItemProps {
+  keyId: string;
+  index: number;
   userOrder: Product[];
   orderDate: string;
   deliveryMethod: number;
-  index: number;
-  keyId: string;
 }
 
 function UserOrderItem({
+  keyId,
+  index,
   userOrder,
   orderDate,
   deliveryMethod,
-  index,
-  keyId,
 }: OrderItemProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const deliveryDate = generateDate(deliveryMethod);
 
   return (
     <Paper elevation={3} sx={{ p: 1 }}>
-      <ItemBox
-        onClick={() => {
-          setDialogOpen(true);
-        }}
-      >
+      <ItemBox onClick={() => setDialogOpen(true)}>
         <Typography variant="subtitle2" fontWeight={700} mb={0.7}>
           Order #{index + 1}
         </Typography>

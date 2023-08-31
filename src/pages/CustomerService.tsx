@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { Container, styled, Typography } from "@mui/material";
 
 const Headline = styled(Typography)({
+  marginBottom: 5,
   fontSize: 18,
   fontWeight: 700,
-  marginBottom: 5,
 });
 
 const BodyText = styled(Typography)({
-  fontSize: 15,
   marginBottom: 25,
+  fontSize: 15,
 });
 
 function CustomerService() {

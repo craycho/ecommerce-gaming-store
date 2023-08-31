@@ -18,8 +18,8 @@ export const patchProfilePicture = function ({
     if (!response.ok) {
       throw new Error("Could not change profile picture.");
     }
-    const firebaseUsersData = await response.json();
 
+    const firebaseUsersData = await response.json();
     for (const user in firebaseUsersData) {
       const firebaseUserEmail: string = firebaseUsersData[user].email;
 
@@ -86,8 +86,8 @@ export const patchUserData = function ({
 
 export const logoutUserLocal = function () {
   return async (dispatch: AppDispatch) => {
+    // Cleara postojeci cart da bi fetch novi
     localStorage.setItem("cart", JSON.stringify([]));
-
     dispatch(userActions.logoutUser());
   };
 };

@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { Container, styled, Typography } from "@mui/material";
 
 const Headline = styled(Typography)({
+  marginBottom: 5,
   fontSize: 18,
   fontWeight: 700,
-  marginBottom: 5,
 });
 
 const BodyText = styled(Typography)({
@@ -17,7 +17,7 @@ function TermsConditions() {
   }, []);
 
   return (
-    <Container sx={{ mt: 5, mb: 7, width: "60%" }}>
+    <Container sx={{ width: "60%", mt: 5, mb: 7 }}>
       <Typography variant="h5" fontWeight={700} mb={2}>
         Terms & Conditions
       </Typography>
